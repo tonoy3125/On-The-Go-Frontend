@@ -2,6 +2,76 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "https://cssicon.space/css/icons.css";
+
+.icon,
+.icon:before,
+.icon:after,
+.icon i,
+.icon i:before,
+.icon i:after {
+  transition: all 0.4s ease;
+}
+
+@layer components {
+  .center {
+    @apply flex justify-center items-center;
+  }
+
+  .layout_container {
+    @apply max-w-[1800px] mx-auto px-[10px] sm:px-[20px] 2xl:px-[80px];
+  }
+}
+
+.gridResponsive {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 300px));
+}
+
+.PhoneInputInput {
+  outline: none;
+  width: 100%;
+  height: 100%;
+}
+
+.position_center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: spin 4s linear infinite; /* Rotate continuously */
+}
+
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg); /* Start at 0 degrees */
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg); /* Full rotation */
+  }
+}
+
+.smoothBar::-webkit-scrollbar {
+  width: 5px;
+  opacity: 1;
+}
+
+.smoothBar::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 5px;
+}
+
+.smoothBar:hover::-webkit-scrollbar-thumb {
+  background-color: #c2c2c2;
+}
+
+.no-drag {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+
 @layer base {
   :root {
     --baseBackground: #f5f5f5;
@@ -65,19 +135,70 @@
   }
 }
 
+.canvasHeadGradient {
+  background: #a1ffd4;
+  background: linear-gradient(169deg, #3df1a0 5%, #3df1ca 50%, #aaff68 100%);
+}
+
+.avatarGradient {
+  background: linear-gradient(169deg, #12ff94 5%, #fecaff 50%, #f0bff1 100%);
+}
+
+.reset-all ul,
+.reset-all li,
+.reset-all h1,
+.reset-all ol,
+.reset-all p {
+  all: revert !important; /* This will unset all inherited styles */
+  margin: 0 !important; /* Reset margins */
+  padding: revert !important; /* Reset padding */
+}
+
+.spin_center {
+  animation: spin 2s linear infinite;
+}
+
+.gridUser_responsive {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(277px, 1fr));
+}
+.gridGroup_responsive {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .bgSmooth {
   background-color: var(--baseBackground);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.activeRoute::after {
+  content: "";
+  height: 2px;
+  width: 100%;
+  background: #3bb77e;
+  position: absolute;
+  bottom: -7px;
+  left: 0;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+.hideGradient {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.46262254901960786) 0%,
+    var(--solidWhite) 67%
+  );
 }
