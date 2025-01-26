@@ -1,10 +1,14 @@
+"use client";
 import Image from "next/image";
 import "./Signin.css";
 import { FaLinkedinIn } from "react-icons/fa";
 import { CiFacebook } from "react-icons/ci";
 import { IoLogoGithub } from "react-icons/io";
+import { useState } from "react";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const SignIn = () => {
+  const [showRegisterPassword, setShowRegisterPassword] = useState(false);
   return (
     <div className="flex items-center justify-center lg:justify-start w-full md:gap-10 bg-[#FFFFFF]">
       <div className="bg-[#DDE7EB] lg:w-[67%] lg:min-h-screen hidden lg:block">
@@ -42,7 +46,7 @@ const SignIn = () => {
               }}
             />
           </div>
-          <div className="mb-5">
+          <div className="mb-5 relative">
             <div className="flex items-center justify-between">
               <h2 className="text-[15px] font-medium text-[#231928] mb-3 opacity-90">
                 Password
@@ -53,7 +57,7 @@ const SignIn = () => {
             </div>
             <input
               className="pt-2 pb-2 pl-3 w-[295px] sm:w-[350px] semi-sm:w-[390px] md:w-[550px] mx-auto border-[#ebedf0] border-[1px] bg-[#FFFFFF] text-[#74788D] font-poppins rounded-lg focus:outline-none focus:ring-[4px] focus:ring-[#15434133] focus:border-[#056464] transition-all duration-300 ease-in-out text-sm"
-              type="email"
+              type={showRegisterPassword ? "text" : "password"}
               id=""
               placeholder="Enter Your Password"
               style={{
@@ -62,6 +66,18 @@ const SignIn = () => {
                 boxShadow: "0 0 0 0px bg-[#38b2ac]", // Default shadow
               }}
             />
+            <span
+              className="absolute right-4 md:right-3 top-[44px] rtl:left-0 rtl:right-auto "
+              onClick={() => {
+                setShowRegisterPassword(!showRegisterPassword);
+              }}
+            >
+              {showRegisterPassword ? (
+                <AiOutlineEyeInvisible className="text-xl"></AiOutlineEyeInvisible>
+              ) : (
+                <AiOutlineEye className="text-xl"></AiOutlineEye>
+              )}
+            </span>
           </div>
           <div className="checkbox-container">
             <input type="checkbox" id="rememberMe" />
@@ -94,7 +110,7 @@ const SignIn = () => {
             </span>
           </p>
           <div className="divider">Or sign in with</div>
-          <div className="flex flex-col semi-sm:flex-row items-center gap-5 justify-center mt-10">
+          <div className="flex flex-col semi-sm:flex-row items-center gap-3 semi-sm:gap-5 justify-center mt-10">
             <button className="flex items-center justify-center w-full gap-1 bg-[#E6E9EB] hover:bg-[#E5EFEF] py-[6px] px-[13px] rounded-md">
               <FaLinkedinIn className="text-base text-[#0077B5]" />
               <span className="text-lg">LinkedIn</span>
