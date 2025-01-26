@@ -6,8 +6,8 @@ import { IoLogoGithub } from "react-icons/io";
 
 const SignIn = () => {
   return (
-    <div className="flex items-center w-full gap-10 bg-[#FFFFFF]">
-      <div className="bg-[#DDE7EB] w-[67%] min-h-screen">
+    <div className="flex items-center justify-center lg:justify-start w-full md:gap-10 bg-[#FFFFFF]">
+      <div className="bg-[#DDE7EB] lg:w-[67%] lg:min-h-screen hidden lg:block">
         <div>
           <Image
             src="https://i.ibb.co.com/d426M2w/Login.png"
@@ -18,11 +18,11 @@ const SignIn = () => {
           />
         </div>
       </div>
-      <div>
-        <h1 className="text-[#056464] font-semibold text-3xl  hover:opacity-70 transition-opacity duration-300 mb-1">
+      <div className="mt-10 lg:mt-0 mb-10 lg:mb-10 mx-3 sm:mx-4 semi-sm:mx-5 md:mx-0">
+        <h1 className="text-[#056464] font-semibold sm:text-2xl md:text-3xl text-center lg:text-start  hover:opacity-70 transition-opacity duration-300 mb-1">
           Welcome To On The Go!!
         </h1>
-        <p className="text-[#231928] font-medium mb-10">
+        <p className="text-[#231928] font-medium mb-10 text-center lg:text-start">
           Sign in with your data that you enterd during your registration
         </p>
         <form>
@@ -81,7 +81,7 @@ const SignIn = () => {
             value="Sign In"
           />
           <p
-            className=" text-start font-poppins text-sm mt-4 mb-7"
+            className=" text-center lg:text-start font-poppins text-sm mt-4 mb-7"
             style={{ letterSpacing: ".4px" }}
           >
             <span className="">Don't Have Your Account yet </span>
@@ -94,16 +94,16 @@ const SignIn = () => {
             </span>
           </p>
           <div className="divider">Or sign in with</div>
-          <div className="flex items-center gap-5 justify-center mt-10">
-            <button className="flex items-center gap-1 bg-[#E6E9EB] hover:bg-[#E5EFEF] py-[6px] px-[13px] rounded-md">
+          <div className="flex flex-col semi-sm:flex-row items-center gap-5 justify-center mt-10">
+            <button className="flex items-center justify-center w-full gap-1 bg-[#E6E9EB] hover:bg-[#E5EFEF] py-[6px] px-[13px] rounded-md">
               <FaLinkedinIn className="text-base text-[#0077B5]" />
               <span className="text-lg">LinkedIn</span>
             </button>
-            <button className="flex items-center gap-1 bg-[#E6E9EB] hover:bg-[#E5EFEF] py-[6px] px-[13px] rounded-md">
+            <button className="flex items-center w-full justify-center gap-1 bg-[#E6E9EB] hover:bg-[#E5EFEF] py-[6px] px-[13px] rounded-md">
               <CiFacebook className="text-base text-[#50598e]" />
               <span className="text-lg">Facebook</span>
             </button>
-            <button className="flex items-center gap-1 bg-[#E6E9EB] hover:bg-[#E5EFEF] py-[6px] px-[13px] rounded-md">
+            <button className="flex items-center w-full justify-center gap-1 bg-[#E6E9EB] hover:bg-[#E5EFEF] py-[6px] px-[13px] rounded-md">
               <IoLogoGithub className="text-base text-[#6fa2d8]" />
               <span className="text-lg">Github</span>
             </button>
