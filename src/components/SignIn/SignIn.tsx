@@ -1,5 +1,8 @@
 import Image from "next/image";
 import "./Signin.css";
+import { FaLinkedinIn } from "react-icons/fa";
+import { CiFacebook } from "react-icons/ci";
+import { IoLogoGithub } from "react-icons/io";
 
 const SignIn = () => {
   return (
@@ -28,7 +31,7 @@ const SignIn = () => {
               Email Address
             </h2>
             <input
-              className="pt-2 pb-2 pl-3 w-[295px] sm:w-[350px] semi-sm:w-[390px] md:w-[550px] mx-auto border-[#ebedf0] border-[1px] bg-[#FFFFFF] text-[#74788D] font-poppins rounded-lg focus:outline-none focus:ring-[4px] focus:ring-[#15434133] focus:border-[#056464] transition-all duration-300 ease-in-out"
+              className="pt-2 pb-2 pl-3 w-[295px] sm:w-[350px] semi-sm:w-[390px] md:w-[550px] mx-auto border-[#ebedf0] border-[1px] bg-[#FFFFFF] text-[#74788D] font-poppins rounded-lg focus:outline-none focus:ring-[4px] focus:ring-[#15434133] focus:border-[#056464] transition-all duration-300 ease-in-out text-sm"
               type="email"
               id=""
               placeholder="Enter Your Email"
@@ -49,7 +52,7 @@ const SignIn = () => {
               </h2>
             </div>
             <input
-              className="pt-2 pb-2 pl-3 w-[295px] sm:w-[350px] semi-sm:w-[390px] md:w-[550px] mx-auto border-[#ebedf0] border-[1px] bg-[#FFFFFF] text-[#74788D] font-poppins rounded-lg focus:outline-none focus:ring-[4px] focus:ring-[#15434133] focus:border-[#056464] transition-all duration-300 ease-in-out"
+              className="pt-2 pb-2 pl-3 w-[295px] sm:w-[350px] semi-sm:w-[390px] md:w-[550px] mx-auto border-[#ebedf0] border-[1px] bg-[#FFFFFF] text-[#74788D] font-poppins rounded-lg focus:outline-none focus:ring-[4px] focus:ring-[#15434133] focus:border-[#056464] transition-all duration-300 ease-in-out text-sm"
               type="email"
               id=""
               placeholder="Enter Your Password"
@@ -78,7 +81,7 @@ const SignIn = () => {
             value="Sign In"
           />
           <p
-            className=" text-start font-poppins text-sm mt-4"
+            className=" text-start font-poppins text-sm mt-4 mb-7"
             style={{ letterSpacing: ".4px" }}
           >
             <span className="">Don't Have Your Account yet </span>
@@ -90,6 +93,21 @@ const SignIn = () => {
               Sign Up
             </span>
           </p>
+          <div className="divider">Or sign in with</div>
+          <div className="flex items-center gap-5 justify-center mt-10">
+            <button className="flex items-center gap-1 bg-[#E6E9EB] hover:bg-[#E5EFEF] py-[6px] px-[13px] rounded-md">
+              <FaLinkedinIn className="text-base text-[#0077B5]" />
+              <span className="text-lg">LinkedIn</span>
+            </button>
+            <button className="flex items-center gap-1 bg-[#E6E9EB] hover:bg-[#E5EFEF] py-[6px] px-[13px] rounded-md">
+              <CiFacebook className="text-base text-[#50598e]" />
+              <span className="text-lg">Facebook</span>
+            </button>
+            <button className="flex items-center gap-1 bg-[#E6E9EB] hover:bg-[#E5EFEF] py-[6px] px-[13px] rounded-md">
+              <IoLogoGithub className="text-base text-[#6fa2d8]" />
+              <span className="text-lg">Github</span>
+            </button>
+          </div>
         </form>
       </div>
     </div>
