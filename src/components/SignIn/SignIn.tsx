@@ -53,9 +53,11 @@ const SignIn = () => {
               <h2 className="text-[15px] font-medium text-[#231928] mb-3 opacity-90">
                 Password
               </h2>
-              <h2 className="text-[15px] font-medium text-[#056464] mb-3 underline">
-                Forgot Password?
-              </h2>
+              <Link href="/forgot-password">
+                <h2 className="text-[15px] font-medium text-[#056464] mb-3 underline">
+                  Forgot Password?
+                </h2>
+              </Link>
             </div>
             <input
               className="pt-2 pb-2 pl-3 w-[295px] sm:w-[350px] semi-sm:w-[390px] md:w-[550px] mx-auto border-[#ebedf0] border-[1px] bg-[#FFFFFF] text-[#74788D] font-poppins rounded-lg focus:outline-none focus:ring-[4px] focus:ring-[#15434133] focus:border-[#056464] transition-all duration-300 ease-in-out text-sm"
