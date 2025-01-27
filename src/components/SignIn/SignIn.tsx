@@ -6,6 +6,7 @@ import { CiFacebook } from "react-icons/ci";
 import { IoLogoGithub } from "react-icons/io";
 import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import Link from "next/link";
 
 const SignIn = () => {
   const [showRegisterPassword, setShowRegisterPassword] = useState(false);
@@ -101,13 +102,12 @@ const SignIn = () => {
             style={{ letterSpacing: ".4px" }}
           >
             <span className="">Don't Have Your Account yet </span>
-            {/* <Link to="/register">
-              
-            </Link> */}
-            <span className="text-[#056464] cursor-pointer underline">
-              {" "}
-              Sign Up
-            </span>
+            <Link href="/register">
+              <span className="text-[#056464] cursor-pointer underline">
+                {" "}
+                Sign Up
+              </span>
+            </Link>
           </p>
           <div className="divider">Or sign in with</div>
           <div className="flex flex-col semi-sm:flex-row items-center gap-3 semi-sm:gap-5 justify-center mt-10">
