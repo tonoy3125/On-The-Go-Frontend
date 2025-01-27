@@ -1,6 +1,44 @@
+'use client'
+import { useForgetPasswordMutation } from "@/redux/features/auth/authApi";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { FieldValues, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const ForgotPassword = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const [forgetPassword] = useForgetPasswordMutation();
+  const router = useRouter();
+
+  const onSubmit = async (data: FieldValues) => {
+    const toastId = toast.loading("Sending Email...");
+    try {
+      const userInfo = {
+        email: data?.email,
+      };
+      const res = await forgetPassword(userInfo).unwrap();
+      toast.success(
+        res.message ||
+          "We've sent you an email with a link to update your password.!",
+        {
+          id: toastId,
+          duration: 3000,
+        }
+      );
+      router.push("/login");
+    } catch (error: any) {
+      toast.error(error?.data?.message || "Something went wrong!", {
+        id: toastId,
+        duration: 3000,
+      });
+    }
+  };
+
   return (
     <div className="flex items-center justify-center lg:justify-start w-full md:gap-10 bg-[#FFFFFF]">
       <div className="bg-[#DDE7EB] lg:w-[67%] lg:min-h-screen hidden lg:block">
@@ -21,7 +59,7 @@ const ForgotPassword = () => {
         <p className="text-[#231928] font-medium mb-10 text-center lg:text-start">
           Enter the email address associated with your account.
         </p>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-5">
             <h2 className="text-[15px] font-medium text-[#231928] mb-3 opacity-90">
               Email Address
@@ -36,7 +74,15 @@ const ForgotPassword = () => {
                   "border-color .15s ease-in-out, box-shadow .15s ease-in-out",
                 boxShadow: "0 0 0 0px bg-[#38b2ac]", // Default shadow
               }}
+              {...register("email", {
+                required: "Email is Required",
+              })}
             />
+            {errors.email && (
+              <p className="text-red-500 text-sm font-poppins font-medium pt-2">
+                {String(errors.email.message)}
+              </p>
+            )}
           </div>
           <input
             className="w-full py-2 bg-[#056464]  text-base font-poppins text-[#fff] font-medium rounded-lg border border-[#056464] mt-5 cursor-pointer"

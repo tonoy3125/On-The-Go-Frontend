@@ -8,8 +8,7 @@ import {
 import { useAppSelector } from "@/redux/hook";
 import { TRole, TUserPayload } from "@/types/user.type";
 
-import Cookies from "js-cookie";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 interface IProps {
   role: TRole | "*";
   children: React.ReactNode;
@@ -20,14 +19,12 @@ const Protectedroute: React.FC<IProps> = ({ role, children }) => {
   const token = useAppSelector(useCurrentToken);
   const isLoading = useAppSelector(selectIsAuthLoading);
   const router = useRouter();
-  const path = usePathname();
 
   if (isLoading) {
     return <Loader className="!h-screen" />;
   }
 
   if (!user || !token) {
-    Cookies.set("redirect", path);
     router.push("/login");
     return <></>;
   }

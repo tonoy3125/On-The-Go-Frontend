@@ -16,6 +16,7 @@ export default {
         "semi-sm": "425px",
       },
       colors: {
+        primaryMat: "#3bb77e",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {

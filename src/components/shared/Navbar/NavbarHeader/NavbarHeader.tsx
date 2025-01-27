@@ -9,6 +9,7 @@ import { navLinks } from "@/utils/navLinks";
 import { AccountPanel } from "@/components/AccountPanel/AccountPanel";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { TUserPayload } from "@/types/user.type";
+import HeaderSearchBar from "../HeaderSearchBar/HeaderSearchBar";
 // import { AccountPanel } from "../client/AccountPanel";
 // import HeaderSearchBar from "./HeaderSearchBar";
 
@@ -19,7 +20,7 @@ const NavbarHeader = () => {
   return (
     <header className="py-[5px] border-b sticky top-0 z-50 bg-white ">
       <div className="layout_container flex justify-between gap-4 items-center relative">
-        {/* <HeaderSearchBar /> */}
+        <HeaderSearchBar />
         <nav className="flex w-fit md:w-full relative z-[1] items-center justify-center">
           {navLinks.map((nav) => {
             const Icon = nav.Icon;
