@@ -7,9 +7,51 @@ import "./Signup.css";
 import Link from "next/link";
 import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { FieldValues, useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { useSignUpMutation } from "@/redux/features/auth/authApi";
+import { useRouter } from "next/navigation";
 
 const SignUp = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
   const [showRegisterPassword, setShowRegisterPassword] = useState(false);
+
+  const [signUp] = useSignUpMutation();
+  const router = useRouter()
+
+  const onSubmit = async (data: FieldValues) => {
+    console.log(data);
+    const toastId = toast.loading("Creating Account...");
+    try {
+      const userInfo = {
+        name: data?.name,
+        email: data?.email,
+        password: data?.password,
+        phone: data?.phone,
+        role: "user",
+      };
+      console.log(userInfo);
+      const res = await signUp(userInfo).unwrap();
+      console.log(res);
+      toast.success(res.message || "User Register Successfully!!!", {
+        id: toastId,
+        duration: 3000,
+      });
+      reset();
+      router.push("/login");
+    } catch (error: any) {
+      toast.error(error?.data?.message || "Something went wrong!", {
+        id: toastId,
+        duration: 3000,
+      });
+    }
+  };
+
   return (
     <div className="flex items-center justify-center lg:justify-start w-full md:gap-10 bg-[#FFFFFF]">
       <div className="bg-[#DDE7EB] lg:w-[67%] lg:min-h-screen hidden lg:block">
@@ -30,7 +72,7 @@ const SignUp = () => {
         <p className="text-[#231928] font-medium mb-10 text-center lg:text-start">
           Get Started For Free Today!
         </p>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-5">
             <h2 className="text-[15px] font-medium text-[#231928] mb-3 opacity-90">
               Name
@@ -45,6 +87,9 @@ const SignUp = () => {
                   "border-color .15s ease-in-out, box-shadow .15s ease-in-out",
                 boxShadow: "0 0 0 0px bg-[#38b2ac]", // Default shadow
               }}
+              {...register("name", {
+                required: "Name is Required",
+              })}
             />
           </div>
           <div className="mb-5">
@@ -61,6 +106,9 @@ const SignUp = () => {
                   "border-color .15s ease-in-out, box-shadow .15s ease-in-out",
                 boxShadow: "0 0 0 0px bg-[#38b2ac]", // Default shadow
               }}
+              {...register("email", {
+                required: "Email is Required",
+              })}
             />
           </div>
           <div className="mb-5">
@@ -77,6 +125,9 @@ const SignUp = () => {
                   "border-color .15s ease-in-out, box-shadow .15s ease-in-out",
                 boxShadow: "0 0 0 0px bg-[#38b2ac]", // Default shadow
               }}
+              {...register("phone", {
+                required: "Phone is Required",
+              })}
             />
           </div>
           <div className="mb-5 relative">
@@ -93,6 +144,9 @@ const SignUp = () => {
                   "border-color .15s ease-in-out, box-shadow .15s ease-in-out",
                 boxShadow: "0 0 0 0px bg-[#38b2ac]", // Default shadow
               }}
+              {...register("password", {
+                required: "Password is Required",
+              })}
             />
             <span
               className="absolute right-4 md:right-3 top-[44px] rtl:left-0 rtl:right-auto "
