@@ -22,7 +22,7 @@ const SignUp = () => {
   const [showRegisterPassword, setShowRegisterPassword] = useState(false);
 
   const [signUp] = useSignUpMutation();
-  const router = useRouter()
+  const router = useRouter();
 
   const onSubmit = async (data: FieldValues) => {
     console.log(data);
@@ -91,6 +91,11 @@ const SignUp = () => {
                 required: "Name is Required",
               })}
             />
+            {errors.name && (
+              <p className="text-red-500 text-sm font-poppins font-medium pt-2">
+                {String(errors.name.message)}
+              </p>
+            )}
           </div>
           <div className="mb-5">
             <h2 className="text-[15px] font-medium text-[#231928] mb-3 opacity-90">
@@ -110,6 +115,11 @@ const SignUp = () => {
                 required: "Email is Required",
               })}
             />
+            {errors.email && (
+              <p className="text-red-500 text-sm font-poppins font-medium pt-2">
+                {String(errors.email.message)}
+              </p>
+            )}
           </div>
           <div className="mb-5">
             <h2 className="text-[15px] font-medium text-[#231928] mb-3 opacity-90">
@@ -129,6 +139,11 @@ const SignUp = () => {
                 required: "Phone is Required",
               })}
             />
+            {errors.phone && (
+              <p className="text-red-500 text-sm font-poppins font-medium pt-2">
+                {String(errors.phone.message)}
+              </p>
+            )}
           </div>
           <div className="mb-5 relative">
             <h2 className="text-[15px] font-medium text-[#231928] mb-3 opacity-90">
@@ -160,6 +175,11 @@ const SignUp = () => {
                 <AiOutlineEye className="text-xl"></AiOutlineEye>
               )}
             </span>
+            {errors.password && (
+              <p className="text-red-500 text-sm font-poppins font-medium pt-2">
+                {String(errors.password.message)}
+              </p>
+            )}
           </div>
           <div className="checkbox-container">
             <input type="checkbox" id="rememberMe" />
