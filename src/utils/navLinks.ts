@@ -4,22 +4,22 @@ export const shortcutsLinks = [
   {
     path: "/",
     label: "New Feed",
-    iconUrl: "/icons/home.svg",
+    iconUrl: "/public/icons/home.svg",
   },
   {
     path: "/profile/settings",
     label: "Settings",
-    iconUrl: "/icons/setting.svg",
+    iconUrl: "/public/icons/setting.svg",
   },
   {
     path: "/group",
     label: "Explore Groups",
-    iconUrl: "/icons/group.svg",
+    iconUrl: "/public/icons/group.svg",
   },
   {
     path: "/followers",
     label: "My Followrs",
-    iconUrl: "/icons/follower.svg",
+    iconUrl: "/public/icons/follower.svg",
   },
 ];
 

@@ -1,18 +1,21 @@
 "use client";
 
 import { useAppSelector } from "@/redux/hook";
-import { navLinks } from "@/utils/navLinks";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import HeaderTooptip from "../../Tooltip/HeaderTooltip";
+import { navLinks } from "@/utils/navLinks";
+import { AccountPanel } from "@/components/AccountPanel/AccountPanel";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { TUserPayload } from "@/types/user.type";
 // import { AccountPanel } from "../client/AccountPanel";
 // import HeaderSearchBar from "./HeaderSearchBar";
-// import OntheGoTooltip from "./OntheGoTooltip";
 
 const NavbarHeader = () => {
   const path = usePathname();
 
-  const { user } = useAppSelector((state) => state.auth);
+  const user = useAppSelector(selectCurrentUser) as TUserPayload | null;
   return (
     <header className="py-[5px] border-b sticky top-0 z-50 bg-white ">
       <div className="layout_container flex justify-between gap-4 items-center relative">
