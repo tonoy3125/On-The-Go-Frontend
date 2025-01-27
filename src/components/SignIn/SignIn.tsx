@@ -8,9 +8,54 @@ import { IoLogoGithub } from "react-icons/io";
 import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import Link from "next/link";
+import { FieldValues, useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { verifyToken } from "@/utils/verifyToken";
+import { useAppDispatch } from "@/redux/hook";
+import { useLoginMutation } from "@/redux/features/auth/authApi";
+import { setUser } from "@/redux/features/auth/authSlice";
+import { useRouter } from "next/navigation";
 
 const SignIn = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [showLoginPassword, setShowLoginPassword] = useState(false);
+  const dispatch = useAppDispatch();
+  const [login] = useLoginMutation();
+  const router = useRouter();
+
+  const onSubmit = async (data: FieldValues) => {
+    console.log(data);
+    const toastId = toast.loading("Logging In...");
+    try {
+      const userInfo = {
+        email: data?.email,
+        password: data?.password,
+      };
+      console.log(userInfo);
+      const res = await login(userInfo).unwrap();
+      // console.log(res);
+      const user = verifyToken(res.accessToken);
+      // console.log(user);
+      dispatch(
+        setUser({ user: { user, id: res.data._id }, token: res.accessToken })
+      );
+      toast.success(res.message || "Logged In Successfully!j", {
+        id: toastId,
+        duration: 3000,
+      });
+      router.push("/");
+    } catch (error: any) {
+      toast.error(error?.data?.message || "Something went wrong!", {
+        id: toastId,
+        duration: 3000,
+      });
+    }
+  };
+
   return (
     <div className="flex items-center justify-center lg:justify-start w-full md:gap-10 bg-[#FFFFFF]">
       <div className="bg-[#DDE7EB] lg:w-[67%] lg:min-h-screen hidden lg:block">
@@ -31,7 +76,7 @@ const SignIn = () => {
         <p className="text-[#231928] font-medium mb-10 text-center lg:text-start">
           Sign in with your data that you enterd during your registration
         </p>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-5">
             <h2 className="text-[15px] font-medium text-[#231928] mb-3 opacity-90">
               Email Address
@@ -46,7 +91,15 @@ const SignIn = () => {
                   "border-color .15s ease-in-out, box-shadow .15s ease-in-out",
                 boxShadow: "0 0 0 0px bg-[#38b2ac]", // Default shadow
               }}
+              {...register("email", {
+                required: "Email is Required",
+              })}
             />
+            {errors.email && (
+              <p className="text-red-500 text-sm font-poppins font-medium pt-2">
+                {String(errors.email.message)}
+              </p>
+            )}
           </div>
           <div className="mb-5 relative">
             <div className="flex items-center justify-between">
@@ -69,6 +122,9 @@ const SignIn = () => {
                   "border-color .15s ease-in-out, box-shadow .15s ease-in-out",
                 boxShadow: "0 0 0 0px bg-[#38b2ac]", // Default shadow
               }}
+              {...register("password", {
+                required: "Password is Required",
+              })}
             />
             <span
               className="absolute right-4 md:right-3 top-[44px] rtl:left-0 rtl:right-auto "
@@ -82,6 +138,11 @@ const SignIn = () => {
                 <AiOutlineEye className="text-xl"></AiOutlineEye>
               )}
             </span>
+            {errors.password && (
+              <p className="text-red-500 text-sm font-poppins font-medium pt-2">
+                {String(errors.password.message)}
+              </p>
+            )}
           </div>
           <div className="checkbox-container">
             <input type="checkbox" id="rememberMe" />

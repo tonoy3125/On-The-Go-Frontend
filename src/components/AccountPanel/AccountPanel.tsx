@@ -1,7 +1,7 @@
 import { LogOut } from "lucide-react";
 
 import { useAppSelector } from "@/redux/hook";
-import Cookies from "js-cookie";
+
 import Image from "next/image";
 // import Link from "next/link";
 import { useDispatch } from "react-redux";
@@ -25,7 +25,6 @@ export function AccountPanel() {
   const handleLogout = () => {
     dispatch(logOut());
     router.push("/login");
-    Cookies.remove("refreshToken");
   };
 
   return (
