@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 import Image from "next/image";
 import "./Signin.css";
@@ -9,7 +10,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import Link from "next/link";
 
 const SignIn = () => {
-  const [showRegisterPassword, setShowRegisterPassword] = useState(false);
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
   return (
     <div className="flex items-center justify-center lg:justify-start w-full md:gap-10 bg-[#FFFFFF]">
       <div className="bg-[#DDE7EB] lg:w-[67%] lg:min-h-screen hidden lg:block">
@@ -58,7 +59,7 @@ const SignIn = () => {
             </div>
             <input
               className="pt-2 pb-2 pl-3 w-[295px] sm:w-[350px] semi-sm:w-[390px] md:w-[550px] mx-auto border-[#ebedf0] border-[1px] bg-[#FFFFFF] text-[#74788D] font-poppins rounded-lg focus:outline-none focus:ring-[4px] focus:ring-[#15434133] focus:border-[#056464] transition-all duration-300 ease-in-out text-sm"
-              type={showRegisterPassword ? "text" : "password"}
+              type={showLoginPassword ? "text" : "password"}
               id=""
               placeholder="Enter Your Password"
               style={{
@@ -70,10 +71,10 @@ const SignIn = () => {
             <span
               className="absolute right-4 md:right-3 top-[44px] rtl:left-0 rtl:right-auto "
               onClick={() => {
-                setShowRegisterPassword(!showRegisterPassword);
+                setShowLoginPassword(!showLoginPassword);
               }}
             >
-              {showRegisterPassword ? (
+              {showLoginPassword ? (
                 <AiOutlineEyeInvisible className="text-xl"></AiOutlineEyeInvisible>
               ) : (
                 <AiOutlineEye className="text-xl"></AiOutlineEye>

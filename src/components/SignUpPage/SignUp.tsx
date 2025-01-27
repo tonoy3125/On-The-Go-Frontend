@@ -5,8 +5,11 @@ import { FaLinkedinIn } from "react-icons/fa";
 import { IoLogoGithub } from "react-icons/io";
 import "./Signup.css";
 import Link from "next/link";
+import { useState } from "react";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const SignUp = () => {
+  const [showRegisterPassword, setShowRegisterPassword] = useState(false);
   return (
     <div className="flex items-center justify-center lg:justify-start w-full md:gap-10 bg-[#FFFFFF]">
       <div className="bg-[#DDE7EB] lg:w-[67%] lg:min-h-screen hidden lg:block">
@@ -68,7 +71,7 @@ const SignUp = () => {
               className="pt-2 pb-2 pl-3 w-[295px] sm:w-[350px] semi-sm:w-[390px] md:w-[550px] mx-auto border-[#ebedf0] border-[1px] bg-[#FFFFFF] text-[#74788D] font-poppins rounded-lg focus:outline-none focus:ring-[4px] focus:ring-[#15434133] focus:border-[#056464] transition-all duration-300 ease-in-out text-sm"
               type="text"
               id=""
-              placeholder="Enter Your Email"
+              placeholder="Enter Your Phone"
               style={{
                 transition:
                   "border-color .15s ease-in-out, box-shadow .15s ease-in-out",
@@ -82,7 +85,7 @@ const SignUp = () => {
             </h2>
             <input
               className="pt-2 pb-2 pl-3 w-[295px] sm:w-[350px] semi-sm:w-[390px] md:w-[550px] mx-auto border-[#ebedf0] border-[1px] bg-[#FFFFFF] text-[#74788D] font-poppins rounded-lg focus:outline-none focus:ring-[4px] focus:ring-[#15434133] focus:border-[#056464] transition-all duration-300 ease-in-out text-sm"
-              // type={showRegisterPassword ? "text" : "password"}
+              type={showRegisterPassword ? "text" : "password"}
               id=""
               placeholder="Enter Your Password"
               style={{
@@ -91,7 +94,7 @@ const SignUp = () => {
                 boxShadow: "0 0 0 0px bg-[#38b2ac]", // Default shadow
               }}
             />
-            {/* <span
+            <span
               className="absolute right-4 md:right-3 top-[44px] rtl:left-0 rtl:right-auto "
               onClick={() => {
                 setShowRegisterPassword(!showRegisterPassword);
@@ -102,7 +105,7 @@ const SignUp = () => {
               ) : (
                 <AiOutlineEye className="text-xl"></AiOutlineEye>
               )}
-            </span> */}
+            </span>
           </div>
           <div className="checkbox-container">
             <input type="checkbox" id="rememberMe" />
