@@ -4,6 +4,7 @@ import { useAppSelector } from "@/redux/hook";
 import { navLinks } from "@/utils/navLinks";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import HeaderTooptip from "../../Tooltip/HeaderTooltip";
 // import { AccountPanel } from "../client/AccountPanel";
 // import HeaderSearchBar from "./HeaderSearchBar";
 // import OntheGoTooltip from "./OntheGoTooltip";
@@ -20,7 +21,7 @@ const NavbarHeader = () => {
           {navLinks.map((nav) => {
             const Icon = nav.Icon;
             return (
-              <OntheGoTooltip delay={400} message={nav.label} key={nav.path}>
+              <HeaderTooptip delay={400} message={nav.label} key={nav.path}>
                 <Link
                   href={nav.path}
                   className={`px-[25px] md:px-[35px] h-[50px] center relative ${
@@ -31,7 +32,7 @@ const NavbarHeader = () => {
                 >
                   <Icon className={`size-6 flex-none`} />
                 </Link>
-              </OntheGoTooltip>
+              </HeaderTooptip>
             );
           })}
         </nav>
