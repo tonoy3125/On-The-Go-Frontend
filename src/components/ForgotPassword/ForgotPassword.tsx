@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 import { useForgetPasswordMutation } from "@/redux/features/auth/authApi";
 import Image from "next/image";
