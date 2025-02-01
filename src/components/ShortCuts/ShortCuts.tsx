@@ -1,3 +1,4 @@
+'use client'
 import { shortcutsLinks } from "@/utils/navLinks";
 import Image from "next/image";
 import Link from "next/link";

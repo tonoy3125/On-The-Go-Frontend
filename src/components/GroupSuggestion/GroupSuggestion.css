@@ -1,0 +1,13 @@
+.smoothBar::-webkit-scrollbar {
+  width: 5px;
+  opacity: 1;
+}
+
+.smoothBar::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 5px;
+}
+
+.smoothBar:hover::-webkit-scrollbar-thumb {
+  background-color: #c2c2c2;
+}

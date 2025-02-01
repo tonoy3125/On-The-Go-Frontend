@@ -1,8 +1,10 @@
+"use client";
 import { useGetGroupsSuggestionByUserIdQuery } from "@/redux/features/group/groupApi";
 import Image from "next/image";
 import Link from "next/link";
 import SmallGroupCardSkeleton from "../skeletons/SmallGroupCardSkeleton";
 import { TGroup } from "@/types/group.type";
+import "./GroupSuggestion.css";
 
 const GroupSuggestion = () => {
   const { data: groupSuggestionData, isLoading } =
@@ -10,7 +12,7 @@ const GroupSuggestion = () => {
       page: 1,
       limit: 5,
     });
-  console.log(groupSuggestionData);
+  //   console.log(groupSuggestionData);
   return (
     <div className="w-full max-h-[350px] overflow-y-auto smoothBar">
       <div className="flex items-start justify-between">
