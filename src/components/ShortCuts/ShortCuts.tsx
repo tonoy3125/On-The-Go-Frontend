@@ -2,13 +2,14 @@ import { shortcutsLinks } from "@/utils/navLinks";
 import Image from "next/image";
 import Link from "next/link";
 import { Separator } from "../ui/separator";
+import UserProfile from "../UserProfile/UserProfile";
 
 const ShortCuts = () => {
   return (
     <div>
       <h2 className="font-semibold mb-[15px]">Shortcuts</h2>
       <div className="flex flex-col gap-[5px]">
-        {/* <UserBox /> */}
+        <UserProfile />
         {shortcutsLinks.map(({ iconUrl, label, path }, i) => (
           <Link
             href={path}

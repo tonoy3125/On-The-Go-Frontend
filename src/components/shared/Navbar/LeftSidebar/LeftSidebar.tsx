@@ -1,3 +1,4 @@
+import ShortCuts from "@/components/ShortCuts/ShortCuts";
 import { Separator } from "@/components/ui/separator";
 import {
   Sheet,
