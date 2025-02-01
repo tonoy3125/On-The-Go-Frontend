@@ -2,13 +2,13 @@ import { SearchIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-// import { LeftSidebar } from "../client/LeftSidebar";
+import LeftSidebar from "../LeftSidebar/LeftSidebar";
 
 const HeaderSearchBar = () => {
   const path = usePathname();
   return (
     <div className="flex items-center gap-2 md:absolute left-[10px] sm:left-[20px] lg:left-[80px] z-[2]">
-      {/* <LeftSidebar /> */}
+      <LeftSidebar />
       <Link href={"/"} className="text-lg font-bold">
         <Image
           width={60}
