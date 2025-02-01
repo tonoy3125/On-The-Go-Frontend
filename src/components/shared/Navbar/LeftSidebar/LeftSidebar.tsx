@@ -1,3 +1,4 @@
+import GroupSuggestion from "@/components/GroupSuggestion/GroupSuggestion";
 import MyGroups from "@/components/MyGroups/MyGroups";
 import ShortCuts from "@/components/ShortCuts/ShortCuts";
 import { Separator } from "@/components/ui/separator";
@@ -38,7 +39,7 @@ const LeftSidebar = () => {
             <ShortCuts />
             <MyGroups />
             <Separator className="my-5" />
-            {/* <GroupSuggestion /> */}
+            <GroupSuggestion />
           </div>
         </SheetContent>
       </Sheet>

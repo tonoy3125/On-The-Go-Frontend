@@ -23,7 +23,17 @@ const GroupApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Group"],
     }),
+    getGroupsSuggestionByUserId: builder.query({
+      query: (token) => ({
+        url: "/group/my-group-suggestions",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      providesTags: ["Group"],
+    }),
   }),
 });
 
-export const { useGetGroupsByUserIdQuery } = GroupApi;
+export const { useGetGroupsByUserIdQuery,useGetGroupsSuggestionByUserIdQuery } = GroupApi;
