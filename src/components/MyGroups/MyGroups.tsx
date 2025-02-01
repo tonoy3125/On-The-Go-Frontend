@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import SmallGroupCardSkeleton from "../skeletons/SmallGroupCardSkeleton";
 import { UsersRound } from "lucide-react";
+import { TGroup } from "@/types/group.type";
 
 const MyGroups = () => {
   const [query, setQuery] = useState({ page: 1, limit: 5 });
@@ -18,7 +19,7 @@ const MyGroups = () => {
         {!isLoading && groupData?.data.length ? (
           <button
             onClick={() =>
-              setQuery({ ...query, limit: groupData?.totalCount || 999 })
+              setQuery({ ...query, limit: groupData?.data?.totalCount || 999 })
             }
             className="text-primaryMat text-[13px]"
           >
@@ -30,7 +31,7 @@ const MyGroups = () => {
       </div>
       {groupData?.data?.result?.length ? (
         <div className="flex flex-col gap-2">
-          {groupData?.data?.result?.map((group) => (
+          {groupData?.data?.result?.map((group: TGroup) => (
             <Link
               href={`/group/${group._id}`}
               key={group._id}
