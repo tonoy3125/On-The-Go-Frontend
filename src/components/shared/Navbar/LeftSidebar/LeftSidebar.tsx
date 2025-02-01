@@ -1,3 +1,4 @@
+import MyGroups from "@/components/MyGroups/MyGroups";
 import ShortCuts from "@/components/ShortCuts/ShortCuts";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -35,7 +36,7 @@ const LeftSidebar = () => {
           <div className="w-full" onClick={() => setIsOpen(false)}>
             <Separator className="my-5" />
             <ShortCuts />
-            {/* <MyGroups /> */}
+            <MyGroups />
             <Separator className="my-5" />
             {/* <GroupSuggestion /> */}
           </div>
