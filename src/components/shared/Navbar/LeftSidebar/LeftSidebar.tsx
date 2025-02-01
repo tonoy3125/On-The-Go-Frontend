@@ -33,7 +33,7 @@ const LeftSidebar = () => {
 
           <div className="w-full" onClick={() => setIsOpen(false)}>
             <Separator className="my-5" />
-            {/* <ShortCuts /> */}
+            <ShortCuts />
             {/* <MyGroups /> */}
             <Separator className="my-5" />
             {/* <GroupSuggestion /> */}
