@@ -43,6 +43,17 @@ const GroupApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Group"],
     }),
+    updateGroupByGroupId: builder.mutation({
+      query: ({ token, groupId, payload }) => ({
+        url: `/group/updateGroup/${groupId}`,
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: payload,
+      }),
+      invalidatesTags: ["Group"],
+    }),
   }),
 });
 
@@ -50,4 +61,5 @@ export const {
   useGetGroupsByUserIdQuery,
   useGetGroupsSuggestionByUserIdQuery,
   useGetGroupDetailsByIdQuery,
+  useUpdateGroupByGroupIdMutation,
 } = GroupApi;

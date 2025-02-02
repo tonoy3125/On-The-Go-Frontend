@@ -3,14 +3,19 @@
 import Loader from "@/components/shared/Loader/Loader";
 import { Button } from "@/components/ui/button";
 import { useCurrentToken } from "@/redux/features/auth/authSlice";
-import { useGetGroupDetailsByIdQuery } from "@/redux/features/group/groupApi";
+import {
+  useGetGroupDetailsByIdQuery,
+  useUpdateGroupByGroupIdMutation,
+} from "@/redux/features/group/groupApi";
 import { setGroupData } from "@/redux/features/group/groupSlice";
 import { useAppSelector } from "@/redux/hook";
+import { upLoadSingeImage } from "@/utils/uploadSingleImage";
 import { Camera } from "lucide-react";
 import Image from "next/image";
 import { useParams, usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { toast } from "sonner";
 
 const groupNavigation = [
   {
@@ -40,6 +45,7 @@ const GroupDetailsLayout = ({ children }: { children: React.ReactNode }) => {
     { skip: !groupId || !token }
   );
   // console.log(groupData);
+  const [updateGroupByGroupId] = useUpdateGroupByGroupIdMutation();
 
   useEffect(() => {
     if (groupData?.data?.group) {
@@ -53,7 +59,39 @@ const GroupDetailsLayout = ({ children }: { children: React.ReactNode }) => {
 
   const group = groupData?.data?.group;
   const member = groupData?.data?.member;
-  
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    console.log(file);
+    if (!file) {
+      return;
+    }
+    // const toastId = toast.loading("Uploading image...");
+    try {
+      const { data } = await upLoadSingeImage(file, token || "");
+      console.log(data);
+
+      if (data) {
+        const payload = {
+          image: data,
+        };
+        console.log(payload);
+        const res = await updateGroupByGroupId({
+          groupId: groupId,
+          payload,
+          token,
+        });
+        console.log(res);
+        // toast.success("Image uploaded successfully");
+      }
+      // toast.dismiss(toastId);
+      // toast.success("Image uploaded successfully");
+    } catch (error) {
+      toast.dismiss(toastId);
+      console.log(error);
+    }
+  };
+
   return (
     <div className="w-full py-6">
       <div className="overflow-hidden  text-card-foreground">
