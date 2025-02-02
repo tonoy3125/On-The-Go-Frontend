@@ -157,7 +157,7 @@ const GroupDetailsLayout = ({ children }: { children: React.ReactNode }) => {
 
             {groupData?.data?.member?.role === "owner" ||
             groupData?.data?.member?.role === "admin" ? (
-              <GroupEdit />
+              <GroupEdit groupData={groupData} />
             ) : (
               ""
             )}

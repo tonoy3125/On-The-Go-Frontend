@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,27 +20,79 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useCurrentToken } from "@/redux/features/auth/authSlice";
 import { useUpdateGroupByGroupIdMutation } from "@/redux/features/group/groupApi";
-import { FileEdit, Globe, Lock, Users } from "lucide-react";
-import { useState } from "react";
+import { useAppSelector } from "@/redux/hook";
+import { TGroup } from "@/types/group.type";
+import { AlertCircle, FileEdit, Globe, Lock, Users } from "lucide-react";
+import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { FaSpinner } from "react-icons/fa";
+import { toast } from "sonner";
 
-const GroupEdit = () => {
+type TGroupDataProps = {
+  data: {
+    group: TGroup;
+  };
+};
+
+const GroupEdit = ({ groupData }: { groupData: TGroupDataProps }) => {
+  const group = groupData?.data?.group;
+  const groupId = groupData?.data?.group?._id;
   const {
     register,
     handleSubmit,
     setValue,
     watch,
+    reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      name: group?.name || "",
+      description: group?.description || "",
+      privacy: group?.privacy || "public",
+    },
+  });
   const [isOpen, setIsOpen] = useState(false);
+  const token = useAppSelector(useCurrentToken);
 
   const [updateGroupByGroupId, { isLoading }] =
     useUpdateGroupByGroupIdMutation();
 
+  useEffect(() => {
+    if (group) {
+      reset({
+        name: group?.name || "",
+        description: group?.description || "",
+        privacy: group?.privacy || "public",
+      });
+    }
+  }, [group, reset]);
+
   const onSubmit = async (data: FieldValues) => {
-    console.log(data);
+    if (isLoading) return;
+    const toastId = toast.loading("Updating Group...");
+
+    const payload = { ...data };
+
+    try {
+      const res = await updateGroupByGroupId({
+        groupId: groupId,
+        payload,
+        token,
+      }).unwrap();
+      console.log(res);
+      toast.success(res.message || "Group Updated Successfully", {
+        id: toastId,
+        duration: 3000,
+      });
+      setIsOpen(false);
+    } catch (error: any) {
+      toast.error(error?.data?.message || "Something went wrong!", {
+        id: toastId,
+        duration: 3000,
+      });
+    }
   };
 
   // Watch privacy value
@@ -73,22 +126,16 @@ const GroupEdit = () => {
               </Label>
               <Input
                 id="name"
-                name="name"
+                {...register("name", { required: "Group name is required" })}
                 placeholder="Enter group name"
                 className="w-full"
               />
-              {/* <ErrorMessage
-                name="name"
-                component="p"
-                className="text-red-500 text-sm flex items-center mt-1"
-              >
-                {(msg) => (
-                  <>
-                    <AlertCircle className="w-4 h-4 mr-1" />
-                    {msg}
-                  </>
-                )}
-              </ErrorMessage> */}
+              {errors.name && (
+                <p className="text-red-500 text-sm font-poppins font-medium pt-1 flex items-center gap-1">
+                  <AlertCircle className="w-4 h-4" />
+                  {String(errors.name.message)}
+                </p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -101,10 +148,18 @@ const GroupEdit = () => {
               </Label>
               <Textarea
                 id="description"
-                name="description"
+                {...register("description", {
+                  required: "Description is required",
+                })}
                 placeholder="Describe your group"
                 className="w-full min-h-[100px]"
               />
+              {errors.description && (
+                <p className="text-red-500 text-sm font-poppins font-medium pt-1 flex items-center gap-1">
+                  <AlertCircle className="w-4 h-4" />
+                  {String(errors.description.message)}
+                </p>
+              )}
             </div>
 
             <div className="space-y-2">
