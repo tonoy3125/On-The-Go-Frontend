@@ -10,7 +10,7 @@ import { TGroup } from "@/types/group.type";
 const MyGroups = () => {
   const [query, setQuery] = useState({ page: 1, limit: 5 });
   const { data: groupData, isLoading } = useGetGroupsByUserIdQuery(query);
-  console.log(groupData?.data?.result);
+  // console.log(groupData?.data?.result);
 
   return (
     <div className="w-full max-h-[350px] overflow-y-auto smoothBar">
