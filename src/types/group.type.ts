@@ -10,3 +10,5 @@ export type TGroup = {
   updatedAt: string;
   __v: number;
 };
+
+export type TGroupPrivacy = "public" | "private";

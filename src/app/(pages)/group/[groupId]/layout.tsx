@@ -11,12 +11,13 @@ import {
 import { setGroupData } from "@/redux/features/group/groupSlice";
 import { useAppSelector } from "@/redux/hook";
 import { upLoadSingeImage } from "@/utils/uploadSingleImage";
-import { Camera } from "lucide-react";
-import Image from "next/image";
+import { Calendar, Camera, Globe, Lock, Users } from "lucide-react";
+import { format } from "date-fns";
 import { useParams, usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
+import GroupEdit from "@/components/GroupPage/GroupEdit/GroupEdit";
 
 const groupNavigation = [
   {
@@ -130,7 +131,7 @@ const GroupDetailsLayout = ({ children }: { children: React.ReactNode }) => {
         </div>
 
         <div className="py-6 bg-white px-6">
-          {/* <div className="flex items-start justify-between flex-col md:flex-row gap-[15px]">
+          <div className="flex items-start justify-between flex-col md:flex-row gap-[15px]">
             <div>
               <h1 className="text-3xl font-bold">{group?.name}</h1>
               <div className="mt-2 flex items-center gap-1 sm:gap-2 text-muted-foreground text-[12px] sm:text-[14px]">
@@ -154,15 +155,15 @@ const GroupDetailsLayout = ({ children }: { children: React.ReactNode }) => {
               </div>
             </div>
 
-            {data?.data?.member?.role === "owner" ||
-            data?.data?.member?.role === "admin" ? (
+            {groupData?.data?.member?.role === "owner" ||
+            groupData?.data?.member?.role === "admin" ? (
               <GroupEdit />
             ) : (
               ""
             )}
 
-            {!member && <GroupJoin groupId={groupId as string} />}
-          </div> */}
+            {/* {!member && <GroupJoin groupId={groupId as string} />} */}
+          </div>
 
           {/* <div className=" flex items-center justify-start mt-[25px] h-[40px] bg-primaryMat/10 px-3 rounded-[8px]">
             {group?.privacy === "public" ? (
