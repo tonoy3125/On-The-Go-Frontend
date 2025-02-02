@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import Loader from "@/components/shared/Loader/Loader";
@@ -66,7 +67,7 @@ const GroupDetailsLayout = ({ children }: { children: React.ReactNode }) => {
     if (!file) {
       return;
     }
-    // const toastId = toast.loading("Uploading image...");
+    const toastId = toast.loading("Uploading image...");
     try {
       const { data } = await upLoadSingeImage(file, token || "");
       console.log(data);
@@ -76,19 +77,22 @@ const GroupDetailsLayout = ({ children }: { children: React.ReactNode }) => {
           image: data,
         };
         console.log(payload);
-        const res = await updateGroupByGroupId({
+        await updateGroupByGroupId({
           groupId: groupId,
           payload,
           token,
         });
-        console.log(res);
-        // toast.success("Image uploaded successfully");
+        // console.log(res);
+        toast.success("Image Uploaded Successfully!!", {
+          id: toastId,
+          duration: 3000,
+        });
       }
-      // toast.dismiss(toastId);
-      // toast.success("Image uploaded successfully");
-    } catch (error) {
-      toast.dismiss(toastId);
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error?.data?.message || "Something went wrong!", {
+        id: toastId,
+        duration: 3000,
+      });
     }
   };
 
