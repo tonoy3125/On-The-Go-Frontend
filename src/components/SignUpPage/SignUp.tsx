@@ -12,6 +12,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useSignUpMutation } from "@/redux/features/auth/authApi";
 import { useRouter } from "next/navigation";
+import Divider from "../shared/Divider/Divider";
 
 const SignUp = () => {
   const {
@@ -211,7 +212,7 @@ const SignUp = () => {
               </span>
             </Link>
           </p>
-          <div className="divider">Or sign in with</div>
+          <Divider />
           <div className="flex flex-col semi-sm:flex-row items-center gap-3 semi-sm:gap-5 justify-center mt-10">
             <button className="flex items-center justify-center w-full gap-1 bg-[#E6E9EB] hover:bg-[#E5EFEF] py-[6px] px-[13px] rounded-md">
               <FaLinkedinIn className="text-base text-[#0077B5]" />

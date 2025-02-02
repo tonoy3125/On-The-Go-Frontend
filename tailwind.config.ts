@@ -10,12 +10,25 @@ export default {
   ],
   theme: {
     extend: {
+      typography: () => ({
+        DEFAULT: {
+          css: {
+            h1: null, // Removes styles for h1
+            p: null, // Removes styles for p
+            ul: null, // Removes styles for ul
+            li: null, // Removes styles for li
+            ol: null, // Removes styles for li
+            // Add any other tags you want to remove default styles from
+          },
+        },
+      }),
       screens: {
         xs: "320px",
         sm: "375px",
         "semi-sm": "425px",
       },
       colors: {
+        primaryTxt: "#253D4E",
         primaryMat: "#3bb77e",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
@@ -63,7 +76,17 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+       keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
     },
   },
-  plugins: [require("tailwindcss-animate"), require("daisyui")],
+  plugins: [require("tailwindcss-animate")],
 } satisfies Config;
