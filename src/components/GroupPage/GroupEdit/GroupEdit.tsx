@@ -23,7 +23,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useCurrentToken } from "@/redux/features/auth/authSlice";
 import { useUpdateGroupByGroupIdMutation } from "@/redux/features/group/groupApi";
 import { useAppSelector } from "@/redux/hook";
-import { TGroup } from "@/types/group.type";
+import { TGroup, TGroupPrivacy } from "@/types/group.type";
 import { AlertCircle, FileEdit, Globe, Lock, Users } from "lucide-react";
 import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
@@ -96,7 +96,7 @@ const GroupEdit = ({ groupData }: { groupData: TGroupDataProps }) => {
   };
 
   // Watch privacy value
-  const privacyValue = watch("privacy", "public"); // Default to 'public'
+  const privacyValue = watch("privacy", "public" as TGroupPrivacy); // Default to 'public'
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -167,7 +167,7 @@ const GroupEdit = ({ groupData }: { groupData: TGroupDataProps }) => {
                 htmlFor="privacy"
                 className="text-sm font-medium flex items-center gap-2"
               >
-                {privacyValue.privacy === "public" ? (
+                {privacyValue === "public" ? (
                   <Globe className="w-4 h-4" />
                 ) : (
                   <Lock className="w-4 h-4" />
@@ -176,7 +176,9 @@ const GroupEdit = ({ groupData }: { groupData: TGroupDataProps }) => {
               </Label>
               <Select
                 value={privacyValue}
-                onValueChange={(value) => setValue("privacy", value)}
+                onValueChange={(value: TGroupPrivacy) =>
+                  setValue("privacy", value)
+                }
               >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select privacy setting" />
