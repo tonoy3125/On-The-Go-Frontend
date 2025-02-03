@@ -18,6 +18,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 import GroupEdit from "@/components/GroupPage/GroupEdit/GroupEdit";
+import GroupJoin from "@/components/GroupPage/GroupJoin/GroupJoin";
 
 const groupNavigation = [
   {
@@ -162,7 +163,7 @@ const GroupDetailsLayout = ({ children }: { children: React.ReactNode }) => {
               ""
             )}
 
-            {/* {!member && <GroupJoin groupId={groupId as string} />} */}
+            {!member && <GroupJoin groupId={groupId as string} />}
           </div>
 
           {/* <div className=" flex items-center justify-start mt-[25px] h-[40px] bg-primaryMat/10 px-3 rounded-[8px]">
