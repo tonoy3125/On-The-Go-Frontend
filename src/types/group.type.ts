@@ -32,24 +32,12 @@ export type TGroupOwner = {
 
 export type TMember = {
   _id: string;
-  user: TUserGroup;
-  group: string;
+  user: TUser;
+  group: TGroup;
   role: string;
   createdAt: string;
   updatedAt: string;
   __v: number;
-};
-
-export type TUserGroup = {
-  _id: string;
-  name: string;
-  email: string;
-  phone: number;
-  role: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-  isPremium: boolean;
 };
 
 export type TGroupPrivacy = "public" | "private";

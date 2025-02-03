@@ -7,6 +7,7 @@ export type TUser = {
   name: string;
   role: string;
   phone: number;
+  image: string;
   createdAt: string;
   updatedAt: string;
   isPremium: boolean;
@@ -18,4 +19,11 @@ export type TUser = {
 export type TUserPayload = {
   user: TUser;
   id: string;
+};
+
+export type TMeta = {
+  limit: number;
+  page: number;
+  total: number;
+  totalPage: number;
 };
