@@ -33,7 +33,9 @@ const GroupJoin: React.FC<IProps> = ({ groupId, className }) => {
     try {
       const res = await joinGroup({ token, groupId });
       if ("error" in res) {
-        toast.error(res.error?.data?.message || "Something went wrong");
+        toast.error(
+          (res.error as any)?.data?.message || "Something went wrong"
+        );
         return;
       }
       toast.success("Joined group successfully!");
@@ -47,7 +49,9 @@ const GroupJoin: React.FC<IProps> = ({ groupId, className }) => {
     try {
       const res = await leaveGroup({ token, groupId });
       if ("error" in res) {
-        toast.error(res.error?.data?.message || "Something went wrong");
+        toast.error(
+          (res.error as any)?.data?.message || "Something went wrong"
+        );
         return;
       }
       toast.success("Left group successfully!");
