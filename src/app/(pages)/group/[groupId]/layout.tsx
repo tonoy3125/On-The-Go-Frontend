@@ -19,6 +19,7 @@ import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 import GroupEdit from "@/components/GroupPage/GroupEdit/GroupEdit";
 import GroupJoin from "@/components/GroupPage/GroupJoin/GroupJoin";
+import Link from "next/link";
 
 const groupNavigation = [
   {
@@ -169,7 +170,7 @@ const GroupDetailsLayout = ({ children }: { children: React.ReactNode }) => {
             )}
           </div>
 
-          {/* <div className=" flex items-center justify-start mt-[25px] h-[40px] bg-primaryMat/10 px-3 rounded-[8px]">
+          <div className=" flex items-center justify-start mt-[25px] h-[40px] bg-primaryMat/10 px-3 rounded-[8px]">
             {group?.privacy === "public" ? (
               <>
                 {groupNavigation.map((item, i) => {
@@ -229,7 +230,7 @@ const GroupDetailsLayout = ({ children }: { children: React.ReactNode }) => {
                 })}
               </>
             )}
-          </div> */}
+          </div>
           {/* <div className="space-y-4">
             <div className="flex items-center gap-3">
               <Avatar>
