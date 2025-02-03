@@ -2,15 +2,24 @@
 import { useGetGroupsByUserIdQuery } from "@/redux/features/group/groupApi";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SmallGroupCardSkeleton from "../skeletons/SmallGroupCardSkeleton";
 import { UsersRound } from "lucide-react";
 import { TGroup } from "@/types/group.type";
 
 const MyGroups = () => {
   const [query, setQuery] = useState({ page: 1, limit: 5 });
-  const { data: groupData, isLoading } = useGetGroupsByUserIdQuery(query);
+  const {
+    data: groupData,
+    isLoading,
+    refetch,
+  } = useGetGroupsByUserIdQuery(query);
   // console.log(groupData?.data?.result);
+
+  // Auto refetch when query state changes
+  useEffect(() => {
+    refetch();
+  }, [query, refetch]);
 
   return (
     <div className="w-full max-h-[350px] overflow-y-auto smoothBar">

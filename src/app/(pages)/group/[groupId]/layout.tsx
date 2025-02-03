@@ -37,7 +37,7 @@ const groupNavigation = [
 
 const GroupDetailsLayout = ({ children }: { children: React.ReactNode }) => {
   const { groupId } = useParams();
-  console.log(groupId);
+  // console.log(groupId);
 
   const dispatch = useDispatch();
   const token = useAppSelector(useCurrentToken);
@@ -163,7 +163,10 @@ const GroupDetailsLayout = ({ children }: { children: React.ReactNode }) => {
               ""
             )}
 
-            {!member && <GroupJoin groupId={groupId as string} />}
+            {(!groupData?.data?.member ||
+              groupData?.data?.member?.role === "member") && (
+              <GroupJoin groupId={groupId as string} />
+            )}
           </div>
 
           {/* <div className=" flex items-center justify-start mt-[25px] h-[40px] bg-primaryMat/10 px-3 rounded-[8px]">

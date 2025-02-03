@@ -1,62 +1,96 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import { useCurrentToken } from "@/redux/features/auth/authSlice";
-import { useJoinGroupMutation } from "@/redux/features/groupMember/groupMemberApi";
+import {
+  useCheckMembershipQuery,
+  useJoinGroupMutation,
+  useLeaveGroupMutation,
+} from "@/redux/features/groupMember/groupMemberApi";
 import { useAppSelector } from "@/redux/hook";
 import { UsersRound } from "lucide-react";
-import { useState } from "react";
 import { FaSpinner } from "react-icons/fa";
 import { toast } from "sonner";
 
 interface IProps {
   groupId: string;
-  children?: React.ReactNode;
   className?: string;
 }
 
-const GroupJoin: React.FC<IProps> = ({ groupId, children, className }) => {
-  const [joinGroup, { isLoading }] = useJoinGroupMutation();
-  const [isJoined, setIsJoined] = useState(false);
+const GroupJoin: React.FC<IProps> = ({ groupId, className }) => {
+  const [joinGroup, { isLoading: isJoining }] = useJoinGroupMutation();
+  const [leaveGroup, { isLoading: isLeaving }] = useLeaveGroupMutation();
   const token = useAppSelector(useCurrentToken);
+
+  const {
+    data: memberShipData,
+    isFetching,
+    refetch,
+  } = useCheckMembershipQuery({ groupId, token }, { skip: !groupId || !token });
+
+  //   console.log(memberShipData)
 
   const handleJoinGroup = async () => {
     try {
       const res = await joinGroup({ token, groupId });
-      console.log(res);
-      const error = res.error as any;
-      if (error) {
-        toast.error(error.data?.message || "Something went wrong");
+      if ("error" in res) {
+        toast.error(res.error?.data?.message || "Something went wrong");
         return;
       }
-
-      setIsJoined(true);
+      toast.success("Joined group successfully!");
+      refetch();
     } catch (error) {
       console.log(error);
     }
   };
 
-  if (isJoined) {
-    return <></>;
-  }
+  const handleLeaveGroup = async () => {
+    try {
+      const res = await leaveGroup({ token, groupId });
+      if ("error" in res) {
+        toast.error(res.error?.data?.message || "Something went wrong");
+        return;
+      }
+      toast.success("Left group successfully!");
+      refetch();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  return (
-    children || (
-      <Button
-        onClick={handleJoinGroup}
-        disabled={isLoading}
-        variant="outline"
-        className={`bg-primaryMat/10 text-primaryMat border-primaryMat center gap-[8px] ${
-          className || ""
-        }`}
-      >
-        Join Group
-        {isLoading ? (
-          <FaSpinner className="spinner" />
-        ) : (
-          <UsersRound width={15} />
-        )}{" "}
-      </Button>
-    )
+  if (isFetching) return <FaSpinner className="spinner" />;
+
+  return memberShipData?.data?.isMember ? (
+    <Button
+      onClick={handleLeaveGroup}
+      disabled={isLeaving}
+      variant="outline"
+      className={`bg-red-500/10 text-red-500 border-red-500 center gap-2 ${
+        className || ""
+      }`}
+    >
+      Leave Group
+      {isLeaving ? (
+        <FaSpinner className="spinner" />
+      ) : (
+        <UsersRound width={15} />
+      )}
+    </Button>
+  ) : (
+    <Button
+      onClick={handleJoinGroup}
+      disabled={isJoining}
+      variant="outline"
+      className={`bg-primaryMat/10 text-primaryMat border-primaryMat center gap-2 ${
+        className || ""
+      }`}
+    >
+      Join Group
+      {isJoining ? (
+        <FaSpinner className="spinner" />
+      ) : (
+        <UsersRound width={15} />
+      )}
+    </Button>
   );
 };
 

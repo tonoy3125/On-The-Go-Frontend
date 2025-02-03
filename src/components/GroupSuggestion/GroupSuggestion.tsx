@@ -4,15 +4,23 @@ import Image from "next/image";
 import Link from "next/link";
 import SmallGroupCardSkeleton from "../skeletons/SmallGroupCardSkeleton";
 import { TGroup } from "@/types/group.type";
+import { useEffect } from "react";
 
 
 const GroupSuggestion = () => {
-  const { data: groupSuggestionData, isLoading } =
+  const { data: groupSuggestionData, isLoading,refetch } =
     useGetGroupsSuggestionByUserIdQuery({
       page: 1,
       limit: 5,
     });
   //   console.log(groupSuggestionData);
+
+// Auto refetch when query state changes
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+
+
   return (
     <div className="w-full max-h-[350px] overflow-y-auto smoothBar">
       <div className="flex items-start justify-between">
