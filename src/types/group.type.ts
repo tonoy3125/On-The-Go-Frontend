@@ -1,3 +1,5 @@
+import { TUser } from "./user.type";
+
 export type TGroup = {
   _id: string;
   name: string;
@@ -5,7 +7,7 @@ export type TGroup = {
   image: string;
   privacy: TGroupPrivacy;
   memberCount: number;
-  GroupOwner: string;
+  GroupOwner: TUser;
   createdAt: string;
   updatedAt: string;
   __v: number;

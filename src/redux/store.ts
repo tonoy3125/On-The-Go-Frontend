@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./features/auth/authSlice";
+import groupReducer from "./features/group/groupSlice";
 import { baseApi } from "./api/baseApi";
 import {
   persistStore,
@@ -25,6 +26,7 @@ export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     auth: persistedAuthReducer, // Persisted auth reducer
+    group: groupReducer,
   },
   middleware: (getDefaultMiddlewares) =>
     getDefaultMiddlewares({
