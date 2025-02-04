@@ -1,4 +1,6 @@
+import { TResponseRedux } from "@/types/user.type";
 import { baseApi } from "../../api/baseApi";
+import { TGroup } from "@/types/group.type";
 
 const GroupApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -24,13 +26,35 @@ const GroupApi = baseApi.injectEndpoints({
       providesTags: ["Group"],
     }),
     getGroupsSuggestionByUserId: builder.query({
-      query: (token) => ({
-        url: "/group/my-group-suggestions",
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }),
+      query: (args) => {
+        const params = new URLSearchParams();
+
+        // Loop through args and append them to params
+        Object.keys(args).forEach((key) => {
+          if (Array.isArray(args[key])) {
+            // Handle array for categories (or other multiple values)
+            args[key].forEach((value: string) => {
+              params.append(key, value);
+            });
+          } else if (args[key]) {
+            // Append normal key-value pairs
+            params.append(key, args[key]);
+          }
+        });
+
+        return {
+          url: "/group/my-group-suggestions",
+          method: "GET",
+          params: params,
+        };
+      },
+      transformResponse: (response: TResponseRedux<TGroup[]>) => {
+        console.log("inside redux", response);
+        return {
+          data: response.data,
+          meta: response.meta,
+        };
+      },
       providesTags: ["Group"],
     }),
     getGroupDetailsById: builder.query({
