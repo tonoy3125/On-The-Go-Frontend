@@ -97,6 +97,7 @@ const Groups = () => {
           </>
         ) : (
           groupSuggestionData?.data?.map((group) => (
+            <Link href={`/group/${group._id}`} key={group._id}>
             <GroupCard
               key={group._id}
               groupId={group._id}
@@ -105,6 +106,7 @@ const Groups = () => {
               groupImage={group.image}
               createdAt={group.createdAt}
             />
+            </Link>
           ))
         )}
       </div>
