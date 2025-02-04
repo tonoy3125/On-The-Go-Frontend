@@ -2,21 +2,28 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useGetGroupsSuggestionByUserIdQuery } from "@/redux/features/group/groupApi";
-import { FilterX, Users } from "lucide-react";
+import { FilterX, SearchIcon, Users } from "lucide-react";
 import { useState } from "react";
 import GroupCard from "../GroupCard/GroupCard";
 import GroupCardSeketon from "@/components/skeletons/GroupCardSeketon";
 import Pagination from "@/components/shared/Pagination/Pagination";
+import Link from "next/link";
 
 const Groups = () => {
-  const [query, setQuery] = useState({ page: 1, limit: 3, searchTerm: "" });
+  const [query, setQuery] = useState({ page: 1, limit: 10, searchTerm: "" });
   const {
     data: groupSuggestionData,
-    isLoading,
     refetch,
     isFetching,
   } = useGetGroupsSuggestionByUserIdQuery(query);
   // console.log(groupSuggestionData)
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const search = form.search?.value || "";
+    setQuery({ ...query, searchTerm: search, page: 1 });
+  };
 
   return (
     <div className="my-[25px] bg-white min-h-screen p-[20px] rounded-[15px]">
@@ -28,7 +35,7 @@ const Groups = () => {
         travel stories
       </p>
       <Separator className="my-4" />
-      {/* <div className="w-full flex items-start sm:items-center justify-between gap-[15px] flex-col sm:flex-row my-[15px]">
+      <div className="w-full flex items-start sm:items-center justify-between gap-[15px] flex-col sm:flex-row my-[15px]">
         <form
           onSubmit={handleSubmit}
           className="w-[90%] sm:w-[350px] h-[40px] border-[1px] border-input rounded-full pl-[10px] flex items-center justify-between overflow-hidden"
@@ -50,7 +57,7 @@ const Groups = () => {
         >
           Create Group <Users />
         </Link>
-      </div> */}
+      </div>
 
       {!isFetching && !groupSuggestionData?.data?.length ? (
         <div className="space-y-2 w-full center flex-col h-[350px]">
@@ -104,7 +111,7 @@ const Groups = () => {
 
       <Pagination
         onPageChange={(page) => setQuery({ ...query, page })}
-        meta={groupSuggestionData?.meta || 0}
+        meta={typeof groupSuggestionData?.meta === "number" ? groupSuggestionData.meta : 0}
       />
     </div>
   );

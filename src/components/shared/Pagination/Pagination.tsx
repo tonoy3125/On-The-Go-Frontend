@@ -43,7 +43,7 @@ function PaginationText({
 // Main Pagination Component
 function Pagination({
   meta,
-  limit = 3,
+  limit = 10,
   onPageChange,
   className,
   showText = true,
