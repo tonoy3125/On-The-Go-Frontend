@@ -18,7 +18,8 @@ import { useCurrentToken } from "@/redux/features/auth/authSlice";
 import { useCreateGroupMutation } from "@/redux/features/group/groupApi";
 import { useAppSelector } from "@/redux/hook";
 import { upLoadSingeImage } from "@/utils/uploadSingleImage";
-import { Camera, Users } from "lucide-react";
+import { AlertCircle, Camera, Users } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { FaSpinner } from "react-icons/fa";
@@ -37,6 +38,7 @@ const CreateGroup = () => {
   const [privacy, setPrivacy] = useState("public");
   const token = useAppSelector(useCurrentToken);
   const [createGroup, { isLoading }] = useCreateGroupMutation();
+  const router = useRouter();
 
   const onSubmit = async (data: FieldValues) => {
     if (isLoading) return;
@@ -45,7 +47,7 @@ const CreateGroup = () => {
     const payload = {
       name: data?.name,
       description: data?.description,
-      image:image || "/images/travelGroup.png",
+      image: image || "/images/travelGroup.png",
       privacy,
     };
     // console.log(payload)
@@ -55,13 +57,14 @@ const CreateGroup = () => {
         payload,
         token,
       }).unwrap();
-      console.log(res);
+      //   console.log(res);
       toast.success(res.message || "Group Updated Successfully", {
         id: toastId,
         duration: 3000,
       });
       reset();
-      setImage(null)
+      setImage(null);
+      router.push(`/group/${res?.data?._id}/post`);
     } catch (error: any) {
       toast.error(error?.data?.message || "Something went wrong!", {
         id: toastId,
@@ -82,7 +85,7 @@ const CreateGroup = () => {
     setValue("image", previewUrl); // Update form value for preview
     try {
       const { data } = await upLoadSingeImage(file, token || "");
-      console.log(data);
+      //   console.log(data);
       setImage(data); // Update with uploaded image URL
       setValue("image", data); // Set uploaded image in form state
     } catch (error: any) {
@@ -111,6 +114,12 @@ const CreateGroup = () => {
                   placeholder="Enter group name"
                   {...register("name", { required: "Group name is required" })}
                 />
+                {errors.name && (
+                  <p className="text-red-500 text-sm font-poppins font-medium pt-1 flex items-center gap-1">
+                    <AlertCircle className="w-4 h-4" />
+                    {String(errors.name.message)}
+                  </p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="description">Description</Label>
@@ -121,6 +130,12 @@ const CreateGroup = () => {
                     required: "Group Description is required",
                   })}
                 />
+                {errors.description && (
+                  <p className="text-red-500 text-sm font-poppins font-medium pt-1 flex items-center gap-1">
+                    <AlertCircle className="w-4 h-4" />
+                    {String(errors.description.message)}
+                  </p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="image">Cover Image</Label>
