@@ -13,10 +13,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useCurrentToken } from "@/redux/features/auth/authSlice";
+import { useAppSelector } from "@/redux/hook";
+import { upLoadSingeImage } from "@/utils/uploadSingleImage";
 import { Camera, Users } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaSpinner } from "react-icons/fa";
+import { toast } from "sonner";
 
 const CreateGroup = () => {
   const {
@@ -29,6 +33,25 @@ const CreateGroup = () => {
   } = useForm();
   const [image, setImage] = useState(null);
   const [privacy, setPrivacy] = useState("public");
+  const token = useAppSelector(useCurrentToken);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    console.log(file);
+    if (!file) {
+      return;
+    }
+    // Show preview before upload
+    const previewUrl = URL.createObjectURL(file);
+    setImage(previewUrl);
+    setValue("image", previewUrl); // Update form value for preview
+    try {
+      const { data } = await upLoadSingeImage(file, token || "");
+      console.log(data);
+    } catch (error: any) {
+      toast.error(error?.data?.message || "Something went wrong!");
+    }
+  };
 
   return (
     <div className="py-6">
@@ -79,7 +102,7 @@ const CreateGroup = () => {
                     type="file"
                     accept="image/*"
                     className="hidden"
-                    // onChange={handleImageUpload}
+                    onChange={handleImageUpload}
                   />
                 </div>
               </div>
@@ -99,12 +122,12 @@ const CreateGroup = () => {
                 </Select>
               </div>
               <Button
-                // disabled={isLoading}
+                disabled={isLoading}
                 type="submit"
                 className="w-full bg-primaryMat/10 text-primaryMat border-[1px] border-primaryMat/20 hover:bg-primaryMat hover:text-white center gap-[5px]"
               >
                 Create Group{" "}
-                {/* {isLoading ? <FaSpinner className="spinner" /> : ""} */}
+                {isLoading ? <FaSpinner className="spinner" /> : ""}
               </Button>
             </CardContent>
           </Card>
