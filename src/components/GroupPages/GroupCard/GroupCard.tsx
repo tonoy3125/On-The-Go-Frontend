@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client"
 import GroupJoin from "@/components/GroupPage/GroupJoin/GroupJoin";
 import { Card, CardFooter, CardHeader } from "@/components/ui/card";

@@ -6,9 +6,10 @@ import { FilterX, Users } from "lucide-react";
 import { useState } from "react";
 import GroupCard from "../GroupCard/GroupCard";
 import GroupCardSeketon from "@/components/skeletons/GroupCardSeketon";
+import Pagination from "@/components/shared/Pagination/Pagination";
 
 const Groups = () => {
-  const [query, setQuery] = useState({ page: 1, limit: 10, searchTerm: "" });
+  const [query, setQuery] = useState({ page: 1, limit: 3, searchTerm: "" });
   const {
     data: groupSuggestionData,
     isLoading,
@@ -101,10 +102,10 @@ const Groups = () => {
         )}
       </div>
 
-      {/* <OntheGoPagination
+      <Pagination
         onPageChange={(page) => setQuery({ ...query, page })}
-        totalDoc={data?.totalDoc || 0}
-      /> */}
+        meta={groupSuggestionData?.meta || 0}
+      />
     </div>
   );
 };
