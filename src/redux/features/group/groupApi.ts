@@ -4,17 +4,17 @@ import { TGroup } from "@/types/group.type";
 
 const GroupApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    // createReview: builder.mutation({
-    //   query: ({ token, reviewData }) => ({
-    //     url: "/review",
-    //     method: "POST",
-    //     body: reviewData,
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   }),
-    //   invalidatesTags: ["Review"],
-    // }),
+    createGroup: builder.mutation({
+      query: ({ token, payload }) => ({
+        url: "/group",
+        method: "POST",
+        body: payload,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ["Group"],
+    }),
     getGroupsByUserId: builder.query({
       query: (token) => ({
         url: "/group/my-group",
@@ -92,6 +92,7 @@ const GroupApi = baseApi.injectEndpoints({
 });
 
 export const {
+  useCreateGroupMutation,
   useGetGroupsByUserIdQuery,
   useGetGroupsSuggestionByUserIdQuery,
   useGetGroupDetailsByIdQuery,

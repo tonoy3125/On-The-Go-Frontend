@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,11 +15,12 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCurrentToken } from "@/redux/features/auth/authSlice";
+import { useCreateGroupMutation } from "@/redux/features/group/groupApi";
 import { useAppSelector } from "@/redux/hook";
 import { upLoadSingeImage } from "@/utils/uploadSingleImage";
 import { Camera, Users } from "lucide-react";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { FaSpinner } from "react-icons/fa";
 import { toast } from "sonner";
 
@@ -34,6 +36,39 @@ const CreateGroup = () => {
   const [image, setImage] = useState(null);
   const [privacy, setPrivacy] = useState("public");
   const token = useAppSelector(useCurrentToken);
+  const [createGroup, { isLoading }] = useCreateGroupMutation();
+
+  const onSubmit = async (data: FieldValues) => {
+    if (isLoading) return;
+    const toastId = toast.loading("Creating Group...");
+
+    const payload = {
+      name: data?.name,
+      description: data?.description,
+      image:image || "/images/travelGroup.png",
+      privacy,
+    };
+    // console.log(payload)
+
+    try {
+      const res = await createGroup({
+        payload,
+        token,
+      }).unwrap();
+      console.log(res);
+      toast.success(res.message || "Group Updated Successfully", {
+        id: toastId,
+        duration: 3000,
+      });
+      reset();
+      setImage(null)
+    } catch (error: any) {
+      toast.error(error?.data?.message || "Something went wrong!", {
+        id: toastId,
+        duration: 3000,
+      });
+    }
+  };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -48,7 +83,11 @@ const CreateGroup = () => {
     try {
       const { data } = await upLoadSingeImage(file, token || "");
       console.log(data);
+      setImage(data); // Update with uploaded image URL
+      setValue("image", data); // Set uploaded image in form state
     } catch (error: any) {
+      setImage("/images/travelGroup.png"); // Set fallback image
+      setValue("image", "/images/travelGroup.png");
       toast.error(error?.data?.message || "Something went wrong!");
     }
   };
@@ -57,7 +96,7 @@ const CreateGroup = () => {
     <div className="py-6">
       <div className="flex items-center flex-col-reverse md:flex-row justify-start w-full gap-[15px]">
         <form
-          //   onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(onSubmit)}
           className="flex items-center justify-start w-full md:w-[50%] xl:w-[30%] gap-[15px]"
         >
           <Card className="w-full">
