@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { Button } from "@/components/ui/button";
@@ -34,7 +35,7 @@ const CreateGroup = () => {
     reset,
     formState: { errors },
   } = useForm();
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState<string | null>(null);
   const [privacy, setPrivacy] = useState("public");
   const token = useAppSelector(useCurrentToken);
   const [createGroup, { isLoading }] = useCreateGroupMutation();
@@ -81,12 +82,12 @@ const CreateGroup = () => {
     }
     // Show preview before upload
     const previewUrl = URL.createObjectURL(file);
-    setImage(previewUrl);
+    setImage(previewUrl as string);
     setValue("image", previewUrl); // Update form value for preview
     try {
       const { data } = await upLoadSingeImage(file, token || "");
       //   console.log(data);
-      setImage(data); // Update with uploaded image URL
+      setImage(data as string); // Update with uploaded image URL
       setValue("image", data); // Set uploaded image in form state
     } catch (error: any) {
       setImage("/images/travelGroup.png"); // Set fallback image
