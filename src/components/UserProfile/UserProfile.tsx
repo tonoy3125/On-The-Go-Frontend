@@ -17,7 +17,7 @@ const UserProfile = () => {
           width={40}
           height={40}
           src={user?.user?.image || "/images/avatar.jpg"}
-          alt={user?.user?.name}
+          alt={user?.user?.name || 'User Avatar'}
           className="rounded-full w-full h-full object-contain"
         />
       </div>
