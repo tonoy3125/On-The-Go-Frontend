@@ -23,7 +23,22 @@ const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Auth"],
     }),
+    updateProfileImage: builder.mutation({
+      query: ({ token, file }) => ({
+        url: "/users/update-profile-image",
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: file,
+      }),
+      invalidatesTags: ["Auth"],
+    }),
   }),
 });
 
-export const { useGetUserProfileQuery, useUpdateUserByIdMutation } = userApi;
+export const {
+  useGetUserProfileQuery,
+  useUpdateUserByIdMutation,
+  useUpdateProfileImageMutation,
+} = userApi;
