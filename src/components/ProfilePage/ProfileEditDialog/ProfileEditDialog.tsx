@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Pen } from "lucide-react";
+import ProfileSettingsView from "../ProfileSettingsView/ProfileSettingsView";
 
 const ProfileEditDialog = () => {
   return (
@@ -16,7 +17,7 @@ const ProfileEditDialog = () => {
       </DialogTrigger>
 
       <DialogContent>
-        <h1>This is </h1>
+        <ProfileSettingsView />
       </DialogContent>
     </Dialog>
   );

@@ -10,9 +10,20 @@ const userApi = baseApi.injectEndpoints({
           Authorization: `Bearer ${token}`,
         },
       }),
-      providesTags: ["User"],
+      providesTags: ["Auth"],
+    }),
+    updateUserById: builder.mutation({
+      query: ({ token, id, payload }) => ({
+        url: `/users/${id}`,
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: payload,
+      }),
+      invalidatesTags: ["Auth"],
     }),
   }),
 });
 
-export const { useGetUserProfileQuery } = userApi;
+export const { useGetUserProfileQuery, useUpdateUserByIdMutation } = userApi;
