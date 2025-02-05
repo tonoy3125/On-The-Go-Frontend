@@ -1,14 +1,21 @@
 "use client";
 import { Separator } from "@/components/ui/separator";
-import { useCurrentToken } from "@/redux/features/auth/authSlice";
+import {
+  selectCurrentUser,
+  useCurrentToken,
+} from "@/redux/features/auth/authSlice";
 import { useGetUserProfileQuery } from "@/redux/features/user/userApi";
 import { useAppSelector } from "@/redux/hook";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { format } from "date-fns";
+import { TUserPayload } from "@/types/user.type";
+import ProfileEditDialog from "../ProfileEditDialog/ProfileEditDialog";
+import ProfileFollowToggle from "../ProfileFollowToggle/ProfileFollowToggle";
 
 const ProfilePageView = () => {
   const { userId } = useParams();
+  const user = useAppSelector(selectCurrentUser) as TUserPayload | null;
   const token = useAppSelector(useCurrentToken);
   console.log(userId);
   const {
@@ -16,7 +23,7 @@ const ProfilePageView = () => {
     // isLoading,
     // isError,
   } = useGetUserProfileQuery({ userId, token }, { skip: !userId || !token });
-//   console.log(userProfileData);
+  //   console.log(userProfileData);
 
   return (
     <div className="w-full mt-[25px]">
@@ -49,14 +56,17 @@ const ProfilePageView = () => {
           </div>
           <div className="flex flex-col gap-[5px]">
             <h1 className="text-[18px] lg:text-[25px] font-bold text-primaryTxt">
-              {userProfileData?.data?.name} 
+              {userProfileData?.data?.name}
             </h1>
 
             <div className="flex items-start justify-start  gap-[3px] md:gap-[10px] flex-row flex-wrap">
               <p className="text-primaryTxt text-[14px] sm:mb-[8px]">
                 Joined on{" "}
                 <span className="font-[700]">
-                  {format(userProfileData?.data?.createdAt || new Date(), "MMM dd, yyyy")}
+                  {format(
+                    userProfileData?.data?.createdAt || new Date(),
+                    "MMM dd, yyyy"
+                  )}
                 </span>
               </p>
               <p className="center gap-[5px] font-[700] text-[14px] text-primaryTxt/70">
@@ -73,15 +83,15 @@ const ProfilePageView = () => {
           </div>
         </div>
 
-        {/* <div className="pt-[20px]">
-          {user?._id === userId ? (
+        <div className="pt-[20px]">
+          {user?.id === userId ? (
             <ProfileEditDialog />
           ) : (
             <ProfileFollowToggle
-              isFollowing={data?.data?.isFollowing || false}
+              isFollowing={userProfileData?.data?.isFollowing || false}
             />
           )}
-        </div> */}
+        </div>
       </div>
 
       <Separator className="mt-[15px] mb-[25px] bg-input" />
