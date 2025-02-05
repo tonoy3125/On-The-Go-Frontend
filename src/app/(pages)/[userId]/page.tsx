@@ -1,7 +1,9 @@
+import ProfilePageView from "@/components/ProfilePage/ProfilePageView/ProfilePageView";
+
 const UserProfilePage = () => {
   return (
     <div>
-      <h1>This is User Profile page</h1>
+      <ProfilePageView />
     </div>
   );
 };
