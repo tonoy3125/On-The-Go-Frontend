@@ -1,15 +1,25 @@
+"use client";
 import { Separator } from "@/components/ui/separator";
+import { useCurrentToken } from "@/redux/features/auth/authSlice";
+import { useGetUserProfileQuery } from "@/redux/features/user/userApi";
+import { useAppSelector } from "@/redux/hook";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-
+import { format } from "date-fns";
 
 const ProfilePageView = () => {
-const {userId} = useParams()
+  const { userId } = useParams();
+  const token = useAppSelector(useCurrentToken);
+  console.log(userId);
+  const {
+    data: userProfileData,
+    // isLoading,
+    // isError,
+  } = useGetUserProfileQuery({ userId, token }, { skip: !userId || !token });
+//   console.log(userProfileData);
 
-
-
-    return (
-        <div className="w-full mt-[25px]">
+  return (
+    <div className="w-full mt-[25px]">
       <div className="w-full aspect-[1640/400] bg-primaryMat/50 relative rounded-[8px] overflow-hidden">
         <Image
           src={"/images/default_cover.jpg"}
@@ -31,7 +41,7 @@ const {userId} = useParams()
             />
             <Image
               className="w-full h-full object-contain relative  z-[3]"
-              src={data?.data?.image || "/images/avatar.jpg"}
+              src={userProfileData?.data?.image || "/images/avatar.jpg"}
               width={150}
               height={150}
               alt=""
@@ -39,25 +49,25 @@ const {userId} = useParams()
           </div>
           <div className="flex flex-col gap-[5px]">
             <h1 className="text-[18px] lg:text-[25px] font-bold text-primaryTxt">
-              {data?.data?.firstName} {data?.data?.lastName}
+              {userProfileData?.data?.name} 
             </h1>
 
             <div className="flex items-start justify-start  gap-[3px] md:gap-[10px] flex-row flex-wrap">
               <p className="text-primaryTxt text-[14px] sm:mb-[8px]">
                 Joined on{" "}
                 <span className="font-[700]">
-                  {format(data?.data?.createdAt || new Date(), "MMM dd, yyyy")}
+                  {format(userProfileData?.data?.createdAt || new Date(), "MMM dd, yyyy")}
                 </span>
               </p>
               <p className="center gap-[5px] font-[700] text-[14px] text-primaryTxt/70">
                 <span className="">|</span>
                 <span id={"follower_count_profile"}>
-                  {data?.data?.totalFollower || 0}
+                  {userProfileData?.data?.totalFollower || 0}
                 </span>{" "}
                 followers <span>|</span>
               </p>
               <p className="center gap-[5px] font-[700] text-[14px] text-primaryTxt/70">
-                {data?.data?.totalPost || 0} posts
+                {userProfileData?.data?.totalPost || 0} posts
               </p>
             </div>
           </div>
@@ -120,7 +130,7 @@ const {userId} = useParams()
         </div>
       </div> */}
     </div>
-    );
+  );
 };
 
 export default ProfilePageView;
