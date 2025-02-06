@@ -48,56 +48,70 @@ const ProfileSettingsView = () => {
   const [profileUrl, setProfileUrl] = useState<string>(
     user?.user?.image ? user.user.image : "/images/avatar.jpg"
   );
+  const [profileFile, setProfileFile] = useState<File | null>(null);
 
   const [updateUserById] = useUpdateUserByIdMutation();
   const [updateProfileImage] = useUpdateProfileImageMutation();
   const dispatch = useDispatch();
 
-  const onSubmit = async (data: FieldValues) => {
+  const onSubmit = async (values: FieldValues) => {
     const toastId = toast.loading("Updating profile...");
-    const payload = {
-      name: data?.name,
-      email: data?.email,
-      phone: data?.phone,
-      image: profileUrl,
-    };
-    console.log(payload);
+    const payload: Record<string, any> = {};
+
+    // Extract new image and other fields
+    const { image: newImage, ...newRest } = values;
+    const { image: oldImage, ...oldRest } = user?.user || {};
+
+    // Check for updated fields
+    Object.entries(newRest).forEach(([key, value]) => {
+      if (oldRest[key as keyof typeof oldRest] !== value) {
+        payload[key] = value;
+      }
+    });
 
     try {
-      if (profileUrl instanceof File) {
+      let image = profileUrl; // Default to existing image
+
+      // Handle profile image upload
+      if (profileFile) {
         const formData = new FormData();
-        formData.append("file", profileUrl);
-        // console.log([...formData.entries()]);
-        const { data: imageUrl } = await updateProfileImage({
-          formData,
+        formData.append("file", profileFile);
+
+        const { data: uploadedImageUrl } = await updateProfileImage({
           token,
+          file: formData, // Ensure correct payload format
         }).unwrap();
-        
-        payload.image = imageUrl;
-        console.log(imageUrl);
+        console.log(uploadedImageUrl);
+
+        image = uploadedImageUrl.image; // Update image URL after upload
+        payload.image = image; // Add image to payload if changed
       }
 
+      // If no fields have changed, do nothing
+      if (!Object.keys(payload).length) {
+        toast.success("No changes detected.");
+        toast.dismiss(toastId);
+        return;
+      }
+
+      // Send update request
       const res = await updateUserById({ id: userId, payload, token }).unwrap();
-      console.log(res);
-      toast.success(res.message || "Profile Updated Successfully", {
-        id: toastId,
-        duration: 3000,
-      });
+
+      // Update Redux store
       dispatch(
         setUser({
           user: {
             ...user,
-            user: {
-              ...user?.user,
-              name: data.name,
-              phone: data.phone,
-              image: payload.image, // Update only the fields from the response
-            },
+            user: { ...user?.user, ...payload },
           },
           token,
         })
       );
-      // onClose();
+
+      toast.success(res.message || "Profile Updated Successfully", {
+        id: toastId,
+        duration: 3000,
+      });
     } catch (error) {
       console.error(error);
       toast.error("Failed to update profile.");
@@ -109,12 +123,12 @@ const ProfileSettingsView = () => {
   const handleMakeProfilePreviewUrl = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const file = event.target.files?.[0]; // Get the first selected file
+    const file = event.target.files?.[0];
     if (file) {
       const url = await local_img_url(file);
-      console.log(url)
-      setProfileUrl(url);
-      setValue("image", file, { shouldValidate: true }); // Update the form value for the image field
+      setProfileUrl(url); // Show preview
+      setProfileFile(file); // Store the actual file for upload
+      setValue("image", file, { shouldValidate: true });
     }
   };
 
