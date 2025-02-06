@@ -8,10 +8,11 @@ import { useGetUserProfileQuery } from "@/redux/features/user/userApi";
 import { useAppSelector } from "@/redux/hook";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import { format } from "date-fns";
+import { format, formatDistanceToNow } from "date-fns";
 import { TUserPayload } from "@/types/user.type";
 import ProfileEditDialog from "../ProfileEditDialog/ProfileEditDialog";
 import ProfileFollowToggle from "../ProfileFollowToggle/ProfileFollowToggle";
+import { CalendarCheck, GlobeIcon, NotebookPen, UserCheck } from "lucide-react";
 
 const ProfilePageView = () => {
   const { userId } = useParams();
@@ -96,30 +97,32 @@ const ProfilePageView = () => {
 
       <Separator className="mt-[15px] mb-[25px] bg-input" />
 
-      {/* <div className="flex items-start justify-start gap-[15px] flex-col lg:flex-row">
+      <div className="flex items-start justify-start gap-[15px] flex-col lg:flex-row">
         <div className="space-y-6  bg-white p-[15px] rounded-[18px] shrink-0 w-full lg:w-[440px]">
           <div className="mt-2 flex-col gap-[15px]">
             <p className="text-lg font-semibold">Profile Intro</p>
             <p className="text-muted-foreground text-[14px]">
-              HI I&apos;m {data?.data?.firstName} {data?.data?.lastName}. I am a
-              travel enthusiast and love to explore new places.
+              HI I&apos;m {userProfileData?.data?.name}. I am a travel
+              enthusiast and love to explore new places.
             </p>
           </div>
           <div className="mt-2 flex flex-col gap-[10px]">
             <p className="text-lg font-semibold mt-[5px]">Profile Summury</p>
             <p className="text-muted-foreground text-[14px] flex items-center gap-[5px]">
               <UserCheck className="w-[20px] h-[20px]" />{" "}
-              <span>{data?.data?.totalFollower || 0} Followers</span>
+              <span>{userProfileData?.data?.totalFollower || 0} Followers</span>
             </p>
             <p className="text-muted-foreground text-[14px] flex items-center gap-[5px]">
               <NotebookPen className="w-[20px] h-[20px]" />{" "}
-              <span>{data?.data?.totalPost || 0} Total Post</span>
+              <span>{userProfileData?.data?.totalPost || 0} Total Post</span>
             </p>
             <p className="text-muted-foreground text-[14px] flex items-center gap-[5px]">
               <CalendarCheck className="w-[20px] h-[20px]" />{" "}
               <span>
                 Member Since{" "}
-                {formatDistanceToNow(data?.data?.createdAt || new Date())}
+                {formatDistanceToNow(
+                  userProfileData?.data?.createdAt || new Date()
+                )}
               </span>
             </p>
           </div>
@@ -134,11 +137,11 @@ const ProfilePageView = () => {
             </p>
           </div>
         </div>
-        <div className="flex flex-col gap-[25px] w-full">
+        {/* <div className="flex flex-col gap-[25px] w-full">
           <PostCreateBox />
           <GetUserProfilePost />
-        </div>
-      </div> */}
+        </div> */}
+      </div>
     </div>
   );
 };
