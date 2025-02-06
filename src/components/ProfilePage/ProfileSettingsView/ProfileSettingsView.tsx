@@ -18,7 +18,7 @@ import { useAppSelector } from "@/redux/hook";
 
 import { TUserPayload } from "@/types/user.type";
 import { local_img_url } from "@/utils/localImageURL";
-import { UploadIcon } from "lucide-react";
+import { AlertCircle, UploadIcon } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -163,11 +163,6 @@ const ProfileSettingsView = () => {
               accept="image/*"
               onChange={handleMakeProfilePreviewUrl}
             />
-            {/* <ErrorMessage
-              name="image"
-              component="div"
-              className="text-red-500 text-sm mt-[5px]"
-            /> */}
             <label
               htmlFor="image"
               className="p-[10px] border-[1px] border-borderColor rounded-[8px]"
@@ -181,25 +176,43 @@ const ProfileSettingsView = () => {
           <Label htmlFor="name">Name *</Label>
           <Input
             id="name"
-            {...register("name", { required: "Group name is required" })}
+            {...register("name", { required: "Group Name is Required" })}
             className="mt-1 block w-full px-3 py-2 border border-borderColor rounded-md outline-none"
           />
+          {errors.name && (
+            <p className="text-red-500 text-sm font-poppins font-medium pt-1 flex items-center gap-1">
+              <AlertCircle className="w-4 h-4" />
+              {String(errors.name.message)}
+            </p>
+          )}
         </div>
         <div className="mb-4">
-          <Label htmlFor="lastName">Email *</Label>
+          <Label htmlFor="email">Email *</Label>
           <Input
             readOnly
             value={user?.user?.email}
             className="mt-1 block w-full px-3 py-2 border border-borderColor rounded-md outline-none bg-[whitesmoke] cursor-not-allowed"
           />
+          {errors.email && (
+            <p className="text-red-500 text-sm font-poppins font-medium pt-1 flex items-center gap-1">
+              <AlertCircle className="w-4 h-4" />
+              {String(errors.email.message)}
+            </p>
+          )}
         </div>
         <div className="mb-4">
           <Label htmlFor="phone">Phone *</Label>
           <Input
             id="phone"
-            {...register("phone", { required: "Group name is required" })}
+            {...register("phone", { required: "Phone Number is Required" })}
             className="mt-1 block w-full px-3 py-2 border border-borderColor rounded-md outline-none"
           />
+          {errors.phone && (
+            <p className="text-red-500 text-sm font-poppins font-medium pt-1 flex items-center gap-1">
+              <AlertCircle className="w-4 h-4" />
+              {String(errors.phone.message)}
+            </p>
+          )}
         </div>
 
         <Button type="submit" className="bg-primaryMat text-white w-[100px]">
