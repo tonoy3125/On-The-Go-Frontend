@@ -7,12 +7,13 @@ import {
 import { useGetUserProfileQuery } from "@/redux/features/user/userApi";
 import { useAppSelector } from "@/redux/hook";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import { format, formatDistanceToNow } from "date-fns";
 import { TUserPayload } from "@/types/user.type";
 import ProfileEditDialog from "../ProfileEditDialog/ProfileEditDialog";
 import ProfileFollowToggle from "../ProfileFollowToggle/ProfileFollowToggle";
 import { CalendarCheck, GlobeIcon, NotebookPen, UserCheck } from "lucide-react";
+import ProfileLoadingSkeleton from "@/components/skeletons/ProfileLoadingSkeleton";
 
 const ProfilePageView = () => {
   const { userId } = useParams();
@@ -21,10 +22,18 @@ const ProfilePageView = () => {
   console.log(userId);
   const {
     data: userProfileData,
-    // isLoading,
-    // isError,
+    isLoading,
+    isError,
   } = useGetUserProfileQuery({ userId, token }, { skip: !userId || !token });
   //   console.log(userProfileData);
+
+  if (isLoading) {
+    return <ProfileLoadingSkeleton />;
+  }
+
+  if (isError) {
+    notFound();
+  }
 
   return (
     <div className="w-full mt-[25px]">
