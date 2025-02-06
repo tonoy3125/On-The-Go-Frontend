@@ -14,6 +14,7 @@ import ProfileEditDialog from "../ProfileEditDialog/ProfileEditDialog";
 import ProfileFollowToggle from "../ProfileFollowToggle/ProfileFollowToggle";
 import { CalendarCheck, GlobeIcon, NotebookPen, UserCheck } from "lucide-react";
 import ProfileLoadingSkeleton from "@/components/skeletons/ProfileLoadingSkeleton";
+import CreatePost from "../CreatePost/CreatePost";
 
 const ProfilePageView = () => {
   const { userId } = useParams();
@@ -146,10 +147,10 @@ const ProfilePageView = () => {
             </p>
           </div>
         </div>
-        {/* <div className="flex flex-col gap-[25px] w-full">
-          <PostCreateBox />
-          <GetUserProfilePost />
-        </div> */}
+        <div className="flex flex-col gap-[25px] w-full">
+          <CreatePost />
+          {/* <GetUserProfilePost /> */}
+        </div>
       </div>
     </div>
   );
