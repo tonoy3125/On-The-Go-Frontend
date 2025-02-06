@@ -24,13 +24,13 @@ const userApi = baseApi.injectEndpoints({
       invalidatesTags: ["Auth"],
     }),
     updateProfileImage: builder.mutation({
-      query: ({ token, file }) => ({
+      query: ({ token, formData }) => ({
         url: "/users/update-profile-image",
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        body: file,
+        body: formData,
       }),
       invalidatesTags: ["Auth"],
     }),

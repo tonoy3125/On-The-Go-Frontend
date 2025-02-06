@@ -2,83 +2,127 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { selectCurrentUser } from "@/redux/features/auth/authSlice";
-import { useUpdateUserByIdMutation } from "@/redux/features/user/userApi";
+import {
+  selectCurrentUser,
+  setUser,
+  useCurrentToken,
+} from "@/redux/features/auth/authSlice";
+import {
+  useUpdateProfileImageMutation,
+  useUpdateUserByIdMutation,
+} from "@/redux/features/user/userApi";
 
 import { useAppSelector } from "@/redux/hook";
 
 import { TUserPayload } from "@/types/user.type";
+import { local_img_url } from "@/utils/localImageURL";
+import { UploadIcon } from "lucide-react";
+import Image from "next/image";
+import { useState } from "react";
 
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
+import { FaPen } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { toast } from "sonner";
 
 const ProfileSettingsView = () => {
   const user = useAppSelector(selectCurrentUser) as TUserPayload | null;
   const userId = user?.id as string;
+  const token = useAppSelector(useCurrentToken);
   const {
     register,
-    // handleSubmit,
-    // setValue,
-    // watch,
-    // reset,
-    // formState: { errors },
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { errors },
   } = useForm({
     defaultValues: {
       name: user?.user?.name || "",
       email: user?.user?.email || "",
       phone: user?.user?.phone || "",
+      image: user?.user?.image || null,
     },
   });
 
-  //   const [profileUrl, setProfileUrl] = useState(image || "/images/avatar.jpg");
+  const [profileUrl, setProfileUrl] = useState<string>(
+    user?.user?.image ? user.user.image : "/images/avatar.jpg"
+  );
 
   const [updateUserById] = useUpdateUserByIdMutation();
+  const [updateProfileImage] = useUpdateProfileImageMutation();
+  const dispatch = useDispatch();
 
-  //   const onSubmit = async (values: FormValues) => {
-  //     const toastId = toast.loading("Please wait");
-  //     const payload: Record<string, any> = {};
+  const onSubmit = async (data: FieldValues) => {
+    const toastId = toast.loading("Updating profile...");
+    const payload = {
+      name: data?.name,
+      email: data?.email,
+      phone: data?.phone,
+      image: profileUrl,
+    };
+    console.log(payload);
 
-  //     const { image, ...newRest } = values;
-  //     const { image: img, ...oldrest } = initialValues;
+    try {
+      if (profileUrl instanceof File) {
+        const formData = new FormData();
+        formData.append("file", profileUrl);
+        // console.log([...formData.entries()]);
+        const { data: imageUrl } = await updateProfileImage({
+          formData,
+          token,
+        }).unwrap();
+        
+        payload.image = imageUrl;
+        console.log(imageUrl);
+      }
 
-  //     const newValues = Object.entries(newRest);
+      const res = await updateUserById({ id: userId, payload, token }).unwrap();
+      console.log(res);
+      toast.success(res.message || "Profile Updated Successfully", {
+        id: toastId,
+        duration: 3000,
+      });
+      dispatch(
+        setUser({
+          user: {
+            ...user,
+            user: {
+              ...user?.user,
+              name: data.name,
+              phone: data.phone,
+              image: payload.image, // Update only the fields from the response
+            },
+          },
+          token,
+        })
+      );
+      // onClose();
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to update profile.");
+    } finally {
+      toast.dismiss(toastId);
+    }
+  };
 
-  //     newValues.forEach(([key, value]) => {
-  //       if (oldrest[key as key] !== value) {
-  //         payload[key] = value;
-  //       }
-  //     });
-  //     try {
-  //       if (image) {
-  //         const formData = new FormData();
-  //         formData.append("file", image);
-  //         await updateProfileImage(formData);
-  //       }
-
-  //       if (!Object.keys(payload).length) {
-  //         toast.success("nothing");
-  //         toast.dismiss(toastId);
-  //         return;
-  //       }
-  //       toast.success("Profile updated");
-  //       await updateDetails(payload);
-  //     } catch (error) {
-  //       console.log(error);
-  //       toast.error("Something went wrong while updating your details");
-  //     } finally {
-  //       toast.dismiss(toastId);
-  //     }
-  //   };
-
-  //   const handleMakeProfilePreviewUrl = async (file: File) => {
-  //     const url = await local_img_url(file);
-  //     setProfileUrl(url);
-  //   };
+  const handleMakeProfilePreviewUrl = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0]; // Get the first selected file
+    if (file) {
+      const url = await local_img_url(file);
+      console.log(url)
+      setProfileUrl(url);
+      setValue("image", file, { shouldValidate: true }); // Update the form value for the image field
+    }
+  };
 
   return (
     <div className="w-full">
       <h1 className="text-[25px] font-[600] mb-[20px]">Update Information</h1>
-      <form>
-        {/* <div className="grid gap-2">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="grid gap-2">
           <div className="flex items-center gap-2">
             <Label
               htmlFor={"image"}
@@ -98,23 +142,16 @@ const ProfileSettingsView = () => {
             </Label>
             <Input
               id="image"
-              name="image"
               type="file"
-              className="invisible w-0"
+              className="hidden"
               accept="image/*"
-              onChange={(event) => {
-                const file = event.currentTarget.files?.[0];
-                if (file) {
-                  setFieldValue("image", file);
-                  handleMakeProfilePreviewUrl(file);
-                }
-              }}
+              onChange={handleMakeProfilePreviewUrl}
             />
-            <ErrorMessage
+            {/* <ErrorMessage
               name="image"
               component="div"
               className="text-red-500 text-sm mt-[5px]"
-            />
+            /> */}
             <label
               htmlFor="image"
               className="p-[10px] border-[1px] border-borderColor rounded-[8px]"
@@ -122,7 +159,7 @@ const ProfileSettingsView = () => {
               <UploadIcon className="h-4 w-4" />
             </label>
           </div>
-        </div> */}
+        </div>
 
         <div className="mb-4">
           <Label htmlFor="name">Name *</Label>
