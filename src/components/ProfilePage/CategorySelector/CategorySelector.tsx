@@ -4,6 +4,8 @@ import { useGetCategoryByNameQuery } from "@/redux/features/category/categoryApi
 import { Label } from "@/components/ui/label";
 import useDebounce from "@/hooks/debounce";
 import { TCategories } from "@/types/category.type";
+import { useAppSelector } from "@/redux/hook";
+import { useCurrentToken } from "@/redux/features/auth/authSlice";
 
 interface IPorps {
   onChange: (categories: TCategories[]) => void;
@@ -19,10 +21,14 @@ const CategorySelector: React.FC<IPorps> = ({ onChange }) => {
   const [isFocused, setIsFocused] = useState(false);
   const ref = useRef<HTMLInputElement | null>(null);
   const suggestionRef = useRef<HTMLDivElement | null>(null);
+  const token = useAppSelector(useCurrentToken);
 
-  const { data } = useGetCategoryByNameQuery(debouncevalue, {
-    skip: !debouncevalue,
-  });
+  const { data } = useGetCategoryByNameQuery(
+    { name: debouncevalue, token },
+    {
+      skip: !debouncevalue,
+    }
+  );
 
   console.log(data);
 
