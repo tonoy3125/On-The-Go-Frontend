@@ -1,12 +1,15 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import { useAppSelector } from "@/redux/hook";
-import Image from "next/image";
 
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { TUserPayload } from "@/types/user.type";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
+import CreatePostModal from "../CreatePostModal/CreatePostModal";
+import Image from "next/image";
 const CreatePost = () => {
   const user = useAppSelector(selectCurrentUser) as TUserPayload | null;
   return (
@@ -21,15 +24,15 @@ const CreatePost = () => {
                   <img src="/images/avatar.jpg" />
                 </AvatarFallback>
               </Avatar>
-              {/* <CreatePostModal>
+              <CreatePostModal>
                 <div className="w-full h-[40px] rounded-[8px] bg-primaryTxt/5 border-primaryTxt/10 border-[1px] flex items-center px-[15px] text-primaryTxt cursor-pointer hover:bg-primaryTxt/10">
                   Share you story
                 </div>
-              </CreatePostModal> */}
+              </CreatePostModal>
             </div>
             <Separator />
             <div className="hidden items-center gap-2 justify-between md:flex">
-              {/* <CreatePostModal>
+              <CreatePostModal>
                 <button className="py-[10px] w-full hover:bg-primaryMat/5 center gap-[5px] text-[16px] font-[500]">
                   <Image
                     src={"/icons/travel.svg"}
@@ -61,7 +64,7 @@ const CreatePost = () => {
                   />
                   Story Book
                 </button>
-              </CreatePostModal> */}
+              </CreatePostModal>
             </div>
           </div>
         </div>

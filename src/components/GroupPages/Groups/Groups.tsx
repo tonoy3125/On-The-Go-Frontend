@@ -13,7 +13,6 @@ const Groups = () => {
   const [query, setQuery] = useState({ page: 1, limit: 10, searchTerm: "" });
   const {
     data: groupSuggestionData,
-    refetch,
     isFetching,
   } = useGetGroupsSuggestionByUserIdQuery(query);
   // console.log(groupSuggestionData)
