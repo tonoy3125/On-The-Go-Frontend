@@ -17,13 +17,14 @@ import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useCopyToClipboard } from "usehooks-ts";
+import DownloadPdf from "../DownloadPdf/DownloadPdf";
 
 const PostOptions = ({ post }: { post: IPost }) => {
   const user = useAppSelector(selectCurrentUser) as TUserPayload | null;
   const isAuthor = user && post.user?._id === user?.user?._id;
   const [_, copy] = useCopyToClipboard();
 
- 
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
   const handleShare = async () => {
     const url = window.location.origin;
@@ -56,7 +57,7 @@ const PostOptions = ({ post }: { post: IPost }) => {
                 <Eye width={15} /> View Post
               </DropdownMenuItem>
             </Link>
-            
+            <DownloadPdf id={post._id} />
             {isAuthor ? (
               <>
                 <DropdownMenuItem
