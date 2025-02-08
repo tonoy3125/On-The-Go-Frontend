@@ -8,6 +8,9 @@ import { Crown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
+import { ProfileHoverCard } from "../ProfileCard/ProfileCard";
+import PostOptions from "../PostOptions/PostOptions";
+import PostGallery from "../PostGallery/PostGallery";
 
 const PostContent = ({
   post,
@@ -128,9 +131,9 @@ const PostContent = ({
           )}
         </div>
         <div className="flex justify-start items-center gap-[10px] mb-2">
-          {post.categories?.map(({ label }) => (
-            <Badge key={post._id + "-" + label} variant="outline">
-              {label}
+          {post.categories?.map(({ name }) => (
+            <Badge key={post._id + "-" + name} variant="outline">
+              {name}
             </Badge>
           ))}
         </div>
