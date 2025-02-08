@@ -19,9 +19,11 @@ const GetUserProfilePost = () => {
   const [query, setQuery] = useState({ page: 1, limit: 5 });
   const { data, isFetching } = useGetUserProfilePostQuery({
     userId,
-    query,
+    ...query,
     token,
   });
+
+  console.log(data);
 
   const [postData, setPostData] = useState<IPost[]>([]);
 
@@ -30,7 +32,7 @@ const GetUserProfilePost = () => {
       const newPostData = data.data || [];
       setPostData([...postData, ...newPostData]);
     }
-  }, [postData, data]);
+  }, [data]);
 
   return (
     <div className="w-full">

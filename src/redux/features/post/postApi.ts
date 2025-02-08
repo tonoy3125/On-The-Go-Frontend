@@ -17,7 +17,7 @@ const PostApi = baseApi.injectEndpoints({
     }),
     getUserProfilePost: builder.query({
       query: (args) => {
-        const { token, ...params } = args; // Destructure token from args
+        const { userId, token, ...params } = args; // Destructure token from args
 
         const queryParams = new URLSearchParams();
 
@@ -35,7 +35,7 @@ const PostApi = baseApi.injectEndpoints({
         });
 
         return {
-          url: "/post/userPost",
+          url: `/post/userPost/${userId}`,
           method: "GET",
           params: queryParams,
           headers: {
