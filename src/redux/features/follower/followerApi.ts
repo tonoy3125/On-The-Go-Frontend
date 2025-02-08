@@ -13,7 +13,18 @@ const FollowerApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Follower"],
     }),
+    unFollow: builder.mutation({
+      query: ({ token, payload }) => ({
+        url: "/follower/delete",
+        method: "PUT",
+        body: payload,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ["Follower"],
+    }),
   }),
 });
 
-export const { useFollowMutation } = FollowerApi;
+export const { useFollowMutation, useUnFollowMutation } = FollowerApi;
