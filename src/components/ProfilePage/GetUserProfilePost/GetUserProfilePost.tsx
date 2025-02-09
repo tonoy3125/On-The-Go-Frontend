@@ -1,20 +1,16 @@
 import PostCard from "@/components/PostData/PostCard/PostCard";
 import PostCardSkeleton from "@/components/skeletons/PostCardSkeleton";
 import { Separator } from "@/components/ui/separator";
-import {
-  selectCurrentUser,
-  useCurrentToken,
-} from "@/redux/features/auth/authSlice";
+import { useCurrentToken } from "@/redux/features/auth/authSlice";
 import { useGetUserProfilePostQuery } from "@/redux/features/post/postApi";
 import { useAppSelector } from "@/redux/hook";
 import { IPost } from "@/types/post.types";
-import { TUserPayload } from "@/types/user.type";
 import { X } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const GetUserProfilePost = () => {
-  const {userId} = useParams()
+  const { userId } = useParams();
   const token = useAppSelector(useCurrentToken);
   const [query, setQuery] = useState({ page: 1, limit: 5 });
   const { data, isFetching, refetch } = useGetUserProfilePostQuery({
