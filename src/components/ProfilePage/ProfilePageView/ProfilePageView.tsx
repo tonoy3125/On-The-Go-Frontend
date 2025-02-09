@@ -101,6 +101,7 @@ const ProfilePageView = () => {
           ) : (
             <ProfileFollowToggle
               isFollowing={userProfileData?.data?.isFollowing || false}
+              
             />
           )}
         </div>

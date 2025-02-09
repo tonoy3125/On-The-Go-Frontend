@@ -19,7 +19,7 @@ const GetUserProfilePost = () => {
     token,
   });
 
-  console.log(data);
+  // console.log(data);
 
   const [postData, setPostData] = useState<IPost[]>([]);
 
