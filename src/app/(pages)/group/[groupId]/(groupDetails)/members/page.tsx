@@ -8,6 +8,7 @@ import { useParams } from "next/navigation";
 import { format } from "date-fns";
 import { TMember } from "@/types/group.type";
 import GroupMemberSkeleton from "@/components/skeletons/GroupMemberSkeleton";
+import Link from "next/link";
 
 const GroupPageMemberLayout = () => {
   const { groupId } = useParams();
@@ -41,7 +42,7 @@ const GroupPageMemberLayout = () => {
                   : "Member";
               return (
                 <div key={member._id}>
-                  <div className="flex items-center gap-3">
+                  <Link href={`/${member?.user?._id}`} className="flex items-center gap-3">
                     <Avatar>
                       <AvatarImage
                         src={member?.user.image || "/images/avatar.jpg"}
@@ -59,7 +60,7 @@ const GroupPageMemberLayout = () => {
                         )}
                       </p>
                     </div>
-                  </div>
+                  </Link>
                   <Separator className="mt-[15px]" />
                 </div>
               );

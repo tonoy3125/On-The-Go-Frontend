@@ -10,11 +10,11 @@ import { useAppSelector } from "@/redux/hook";
 import { IPost } from "@/types/post.types";
 import { TUserPayload } from "@/types/user.type";
 import { X } from "lucide-react";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const GetUserProfilePost = () => {
-  const user = useAppSelector(selectCurrentUser) as TUserPayload | null;
-  const userId = user?.id as string;
+  const {userId} = useParams()
   const token = useAppSelector(useCurrentToken);
   const [query, setQuery] = useState({ page: 1, limit: 5 });
   const { data, isFetching, refetch } = useGetUserProfilePostQuery({
