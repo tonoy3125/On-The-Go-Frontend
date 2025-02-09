@@ -18,10 +18,11 @@ import { TUser, TUserPayload } from "@/types/user.type";
 import { useFollowMutation } from "@/redux/features/follower/followerApi";
 import OntheGoTooltip from "@/components/shared/Tooltip/OntheGoTooltip";
 import { Button } from "@/components/ui/button";
-import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { selectCurrentUser, useCurrentToken } from "@/redux/features/auth/authSlice";
 const ProfileCard = ({ userData }: { userData: TUser }) => {
   const [follow, { isError, isLoading }] = useFollowMutation();
   const user = useAppSelector(selectCurrentUser) as TUserPayload | null;
+  const token = useAppSelector(useCurrentToken);
 
   const following = useAppSelector((state) => state.followers.following);
 
@@ -32,8 +33,13 @@ const ProfileCard = ({ userData }: { userData: TUser }) => {
   const handleFollow = async () => {
     if (!user) return;
     try {
+      const payload = {
+        following:user?.id,
+        follower: userData?._id
+      };
+
       // the api is designed to follow and unfollow the user from same api, no need to call different api
-      const res = await follow(userData._id);
+      const res = await follow({ token, payload });
       const error = res.error as any;
       if (isError || (error && error.status !== 200)) {
         toast.error("Something went wrong");
@@ -69,7 +75,7 @@ const ProfileCard = ({ userData }: { userData: TUser }) => {
             Joined December 2021
           </span>
         </div>
-        {!user || userData._id === user?.user._id ? (
+        {!user || userData._id === user?.id ? (
           ""
         ) : (
           <Button size="sm" onClick={handleFollow}>
