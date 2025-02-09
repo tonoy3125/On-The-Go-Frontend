@@ -2,7 +2,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { CardContent, CardHeader } from "@/components/ui/card";
-import { IPost } from "@/types/post";
 import { format, formatDistanceToNow } from "date-fns";
 import { Crown } from "lucide-react";
 import Image from "next/image";
@@ -11,13 +10,16 @@ import { useRef, useState } from "react";
 import { ProfileHoverCard } from "../ProfileCard/ProfileCard";
 import PostOptions from "../PostOptions/PostOptions";
 import PostGallery from "../PostGallery/PostGallery";
+import { IPost } from "@/types/post.types";
 
 const PostContent = ({
   post,
   groupView,
+  refetch,
 }: {
   post: IPost;
   groupView?: boolean;
+  refetch: () => void;
 }) => {
   const [showFullContent, setShowFullContent] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -28,8 +30,8 @@ const PostContent = ({
         {groupView ? (
           <div className="flex items-center">
             <Avatar className="w-10 h-10 mr-4 border-[1px] border-secondary">
-              <AvatarImage src={post.user?.image} alt={post.user?.firstName} />
-              <AvatarFallback>{post.user?.firstName?.charAt(0)}</AvatarFallback>
+              <AvatarImage src={post?.user?.image} alt={post?.user?.name} />
+              <AvatarFallback>{post?.user?.name?.charAt(0)}</AvatarFallback>
             </Avatar>
 
             <div>
@@ -79,8 +81,8 @@ const PostContent = ({
         ) : (
           <div className="flex items-center">
             <Avatar className="w-10 h-10 mr-4 border-[1px] border-secondary">
-              <AvatarImage src={post.user?.image} alt={post.user?.firstName} />
-              <AvatarFallback>{post.user?.firstName?.charAt(0)}</AvatarFallback>
+              <AvatarImage src={post.user?.image} alt={post.user?.name} />
+              <AvatarFallback>{post.user?.name?.charAt(0)}</AvatarFallback>
             </Avatar>
 
             <div>
@@ -91,7 +93,7 @@ const PostContent = ({
             </div>
           </div>
         )}
-        <PostOptions post={post} />
+        <PostOptions refetch={refetch} post={post} />
       </CardHeader>
       <CardContent>
         {post.premium ? (

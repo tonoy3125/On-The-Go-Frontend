@@ -17,7 +17,7 @@ const GetUserProfilePost = () => {
   const userId = user?.id as string;
   const token = useAppSelector(useCurrentToken);
   const [query, setQuery] = useState({ page: 1, limit: 5 });
-  const { data, isFetching } = useGetUserProfilePostQuery({
+  const { data, isFetching, refetch } = useGetUserProfilePostQuery({
     userId,
     ...query,
     token,
@@ -26,6 +26,10 @@ const GetUserProfilePost = () => {
   console.log(data);
 
   const [postData, setPostData] = useState<IPost[]>([]);
+
+  useEffect(() => {
+    refetch(); // Auto refetch when userId or query changes
+  }, [userId, query, refetch]);
 
   useEffect(() => {
     if (data?.data) {
@@ -53,7 +57,12 @@ const GetUserProfilePost = () => {
       )}
 
       {postData?.map((post) => (
-        <PostCard post={post} key={post._id} groupView={true} />
+        <PostCard
+          post={post}
+          key={post._id}
+          groupView={true}
+          refetch={refetch}
+        />
       ))}
 
       {isFetching && (

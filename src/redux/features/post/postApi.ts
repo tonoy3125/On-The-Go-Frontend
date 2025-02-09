@@ -52,7 +52,21 @@ const PostApi = baseApi.injectEndpoints({
       },
       providesTags: ["Post"],
     }),
+    removePost: builder.mutation({
+      query: ({ token, id }) => ({
+        url: `/post/${id}`,
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ["Post"],
+    }),
   }),
 });
 
-export const { useCreatePostMutation, useGetUserProfilePostQuery } = PostApi;
+export const {
+  useCreatePostMutation,
+  useGetUserProfilePostQuery,
+  useRemovePostMutation,
+} = PostApi;

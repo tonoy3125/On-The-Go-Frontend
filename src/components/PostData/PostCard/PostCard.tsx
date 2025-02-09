@@ -8,6 +8,7 @@ interface IPorps {
   showFooterItems?: boolean;
   children?: React.ReactNode;
   groupView?: boolean;
+  refetch: () => void;
 }
 
 const PostCard: React.FC<IPorps> = ({
@@ -16,10 +17,11 @@ const PostCard: React.FC<IPorps> = ({
   showFooterItems = true,
   children,
   groupView,
+  refetch
 }) => {
   return (
     <Card className={`mb-4 ${className || ""}`} id={`post-${post._id}`}>
-      <PostContent post={post} groupView={groupView} />
+      <PostContent refetch={refetch} post={post} groupView={groupView} />
       <CardFooter className="flex flex-col justify-start items-start">
         {showFooterItems ? (
           <div className="flex items-center justify-between w-full"></div>

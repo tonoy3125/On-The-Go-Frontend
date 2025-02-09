@@ -26,7 +26,7 @@ const ProfileCard = ({ userData }: { userData: TUser }) => {
   const following = useAppSelector((state) => state.followers.following);
 
   const isFollowing = following.find(
-    ({ user: fol }) => fol._id === userData._id
+    (fol) => fol.following._id === userData._id
   );
 
   const handleFollow = async () => {
