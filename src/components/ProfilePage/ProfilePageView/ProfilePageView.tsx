@@ -16,18 +16,34 @@ import { CalendarCheck, GlobeIcon, NotebookPen, UserCheck } from "lucide-react";
 import ProfileLoadingSkeleton from "@/components/skeletons/ProfileLoadingSkeleton";
 import CreatePost from "../CreatePost/CreatePost";
 import GetUserProfilePost from "../GetUserProfilePost/GetUserProfilePost";
+import { useState } from "react";
 
 const ProfilePageView = () => {
   const { userId } = useParams();
   const user = useAppSelector(selectCurrentUser) as TUserPayload | null;
   const token = useAppSelector(useCurrentToken);
-  console.log(userId);
+  // console.log(userId);
   const {
     data: userProfileData,
     isLoading,
     isError,
+    refetch,
   } = useGetUserProfileQuery({ userId, token }, { skip: !userId || !token });
   //   console.log(userProfileData);
+
+  const isFollowingData = userProfileData?.data?.isFollowing || false;
+  // console.log(isFollowing)
+  const [isFollowing, setIsFollowing] = useState(isFollowingData);
+
+  const updateFollowerCount = (change: number) => {
+    const followerCountElement = document.getElementById(
+      "follower_count_profile"
+    ) as HTMLSpanElement | null;
+    if (followerCountElement) {
+      const newValue = Number(followerCountElement.innerText) + change;
+      followerCountElement.innerText = String(newValue);
+    }
+  };
 
   if (isLoading) {
     return <ProfileLoadingSkeleton />;
@@ -100,8 +116,10 @@ const ProfilePageView = () => {
             <ProfileEditDialog />
           ) : (
             <ProfileFollowToggle
-              isFollowing={userProfileData?.data?.isFollowing || false}
-              
+              isFollowing={isFollowing}
+              setIsFollowing={setIsFollowing}
+              updateFollowerCount={updateFollowerCount}
+              refetch={refetch}
             />
           )}
         </div>
@@ -151,7 +169,12 @@ const ProfilePageView = () => {
         </div>
         <div className="flex flex-col gap-[25px] w-full">
           <CreatePost />
-          <GetUserProfilePost />
+          <GetUserProfilePost
+            isFollowing={isFollowing}
+            setIsFollowing={setIsFollowing}
+            updateFollowerCount={updateFollowerCount}
+            refetch={refetch}
+          />
         </div>
       </div>
     </div>

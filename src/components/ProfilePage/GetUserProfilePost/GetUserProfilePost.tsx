@@ -9,7 +9,12 @@ import { X } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const GetUserProfilePost = () => {
+const GetUserProfilePost = ({
+  isFollowing,
+  setIsFollowing,
+  updateFollowerCount,
+  refetch: refetchData,
+}) => {
   const { userId } = useParams();
   const token = useAppSelector(useCurrentToken);
   const [query, setQuery] = useState({ page: 1, limit: 5 });
@@ -54,10 +59,14 @@ const GetUserProfilePost = () => {
 
       {postData?.map((post) => (
         <PostCard
+          isFollowing={isFollowing}
+          setIsFollowing={setIsFollowing}
+          updateFollowerCount={updateFollowerCount}
           post={post}
           key={post._id}
           groupView={true}
           refetch={refetch}
+          refetchData={refetchData}
         />
       ))}
 

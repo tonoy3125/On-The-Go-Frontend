@@ -28,43 +28,18 @@ import {
 import { useGetUserProfileQuery } from "@/redux/features/user/userApi";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-const ProfileCard = ({ userData }: { userData: TUser }) => {
-  const { userId } = useParams();
+const ProfileCard = ({
+  userData,
+  isFollowing,
+  setIsFollowing,
+  updateFollowerCount,
+  refetch,
+}) => {
+  // const { userId } = useParams();
   const [follow, { isLoading: isFollowLoading }] = useFollowMutation();
   const [unFollow, { isLoading: isUnfollowLoading }] = useUnFollowMutation();
   const user = useAppSelector(selectCurrentUser) as TUserPayload | null;
   const token = useAppSelector(useCurrentToken);
-
-  // const following = useAppSelector((state) => state.followers.following);
-  // console.log(following);
-
-  // const isFollowing = following.find(
-  //   (fol) => fol.following._id === userData._id
-  // );
-
-  const { data: userProfileData, refetch } = useGetUserProfileQuery(
-    { userId, token },
-    { skip: !userId || !token }
-  );
-
-  const isFollowingData = userProfileData?.data?.isFollowing || false;
-  // console.log(isFollowing)
-  const [isFollowing, setIsFollowing] = useState(isFollowingData);
-
-  useEffect(() => {
-    // Update isFollowing state based on userProfileData
-    setIsFollowing(userProfileData?.data?.isFollowing || false);
-  }, [userProfileData]);
-
-  const updateFollowerCount = (change: number) => {
-    const followerCountElement = document.getElementById(
-      "follower_count_profile"
-    ) as HTMLSpanElement | null;
-    if (followerCountElement) {
-      const newValue = Number(followerCountElement.innerText) + change;
-      followerCountElement.innerText = String(newValue);
-    }
-  };
 
   const handleFollow = async () => {
     try {
@@ -167,6 +142,10 @@ export const ProfileHoverCard = ({
   user,
   className,
   badgeWidth = 20,
+  isFollowing,
+  setIsFollowing,
+  updateFollowerCount,
+  refetchData,
 }: {
   user: TUser;
   badgeWidth?: number;
@@ -193,7 +172,13 @@ export const ProfileHoverCard = ({
         </div>
       </HoverCardTrigger>
       <HoverCardContent className="w-80">
-        <ProfileCard userData={user} />
+        <ProfileCard
+          isFollowing={isFollowing}
+          setIsFollowing={setIsFollowing}
+          updateFollowerCount={updateFollowerCount}
+          refetch={refetchData}
+          userData={user}
+        />
       </HoverCardContent>
     </HoverCard>
   );

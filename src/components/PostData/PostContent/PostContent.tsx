@@ -16,6 +16,10 @@ const PostContent = ({
   post,
   groupView,
   refetch,
+  isFollowing,
+  setIsFollowing,
+  updateFollowerCount,
+  refetchData,
 }: {
   post: IPost;
   groupView?: boolean;
@@ -35,7 +39,13 @@ const PostContent = ({
             </Avatar>
 
             <div>
-              <ProfileHoverCard user={post.user} />
+              <ProfileHoverCard
+                isFollowing={isFollowing}
+                setIsFollowing={setIsFollowing}
+                updateFollowerCount={updateFollowerCount}
+                user={post.user}
+                refetchData={refetchData}
+              />
               <p className="text-sm text-gray-500">
                 {format(post.createdAt, "MMM dd, yyyy")}
               </p>

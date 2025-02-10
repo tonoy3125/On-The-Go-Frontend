@@ -11,21 +11,25 @@ import {
 import { useAppSelector } from "@/redux/hook";
 import { TUserPayload } from "@/types/user.type";
 import { useParams } from "next/navigation";
-import { useState } from "react";
 import { toast } from "sonner";
 
 interface IProps {
   isFollowing: boolean;
+  setIsFollowing: (value: boolean) => void;
+  updateFollowerCount: (value: number) => void;
   userId?: string;
+  refetch: () => void;
 }
 
 const ProfileFollowToggle: React.FC<IProps> = ({
-  isFollowing: _isFollowing,
+  isFollowing,
+  setIsFollowing,
+  updateFollowerCount,
   userId: uid,
+  refetch,
 }) => {
   const [follow, { isLoading: isFollowLoading }] = useFollowMutation();
   const [unFollow, { isLoading: isUnfollowLoading }] = useUnFollowMutation();
-  const [isFollowing, setIsFollowing] = useState(_isFollowing);
   const user = useAppSelector(selectCurrentUser) as TUserPayload | null;
   const token = useAppSelector(useCurrentToken);
 
@@ -33,16 +37,6 @@ const ProfileFollowToggle: React.FC<IProps> = ({
   const id = userId || uid;
   // console.log(id)
   if (!id) return null;
-
-  const updateFollowerCount = (change: number) => {
-    const followerCountElement = document.getElementById(
-      "follower_count_profile"
-    ) as HTMLSpanElement | null;
-    if (followerCountElement) {
-      const newValue = Number(followerCountElement.innerText) + change;
-      followerCountElement.innerText = String(newValue);
-    }
-  };
 
   const handleFollow = async () => {
     try {
@@ -56,6 +50,7 @@ const ProfileFollowToggle: React.FC<IProps> = ({
       setIsFollowing(true);
       updateFollowerCount(1);
       toast.success(res?.message || "Followed successfully");
+      await refetch();
     } catch (error: any) {
       toast.error(error.data?.message || "Something went wrong");
     }
@@ -73,6 +68,7 @@ const ProfileFollowToggle: React.FC<IProps> = ({
       setIsFollowing(false);
       updateFollowerCount(-1);
       toast.success(res?.message || "Unfollowed successfully");
+      await refetch();
     } catch (error: any) {
       toast.error(error.data?.message || "Something went wrong");
     }

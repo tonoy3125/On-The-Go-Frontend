@@ -12,16 +12,31 @@ interface IPorps {
 }
 
 const PostCard: React.FC<IPorps> = ({
+  isFollowing,
+  setIsFollowing,
+  updateFollowerCount,
   post,
   className,
   showFooterItems = true,
   children,
   groupView,
-  refetch
+  refetch,
+  refetchData
 }) => {
+  // console.log(isFollowing)
+  // console.log(setIsFollowing)
+  // console.log(updateFollowerCount)
   return (
     <Card className={`mb-4 ${className || ""}`} id={`post-${post._id}`}>
-      <PostContent refetch={refetch} post={post} groupView={groupView} />
+      <PostContent
+        isFollowing={isFollowing}
+        setIsFollowing={setIsFollowing}
+        updateFollowerCount={updateFollowerCount}
+        refetch={refetch}
+        post={post}
+        groupView={groupView}
+        refetchData={refetchData}
+      />
       <CardFooter className="flex flex-col justify-start items-start">
         {showFooterItems ? (
           <div className="flex items-center justify-between w-full"></div>
