@@ -2,16 +2,20 @@ import { Card, CardFooter } from "@/components/ui/card";
 import { IPost } from "@/types/post.types";
 import PostContent from "../PostContent/PostContent";
 
-interface IPorps {
+type TProps = {
   post: IPost;
   className?: string;
   showFooterItems?: boolean;
   children?: React.ReactNode;
   groupView?: boolean;
   refetch: () => void;
-}
+  refetchData?: () => void;
+  isFollowing: boolean;
+  setIsFollowing: (state: boolean) => void;
+  updateFollowerCount: (count: number) => void;
+};
 
-const PostCard: React.FC<IPorps> = ({
+const PostCard: React.FC<TProps> = ({
   isFollowing,
   setIsFollowing,
   updateFollowerCount,
@@ -21,7 +25,7 @@ const PostCard: React.FC<IPorps> = ({
   children,
   groupView,
   refetch,
-  refetchData
+  refetchData,
 }) => {
   // console.log(isFollowing)
   // console.log(setIsFollowing)

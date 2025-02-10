@@ -12,7 +12,17 @@ import PostOptions from "../PostOptions/PostOptions";
 import PostGallery from "../PostGallery/PostGallery";
 import { IPost } from "@/types/post.types";
 
-const PostContent = ({
+type TPostContentProps = {
+  post: IPost;
+  groupView?: boolean;
+  refetch: () => void;
+  isFollowing?: boolean;
+  setIsFollowing?: (value: boolean) => void;
+  updateFollowerCount?: (value: number) => void;
+  refetchData?: () => void;
+};
+
+const PostContent: React.FC<TPostContentProps> = ({
   post,
   groupView,
   refetch,
@@ -20,10 +30,6 @@ const PostContent = ({
   setIsFollowing,
   updateFollowerCount,
   refetchData,
-}: {
-  post: IPost;
-  groupView?: boolean;
-  refetch: () => void;
 }) => {
   const [showFullContent, setShowFullContent] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -80,6 +86,10 @@ const PostContent = ({
                 <ProfileHoverCard
                   badgeWidth={15}
                   user={post.user}
+                  isFollowing={isFollowing}
+                  setIsFollowing={setIsFollowing}
+                  updateFollowerCount={updateFollowerCount}
+                  refetchData={refetchData}
                   className="!font-[400] !text-primaryTxt/50 leading-[100%] !text-[13px]"
                 />
                 <p className="text-[12px] text-gray-500">
@@ -96,7 +106,13 @@ const PostContent = ({
             </Avatar>
 
             <div>
-              <ProfileHoverCard user={post.user} />
+              <ProfileHoverCard
+                isFollowing={isFollowing}
+                setIsFollowing={setIsFollowing}
+                updateFollowerCount={updateFollowerCount}
+                refetchData={refetchData}
+                user={post.user}
+              />
               <p className="text-sm text-gray-500">
                 {format(post.createdAt, "MMM dd, yyyy")}
               </p>

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import PostCard from "@/components/PostData/PostCard/PostCard";
 import PostCardSkeleton from "@/components/skeletons/PostCardSkeleton";
 import { Separator } from "@/components/ui/separator";
@@ -9,7 +10,14 @@ import { X } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const GetUserProfilePost = ({
+type TProps = {
+  isFollowing: boolean;
+  setIsFollowing: (state: boolean) => void;
+  updateFollowerCount: (count: number) => void;
+  refetch: () => void;
+};
+
+const GetUserProfilePost: React.FC<TProps> = ({
   isFollowing,
   setIsFollowing,
   updateFollowerCount,

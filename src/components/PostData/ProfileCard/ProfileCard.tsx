@@ -25,10 +25,16 @@ import {
   selectCurrentUser,
   useCurrentToken,
 } from "@/redux/features/auth/authSlice";
-import { useGetUserProfileQuery } from "@/redux/features/user/userApi";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
-const ProfileCard = ({
+
+type ProfileCardProps = {
+  userData: TUser;
+  isFollowing: boolean;
+  setIsFollowing: (value: boolean) => void;
+  updateFollowerCount: (value: number) => void;
+  refetch: () => void;
+};
+
+const ProfileCard: React.FC<ProfileCardProps> = ({
   userData,
   isFollowing,
   setIsFollowing,
@@ -150,6 +156,10 @@ export const ProfileHoverCard = ({
   user: TUser;
   badgeWidth?: number;
   className?: string;
+  isFollowing?: boolean;
+  setIsFollowing?: (value: boolean) => void;
+  updateFollowerCount?: (value: number) => void;
+  refetchData?: () => void;
 }) => {
   return (
     <HoverCard openDelay={300}>
@@ -173,10 +183,10 @@ export const ProfileHoverCard = ({
       </HoverCardTrigger>
       <HoverCardContent className="w-80">
         <ProfileCard
-          isFollowing={isFollowing}
-          setIsFollowing={setIsFollowing}
-          updateFollowerCount={updateFollowerCount}
-          refetch={refetchData}
+          isFollowing={isFollowing ?? false} // Ensures isFollowing is always boolean
+          setIsFollowing={setIsFollowing as (value: boolean) => void} // Type assertion to avoid optional prop issue
+          updateFollowerCount={updateFollowerCount as (value: number) => void}
+          refetch={refetchData as () => void}
           userData={user}
         />
       </HoverCardContent>
