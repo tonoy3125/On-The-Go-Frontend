@@ -2,7 +2,7 @@ import { baseApi } from "../../api/baseApi";
 
 const ReactionApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    follow: builder.mutation({
+    changeReaction: builder.mutation({
       query: ({ token, payload }) => ({
         url: "/reaction/change",
         method: "PATCH",
@@ -16,4 +16,4 @@ const ReactionApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useFollowMutation } = ReactionApi;
+export const { useChangeReactionMutation } = ReactionApi;
