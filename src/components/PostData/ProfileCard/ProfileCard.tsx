@@ -27,7 +27,7 @@ import {
 } from "@/redux/features/auth/authSlice";
 import { useGetUserProfileQuery } from "@/redux/features/user/userApi";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 const ProfileCard = ({ userData }: { userData: TUser }) => {
   const { userId } = useParams();
   const [follow, { isLoading: isFollowLoading }] = useFollowMutation();
@@ -51,6 +51,11 @@ const ProfileCard = ({ userData }: { userData: TUser }) => {
   // console.log(isFollowing)
   const [isFollowing, setIsFollowing] = useState(isFollowingData);
 
+  useEffect(() => {
+    // Update isFollowing state based on userProfileData
+    setIsFollowing(userProfileData?.data?.isFollowing || false);
+  }, [userProfileData]);
+
   const updateFollowerCount = (change: number) => {
     const followerCountElement = document.getElementById(
       "follower_count_profile"
@@ -72,7 +77,7 @@ const ProfileCard = ({ userData }: { userData: TUser }) => {
       console.log("Follow Response", res);
       setIsFollowing(true);
       updateFollowerCount(1);
-      toast.success(res?.message || "Followed successfully");
+      toast.success(res?.data?.message || "Followed successfully");
       refetch();
     } catch (error: any) {
       toast.error(error.data?.message || "Something went wrong");
@@ -90,7 +95,7 @@ const ProfileCard = ({ userData }: { userData: TUser }) => {
       console.log("UnFollow Response", res);
       setIsFollowing(false);
       updateFollowerCount(-1);
-      toast.success(res?.message || "Unfollowed successfully");
+      toast.success(res?.data?.message || "Unfollowed successfully");
       refetch();
     } catch (error: any) {
       toast.error(error.data?.message || "Something went wrong");
@@ -122,22 +127,36 @@ const ProfileCard = ({ userData }: { userData: TUser }) => {
             Joined December 2021
           </span>
         </div>
-        {!user || userData._id === user?.id ? (
-          ""
-        ) : (
-          <Button size="sm" onClick={handleFollow}>
-            <UserPlus className="mr-2 h-4 w-4" />
+        {!user || userData._id === user?.id ? null : (
+          <div className="flex items-center gap-2">
             {isFollowing ? (
-              <button onClick={handleUnfollow} disabled={isUnfollowLoading}>
+              <Button
+                onClick={handleUnfollow}
+                disabled={isUnfollowLoading}
+                className="flex items-center justify-center gap-2"
+              >
+                {isUnfollowLoading ? (
+                  <ImSpinner2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <UserPlus className="h-4 w-4" />
+                )}
                 Unfollow
-              </button>
+              </Button>
             ) : (
-              <button onClick={handleFollow} disabled={isFollowLoading}>
+              <Button
+                onClick={handleFollow}
+                disabled={isFollowLoading}
+                className="flex items-center justify-center gap-2"
+              >
+                {isFollowLoading ? (
+                  <ImSpinner2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <UserPlus className="h-4 w-4" />
+                )}
                 Follow
-              </button>
+              </Button>
             )}
-            {/* {isLoading ? <ImSpinner2 className="spinner" /> : ""} */}
-          </Button>
+          </div>
         )}
       </div>
     </div>
