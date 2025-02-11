@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./features/auth/authSlice";
 import groupReducer from "./features/group/groupSlice";
 import followersReducer from "./features/follower/followerSlice";
+import reactionReducer from "./features/reaction/reactionSlice";
 import { baseApi } from "./api/baseApi";
 import {
   persistStore,
@@ -29,6 +30,7 @@ export const store = configureStore({
     auth: persistedAuthReducer, // Persisted auth reducer
     group: groupReducer,
     followers: followersReducer,
+    reaction: reactionReducer,
   },
   middleware: (getDefaultMiddlewares) =>
     getDefaultMiddlewares({
