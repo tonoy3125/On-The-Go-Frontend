@@ -14,7 +14,7 @@ interface IProps {
 
 const PostReaction: React.FC<IProps> = ({ post }) => {
   const [reactedId, setReactedId] = useState<TReactionType | undefined>(
-    post.reacted?.reactionId
+    post.reacted?.reaction
   );
   const token = useAppSelector(useCurrentToken);
 
@@ -28,25 +28,31 @@ const PostReaction: React.FC<IProps> = ({ post }) => {
   const [showReaction, setShowReaction] = useState(false);
 
   const handleChange = async (reactionId: TReactionType) => {
+    console.log(reactionId);
     const audio = new Audio();
     audio.src = "/audio/reaction.mp3";
     const payload = {
       postId: post._id,
       reaction: reactionId,
     };
+    console.log(payload);
     const isNew = reactedId !== reactionId;
+    console.log(isNew);
 
     const newCount = isNew
       ? reactedId
         ? totalReaction
         : totalReaction + 1
       : totalReaction - 1;
+    console.log(newCount);
 
     setReactedId(isNew ? reactionId : undefined);
     setTotalReaction(newCount);
     setShowReaction(false);
 
     isNew ? audio.play() : "";
+
+    console.log(reactedId);
 
     await changeReaction({ token, payload });
   };
