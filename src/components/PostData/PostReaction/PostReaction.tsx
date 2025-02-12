@@ -31,7 +31,7 @@ const PostReaction: React.FC<IProps> = ({ post }) => {
 
   const [showReaction, setShowReaction] = useState(false);
   // console.log(reactedId);
-  console.log("present reaction Is", showReaction);
+  // console.log("present reaction Is", showReaction);
 
   const handleChange = async (reactionId: TReactionType) => {
     // console.log(reactionId);
@@ -41,7 +41,7 @@ const PostReaction: React.FC<IProps> = ({ post }) => {
       postId: post._id,
       reaction: reactionId,
     };
-    console.log(payload);
+    // console.log(payload);
     const isNew = reactedId !== reactionId;
     // console.log(isNew);
 
@@ -60,8 +60,8 @@ const PostReaction: React.FC<IProps> = ({ post }) => {
       audio.play();
     }
 
-    const res = await changeReaction({ token, payload }).unwrap();
-    console.log(res);
+    await changeReaction({ token, payload }).unwrap();
+    // console.log(res);
   };
 
   return (

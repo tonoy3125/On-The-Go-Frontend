@@ -47,7 +47,15 @@ const PostCard: React.FC<TProps> = ({
         {showFooterItems ? (
           <div className="flex items-center justify-between w-full">
             <PostReaction post={post} />
-            <PostCommentModal post={post} />
+            <PostCommentModal
+              isFollowing={isFollowing}
+              setIsFollowing={setIsFollowing}
+              updateFollowerCount={updateFollowerCount}
+              refetch={refetch}
+              post={post}
+              groupView={groupView}
+              refetchData={refetchData}
+            />
           </div>
         ) : (
           ""
