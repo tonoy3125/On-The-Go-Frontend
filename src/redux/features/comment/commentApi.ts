@@ -52,8 +52,22 @@ const CommentApi = baseApi.injectEndpoints({
       },
       providesTags: ["Comment"],
     }),
+    updateCommentById: builder.mutation({
+      query: ({ token, id, payload }) => ({
+        url: `/comment/${id}`,
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: payload,
+      }),
+      invalidatesTags: ["Comment"],
+    }),
   }),
 });
 
-export const { useCreateCommentMutation, useGetCommentsByPostIdQuery } =
-  CommentApi;
+export const {
+  useCreateCommentMutation,
+  useGetCommentsByPostIdQuery,
+  useUpdateCommentByIdMutation,
+} = CommentApi;

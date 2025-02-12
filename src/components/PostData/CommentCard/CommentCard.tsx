@@ -1,5 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { useAppSelector } from "@/redux/hook";
 import { TComment } from "@/types/comment.type";
 import { TUserPayload } from "@/types/user.type";
 
@@ -13,7 +14,7 @@ interface IPorps {
 
 const CommentCard: React.FC<IPorps> = ({ comment, setPage }) => {
   const { comment: commentText, user, createdAt } = comment;
-  //   const user = useAppSelector(selectCurrentUser) as TUserPayload | null;
+  const userData = useAppSelector(selectCurrentUser) as TUserPayload | null;
 
   return (
     <div className="flex space-x-3">
@@ -31,12 +32,12 @@ const CommentCard: React.FC<IPorps> = ({ comment, setPage }) => {
           </div>
           <p className="mt-3 text-sm">{commentText}</p>
         </div>
-        {/* {auth && auth._id === user._id && (
+        {userData && userData.user?._id === user._id && (
           <div className="flex items-center justify-start gap-[10px] mt-[10px]">
             <CommentDelete comment={comment} setPage={setPage} />
-            <CommentUpdate comment={comment} setPage={setPage} />
+            {/* <CommentUpdate comment={comment} setPage={setPage} /> */}
           </div>
-        )} */}
+        )}
       </div>
     </div>
   );
