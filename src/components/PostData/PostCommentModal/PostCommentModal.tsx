@@ -65,7 +65,12 @@ const PostCommentModal: React.FC<IPorps> = ({
   const user = useAppSelector(selectCurrentUser) as TUserPayload | null;
   const token = useAppSelector(useCurrentToken);
 
-  const { data, isFetching, isLoading } = useGetCommentsByPostIdQuery(
+  const {
+    data,
+    isFetching,
+    isLoading,
+    refetch: refetchComment,
+  } = useGetCommentsByPostIdQuery(
     {
       postId: post._id,
       page,
@@ -87,7 +92,7 @@ const PostCommentModal: React.FC<IPorps> = ({
       };
       //   console.log(payload);
       const res = await createComment({ token, payload }).unwrap();
-        // console.log(res);
+      // console.log(res);
 
       toast.success(res.message || "Comment Created Successfully!!", {
         id: toastId,
@@ -191,7 +196,12 @@ const PostCommentModal: React.FC<IPorps> = ({
 
           <h3 className="mb-5">{data?.meta?.total || 0} Comments:</h3>
           {data?.data?.map((comment, i) => (
-            <CommentCard setPage={setPage} comment={comment} key={i} />
+            <CommentCard
+              refetchComment={refetchComment}
+              setPage={setPage}
+              comment={comment}
+              key={i}
+            />
           ))}
 
           <DialogFooter className="mt-4 flex justify-start w-full">

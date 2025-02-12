@@ -6,15 +6,22 @@ import { TUserPayload } from "@/types/user.type";
 
 import { format } from "date-fns";
 import React from "react";
+import CommentDelete from "../CommentDelete/CommentDelete";
 
 interface IPorps {
   comment: TComment;
   setPage: React.Dispatch<React.SetStateAction<number>>;
+  refetchComment: () => void;
 }
 
-const CommentCard: React.FC<IPorps> = ({ comment, setPage }) => {
+const CommentCard: React.FC<IPorps> = ({
+  comment,
+  setPage,
+  refetchComment,
+}) => {
   const { comment: commentText, user, createdAt } = comment;
   const userData = useAppSelector(selectCurrentUser) as TUserPayload | null;
+  console.log(userData);
 
   return (
     <div className="flex space-x-3">
@@ -32,9 +39,13 @@ const CommentCard: React.FC<IPorps> = ({ comment, setPage }) => {
           </div>
           <p className="mt-3 text-sm">{commentText}</p>
         </div>
-        {userData && userData.user?._id === user._id && (
+        {userData && userData.id === user._id && (
           <div className="flex items-center justify-start gap-[10px] mt-[10px]">
-            <CommentDelete comment={comment} setPage={setPage} />
+            <CommentDelete
+              refetchComment={refetchComment}
+              comment={comment}
+              setPage={setPage}
+            />
             {/* <CommentUpdate comment={comment} setPage={setPage} /> */}
           </div>
         )}

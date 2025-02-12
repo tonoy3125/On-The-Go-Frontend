@@ -80,4 +80,5 @@ export const {
   useCreateCommentMutation,
   useGetCommentsByPostIdQuery,
   useUpdateCommentByIdMutation,
+  useRemoveCommentMutation,
 } = CommentApi;
