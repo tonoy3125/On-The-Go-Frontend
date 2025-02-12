@@ -24,13 +24,21 @@ const authPersistConfig = {
 
 const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 
+const reactionPersistConfig = {
+  key: "reaction",
+  storage,
+};
+
+const persistedReactionReducer = persistReducer(reactionPersistConfig, reactionReducer);
+
+
 export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     auth: persistedAuthReducer, // Persisted auth reducer
     group: groupReducer,
     followers: followersReducer,
-    reaction: reactionReducer,
+    reaction: persistedReactionReducer,
   },
   middleware: (getDefaultMiddlewares) =>
     getDefaultMiddlewares({

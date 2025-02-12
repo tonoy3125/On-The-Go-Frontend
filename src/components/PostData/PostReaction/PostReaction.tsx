@@ -13,22 +13,28 @@ interface IProps {
 }
 
 const PostReaction: React.FC<IProps> = ({ post }) => {
+  // console.log(post);
   const [reactedId, setReactedId] = useState<TReactionType | undefined>(
     post.reacted?.reaction
   );
   const token = useAppSelector(useCurrentToken);
+  // const dispatch = useAppDispatch();
 
   const [totalReaction, setTotalReaction] = useState(post.reactionCount || 0);
 
   const { icon, id, color, background } =
     reactionData.find((react) => react.id == reactedId) || {};
 
+  // console.log(id)
+
   const [changeReaction] = useChangeReactionMutation();
 
   const [showReaction, setShowReaction] = useState(false);
+  // console.log(reactedId);
+  console.log("present reaction Is", showReaction);
 
   const handleChange = async (reactionId: TReactionType) => {
-    console.log(reactionId);
+    // console.log(reactionId);
     const audio = new Audio();
     audio.src = "/audio/reaction.mp3";
     const payload = {
@@ -37,24 +43,23 @@ const PostReaction: React.FC<IProps> = ({ post }) => {
     };
     console.log(payload);
     const isNew = reactedId !== reactionId;
-    console.log(isNew);
+    // console.log(isNew);
 
     const newCount = isNew
       ? reactedId
         ? totalReaction
         : totalReaction + 1
       : totalReaction - 1;
-    console.log(newCount);
+    // console.log(newCount);
 
     setReactedId(isNew ? reactionId : undefined);
     setTotalReaction(newCount);
-    setShowReaction(false);
+    setShowReaction(true);
 
     isNew ? audio.play() : "";
 
-    console.log(reactedId);
-
-    await changeReaction({ token, payload });
+    const res = await changeReaction({ token, payload }).unwrap();
+    console.log(res);
   };
 
   return (
