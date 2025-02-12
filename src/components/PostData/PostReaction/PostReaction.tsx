@@ -56,7 +56,9 @@ const PostReaction: React.FC<IProps> = ({ post }) => {
     setTotalReaction(newCount);
     setShowReaction(true);
 
-    isNew ? audio.play() : "";
+    if (isNew) {
+      audio.play();
+    }
 
     const res = await changeReaction({ token, payload }).unwrap();
     console.log(res);
