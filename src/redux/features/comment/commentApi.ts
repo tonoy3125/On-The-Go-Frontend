@@ -63,6 +63,16 @@ const CommentApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Comment"],
     }),
+    removeComment: builder.mutation({
+      query: ({ token, id }) => ({
+        url: `/comment/${id}`,
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ["Comment"],
+    }),
   }),
 });
 
