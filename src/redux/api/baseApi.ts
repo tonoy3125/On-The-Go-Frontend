@@ -71,6 +71,7 @@ export const baseApi = createApi({
     "Category",
     "Follower",
     "Reaction",
+    "Comment",
   ],
   endpoints: () => ({}),
 });

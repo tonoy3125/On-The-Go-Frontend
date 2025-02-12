@@ -2,6 +2,7 @@ import { Card, CardFooter } from "@/components/ui/card";
 import { IPost } from "@/types/post.types";
 import PostContent from "../PostContent/PostContent";
 import PostReaction from "../PostReaction/PostReaction";
+import PostCommentModal from "../PostCommentModal/PostCommentModal";
 
 type TProps = {
   post: IPost;
@@ -46,6 +47,7 @@ const PostCard: React.FC<TProps> = ({
         {showFooterItems ? (
           <div className="flex items-center justify-between w-full">
             <PostReaction post={post} />
+            <PostCommentModal post={post} />
           </div>
         ) : (
           ""
