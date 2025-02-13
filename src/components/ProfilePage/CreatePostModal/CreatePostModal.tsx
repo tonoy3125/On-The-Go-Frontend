@@ -95,6 +95,7 @@ const CreatePostModal: React.FC<IProps> = ({ children }) => {
         group: groupId as string | undefined,
       };
       const { data } = await createPost(payload);
+      console.log(data);
 
       toast.dismiss(toastId);
       toast.success("Post created successfully");
