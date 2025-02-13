@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import CommentCardSkeleton from "@/components/skeletons/CommentCardSkeleton";
 import PostCardSkeleton from "@/components/skeletons/PostCardSkeleton";
 import { Button } from "@/components/ui/button";
@@ -15,11 +16,8 @@ import {
   useCreateCommentMutation,
   useGetCommentsByPostIdQuery,
 } from "@/redux/features/comment/commentApi";
-
 import { useAppSelector } from "@/redux/hook";
-import { TComment } from "@/types/comment.type";
 import { IPost } from "@/types/post.types";
-
 import { MessageCircle } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
@@ -60,14 +58,12 @@ const PostCommentModal: React.FC<IPorps> = ({
   const { register, handleSubmit, reset } = useForm();
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(1);
-  const [comments, setComments] = useState<TComment[]>([]);
 
   const user = useAppSelector(selectCurrentUser) as TUserPayload | null;
   const token = useAppSelector(useCurrentToken);
 
   const {
     data,
-    isFetching,
     isLoading,
     refetch: refetchComment,
   } = useGetCommentsByPostIdQuery(

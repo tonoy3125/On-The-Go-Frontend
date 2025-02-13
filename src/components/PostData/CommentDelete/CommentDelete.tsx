@@ -7,14 +7,9 @@ import Swal from "sweetalert2";
 interface IPorps {
   comment: TComment;
   setPage: React.Dispatch<React.SetStateAction<number>>;
-  refetchComment: () => void;
 }
-const CommentDelete: React.FC<IPorps> = ({
-  comment,
-  setPage,
-  refetchComment,
-}) => {
-  const [removeComment, { isError }] = useRemoveCommentMutation();
+const CommentDelete: React.FC<IPorps> = ({ comment, setPage }) => {
+  const [removeComment] = useRemoveCommentMutation();
   const token = useAppSelector(useCurrentToken);
 
   const handleRemoveComment = async () => {
@@ -51,6 +46,7 @@ const CommentDelete: React.FC<IPorps> = ({
             id: comment?._id,
             token,
           }).unwrap();
+          setPage(1);
           //   console.log(res);
           //   refetchComment();
           Swal.fire({
