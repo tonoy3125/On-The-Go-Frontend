@@ -7,6 +7,7 @@ import { TUserPayload } from "@/types/user.type";
 import { format } from "date-fns";
 import React from "react";
 import CommentDelete from "../CommentDelete/CommentDelete";
+import CommentUpdate from "../CommentUpdate/CommentUpdate";
 
 interface IPorps {
   comment: TComment;
@@ -46,7 +47,7 @@ const CommentCard: React.FC<IPorps> = ({
               comment={comment}
               setPage={setPage}
             />
-            {/* <CommentUpdate comment={comment} setPage={setPage} /> */}
+            <CommentUpdate comment={comment} setPage={setPage} />
           </div>
         )}
       </div>
