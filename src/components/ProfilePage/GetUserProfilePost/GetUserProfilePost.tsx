@@ -13,14 +13,12 @@ import { useEffect, useState } from "react";
 type TProps = {
   isFollowing: boolean;
   setIsFollowing: (state: boolean) => void;
-  updateFollowerCount: (count: number) => void;
   refetch: () => void;
 };
 
 const GetUserProfilePost: React.FC<TProps> = ({
   isFollowing,
   setIsFollowing,
-  updateFollowerCount,
   refetch: refetchData,
 }) => {
   const { userId } = useParams();
@@ -69,7 +67,6 @@ const GetUserProfilePost: React.FC<TProps> = ({
         <PostCard
           isFollowing={isFollowing}
           setIsFollowing={setIsFollowing}
-          updateFollowerCount={updateFollowerCount}
           post={post}
           key={post._id}
           groupView={true}

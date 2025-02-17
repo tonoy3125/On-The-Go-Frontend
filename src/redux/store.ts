@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./features/auth/authSlice";
 import groupReducer from "./features/group/groupSlice";
-import followersReducer from "./features/follower/followerSlice";
+import userFollowersFollowingsReducer from "./features/follower/followerSlice";
 import reactionReducer from "./features/reaction/reactionSlice";
 import { baseApi } from "./api/baseApi";
 import {
@@ -29,15 +29,27 @@ const reactionPersistConfig = {
   storage,
 };
 
-const persistedReactionReducer = persistReducer(reactionPersistConfig, reactionReducer);
+const persistedReactionReducer = persistReducer(
+  reactionPersistConfig,
+  reactionReducer
+);
 
+const userFollowersFollowingsPersistConfig = {
+  key: "user-followers-followings",
+  storage,
+};
+
+const persistedUserFollowersFollowingsReducer = persistReducer(
+  userFollowersFollowingsPersistConfig,
+  userFollowersFollowingsReducer,
+);
 
 export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     auth: persistedAuthReducer, // Persisted auth reducer
     group: groupReducer,
-    followers: followersReducer,
+    followers: persistedUserFollowersFollowingsReducer,
     reaction: persistedReactionReducer,
   },
   middleware: (getDefaultMiddlewares) =>

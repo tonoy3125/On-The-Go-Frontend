@@ -16,7 +16,7 @@ import { CalendarCheck, GlobeIcon, NotebookPen, UserCheck } from "lucide-react";
 import ProfileLoadingSkeleton from "@/components/skeletons/ProfileLoadingSkeleton";
 import CreatePost from "../CreatePost/CreatePost";
 import GetUserProfilePost from "../GetUserProfilePost/GetUserProfilePost";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ProfilePageView = () => {
   const { userId } = useParams();
@@ -32,18 +32,13 @@ const ProfilePageView = () => {
   //   console.log(userProfileData);
 
   const isFollowingData = userProfileData?.data?.isFollowing || false;
-  // console.log(isFollowing)
+  // console.log(isFollowingData)
   const [isFollowing, setIsFollowing] = useState(isFollowingData);
 
-  const updateFollowerCount = (change: number) => {
-    const followerCountElement = document.getElementById(
-      "follower_count_profile"
-    ) as HTMLSpanElement | null;
-    if (followerCountElement) {
-      const newValue = Number(followerCountElement.innerText) + change;
-      followerCountElement.innerText = String(newValue);
-    }
-  };
+  // Update isFollowing when userProfileData updates
+useEffect(() => {
+  setIsFollowing(userProfileData?.data?.isFollowing || false);
+}, [userProfileData]);
 
   if (isLoading) {
     return <ProfileLoadingSkeleton />;
@@ -99,7 +94,7 @@ const ProfilePageView = () => {
               </p>
               <p className="center gap-[5px] font-[700] text-[14px] text-primaryTxt/70">
                 <span className="">|</span>
-                <span id={"follower_count_profile"}>
+                <span>
                   {userProfileData?.data?.totalFollower || 0}
                 </span>{" "}
                 followers <span>|</span>
@@ -118,7 +113,8 @@ const ProfilePageView = () => {
             <ProfileFollowToggle
               isFollowing={isFollowing}
               setIsFollowing={setIsFollowing}
-              updateFollowerCount={updateFollowerCount}
+              userName={userProfileData?.data?.name}
+              // updateFollowerCount={updateFollowerCount}
               refetch={refetch}
             />
           )}
@@ -172,7 +168,6 @@ const ProfilePageView = () => {
           <GetUserProfilePost
             isFollowing={isFollowing}
             setIsFollowing={setIsFollowing}
-            updateFollowerCount={updateFollowerCount}
             refetch={refetch}
           />
         </div>

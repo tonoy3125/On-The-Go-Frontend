@@ -7,7 +7,7 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 
-import { useAppSelector } from "@/redux/hook";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
 
 import { BadgeCheck, CalendarDays, UserPlus } from "lucide-react";
 import Link from "next/link";
@@ -25,12 +25,15 @@ import {
   selectCurrentUser,
   useCurrentToken,
 } from "@/redux/features/auth/authSlice";
+import {
+  followUser,
+  unfollowUser,
+} from "@/redux/features/follower/followerSlice";
 
 type ProfileCardProps = {
   userData: TUser;
   isFollowing: boolean;
   setIsFollowing: (value: boolean) => void;
-  updateFollowerCount: (value: number) => void;
   refetch: () => void;
 };
 
@@ -38,7 +41,6 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   userData,
   isFollowing,
   setIsFollowing,
-  updateFollowerCount,
   refetch,
 }) => {
   // const { userId } = useParams();
@@ -46,6 +48,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   const [unFollow, { isLoading: isUnfollowLoading }] = useUnFollowMutation();
   const user = useAppSelector(selectCurrentUser) as TUserPayload | null;
   const token = useAppSelector(useCurrentToken);
+  const dispatch = useAppDispatch();
 
   const handleFollow = async () => {
     try {
@@ -57,7 +60,13 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
       const res = await follow({ token, payload }).unwrap();
       console.log("Follow Response", res);
       setIsFollowing(true);
-      updateFollowerCount(1);
+      dispatch(
+        followUser({
+          authUserId: user?.id,
+          targetUser: { _id: userData?._id, name: userData?.name }, // Adjust target user data as needed
+        })
+      );
+
       toast.success(res?.data?.message || "Followed successfully");
       refetch();
     } catch (error: any) {
@@ -75,7 +84,12 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
       const res = await unFollow({ token, payload }).unwrap();
       console.log("UnFollow Response", res);
       setIsFollowing(false);
-      updateFollowerCount(-1);
+      dispatch(
+        unfollowUser({
+          authUserId: user?.id,
+          targetUserId: userData?._id,
+        })
+      );
       toast.success(res?.data?.message || "Unfollowed successfully");
       refetch();
     } catch (error: any) {
@@ -150,7 +164,6 @@ export const ProfileHoverCard = ({
   badgeWidth = 20,
   isFollowing,
   setIsFollowing,
-  updateFollowerCount,
   refetchData,
 }: {
   user: TUser;
@@ -158,7 +171,6 @@ export const ProfileHoverCard = ({
   className?: string;
   isFollowing?: boolean;
   setIsFollowing?: (value: boolean) => void;
-  updateFollowerCount?: (value: number) => void;
   refetchData?: () => void;
 }) => {
   return (
@@ -185,7 +197,6 @@ export const ProfileHoverCard = ({
         <ProfileCard
           isFollowing={isFollowing ?? false} // Ensures isFollowing is always boolean
           setIsFollowing={setIsFollowing as (value: boolean) => void} // Type assertion to avoid optional prop issue
-          updateFollowerCount={updateFollowerCount as (value: number) => void}
           refetch={refetchData as () => void}
           userData={user}
         />

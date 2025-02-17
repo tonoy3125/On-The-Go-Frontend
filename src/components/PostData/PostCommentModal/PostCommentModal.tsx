@@ -42,7 +42,6 @@ interface IPorps {
   refetchData?: () => void;
   isFollowing: boolean;
   setIsFollowing: (state: boolean) => void;
-  updateFollowerCount: (count: number) => void;
 }
 
 const PostCommentModal: React.FC<IPorps> = ({
@@ -52,7 +51,6 @@ const PostCommentModal: React.FC<IPorps> = ({
   refetch,
   isFollowing,
   setIsFollowing,
-  updateFollowerCount,
   refetchData,
 }) => {
   const { register, handleSubmit, reset } = useForm();
@@ -152,7 +150,6 @@ const PostCommentModal: React.FC<IPorps> = ({
             <PostContent
               isFollowing={isFollowing}
               setIsFollowing={setIsFollowing}
-              updateFollowerCount={updateFollowerCount}
               refetch={refetch}
               post={post}
               groupView={groupView}

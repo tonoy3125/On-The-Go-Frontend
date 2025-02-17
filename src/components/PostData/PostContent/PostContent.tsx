@@ -18,7 +18,6 @@ type TPostContentProps = {
   refetch: () => void;
   isFollowing?: boolean;
   setIsFollowing?: (value: boolean) => void;
-  updateFollowerCount?: (value: number) => void;
   refetchData?: () => void;
 };
 
@@ -28,7 +27,6 @@ const PostContent: React.FC<TPostContentProps> = ({
   refetch,
   isFollowing,
   setIsFollowing,
-  updateFollowerCount,
   refetchData,
 }) => {
   const [showFullContent, setShowFullContent] = useState(false);
@@ -48,7 +46,6 @@ const PostContent: React.FC<TPostContentProps> = ({
               <ProfileHoverCard
                 isFollowing={isFollowing}
                 setIsFollowing={setIsFollowing}
-                updateFollowerCount={updateFollowerCount}
                 user={post.user}
                 refetchData={refetchData}
               />
@@ -88,7 +85,6 @@ const PostContent: React.FC<TPostContentProps> = ({
                   user={post.user}
                   isFollowing={isFollowing}
                   setIsFollowing={setIsFollowing}
-                  updateFollowerCount={updateFollowerCount}
                   refetchData={refetchData}
                   className="!font-[400] !text-primaryTxt/50 leading-[100%] !text-[13px]"
                 />
@@ -109,7 +105,6 @@ const PostContent: React.FC<TPostContentProps> = ({
               <ProfileHoverCard
                 isFollowing={isFollowing}
                 setIsFollowing={setIsFollowing}
-                updateFollowerCount={updateFollowerCount}
                 refetchData={refetchData}
                 user={post.user}
               />

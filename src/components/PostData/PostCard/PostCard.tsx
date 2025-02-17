@@ -14,13 +14,11 @@ type TProps = {
   refetchData?: () => void;
   isFollowing: boolean;
   setIsFollowing: (state: boolean) => void;
-  updateFollowerCount: (count: number) => void;
 };
 
 const PostCard: React.FC<TProps> = ({
   isFollowing,
   setIsFollowing,
-  updateFollowerCount,
   post,
   className,
   showFooterItems = true,
@@ -37,7 +35,6 @@ const PostCard: React.FC<TProps> = ({
       <PostContent
         isFollowing={isFollowing}
         setIsFollowing={setIsFollowing}
-        updateFollowerCount={updateFollowerCount}
         refetch={refetch}
         post={post}
         groupView={groupView}
@@ -50,7 +47,7 @@ const PostCard: React.FC<TProps> = ({
             <PostCommentModal
               isFollowing={isFollowing}
               setIsFollowing={setIsFollowing}
-              updateFollowerCount={updateFollowerCount}
+              // updateFollowerCount={updateFollowerCount}
               refetch={refetch}
               post={post}
               groupView={groupView}
