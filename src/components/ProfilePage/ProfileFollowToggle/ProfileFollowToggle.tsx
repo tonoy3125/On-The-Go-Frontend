@@ -13,6 +13,7 @@ import {
   unfollowUser,
 } from "@/redux/features/follower/followerSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { TFollower } from "@/types/follower.type";
 import { TUserPayload } from "@/types/user.type";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
@@ -20,7 +21,7 @@ import { toast } from "sonner";
 interface IProps {
   isFollowing: boolean;
   setIsFollowing: (value: boolean) => void;
-  userId?: string;
+  userId: string;
   userName: string;
   refetch: () => void;
 }
@@ -39,11 +40,16 @@ const ProfileFollowToggle: React.FC<IProps> = ({
   const dispatch = useAppDispatch();
 
   const { userId } = useParams();
-  const id = userId || uid;
-  // console.log(id)
+  const id = (userId as string) || uid;
+  // console.log(id);
   if (!id) return null;
 
   const handleFollow = async () => {
+    if (!user?.id || !id) {
+      toast.error("Invalid user data");
+      return;
+    }
+
     try {
       const payload = {
         following: id,
@@ -56,7 +62,7 @@ const ProfileFollowToggle: React.FC<IProps> = ({
       dispatch(
         followUser({
           authUserId: user?.id,
-          targetUser: { _id: userId, name: userName }, // Adjust target user data as needed
+          targetUser: { _id: id, name: userName } as TFollower,
         })
       );
       toast.success(res?.data?.message || "Followed successfully");
@@ -78,7 +84,7 @@ const ProfileFollowToggle: React.FC<IProps> = ({
       setIsFollowing(false);
       dispatch(
         unfollowUser({
-          authUserId: user?.id,
+          authUserId: user?.id as string,
           targetUserId: id,
         })
       );

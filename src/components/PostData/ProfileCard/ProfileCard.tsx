@@ -29,6 +29,7 @@ import {
   followUser,
   unfollowUser,
 } from "@/redux/features/follower/followerSlice";
+import { TFollower } from "@/types/follower.type";
 
 type ProfileCardProps = {
   userData: TUser;
@@ -62,8 +63,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
       setIsFollowing(true);
       dispatch(
         followUser({
-          authUserId: user?.id,
-          targetUser: { _id: userData?._id, name: userData?.name }, // Adjust target user data as needed
+          authUserId: user?.id as string,
+          targetUser: { _id: userData?._id, name: userData?.name } as TFollower, // Adjust target user data as needed
         })
       );
 
@@ -86,7 +87,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
       setIsFollowing(false);
       dispatch(
         unfollowUser({
-          authUserId: user?.id,
+          authUserId: user?.id as string,
           targetUserId: userData?._id,
         })
       );
