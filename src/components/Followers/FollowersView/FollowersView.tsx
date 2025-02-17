@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import SmallGroupCardSkeleton from "@/components/skeletons/SmallGroupCardSkeleton";
@@ -13,10 +14,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const FollowersView = () => {
-    const token = useAppSelector(useCurrentToken);
+  const token = useAppSelector(useCurrentToken);
   const [query, setQuery] = useState({ page: 1, limit: 1 });
-  const { data, isFetching } = useGetFollowersQuery({token,query});
-  console.log('follower data',data);
+  const { data, isFetching } = useGetFollowersQuery({ token, query });
+  console.log("follower data", data);
   const [followerData, setFollowerData] = useState<TFollower[]>([]);
 
   useEffect(() => {
