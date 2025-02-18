@@ -3,6 +3,7 @@ import CreatePost from "@/components/ProfilePage/CreatePost/CreatePost";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAppSelector } from "@/redux/hook";
 import { GlobeIcon, LockIcon } from "lucide-react";
+import DisplayGroupPost from "../DisplayGroupPost/DisplayGroupPost";
 
 const GroupPostView = () => {
   const { group } = useAppSelector((state) => state.group);
@@ -11,7 +12,7 @@ const GroupPostView = () => {
     <div className="flex items-start justify-start flex-col-reverse lg:flex-row gap-[15px]">
       <div className="w-full">
         <CreatePost />
-        {/* <DisplayGroupPost /> */}
+        <DisplayGroupPost />
       </div>
       <div className="space-y-6  bg-white p-[15px] rounded-[18px] w-full lg:w-[440px] shrink-0">
         <div>
