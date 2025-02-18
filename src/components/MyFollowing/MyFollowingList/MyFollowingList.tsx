@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import MyFollowingListSkeleton from "@/components/skeletons/MyFollowingListSkeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -18,7 +20,6 @@ import { UserPlus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ImSpinner2 } from "react-icons/im";
 import { toast } from "sonner";
-
 
 const MyFollowingList = ({ heading = true }: { heading?: boolean }) => {
   const user = useAppSelector(selectCurrentUser) as TUserPayload | null;
