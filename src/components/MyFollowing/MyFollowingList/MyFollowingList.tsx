@@ -73,7 +73,7 @@ const MyFollowingList = ({ heading = true }: { heading?: boolean }) => {
 
       {/* Show Skeleton if data is loading */}
       {isLoading ? (
-        Array.from({ length: 3 }).map((_, i) => (
+        Array.from({ length: 4 }).map((_, i) => (
           <MyFollowingListSkeleton key={i} />
         ))
       ) : followingList?.data?.length ? (
