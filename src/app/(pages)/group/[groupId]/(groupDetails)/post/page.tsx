@@ -1,7 +1,9 @@
+import GroupPostView from "@/components/GroupPages/GroupPostView/GroupPostView";
+
 const GroupPagePostLayout = () => {
   return (
     <div>
-      <h1>This is GroupPageAboutLayout</h1>
+     <GroupPostView/>
     </div>
   );
 };
