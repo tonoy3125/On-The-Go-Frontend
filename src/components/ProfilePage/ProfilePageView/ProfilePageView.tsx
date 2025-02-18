@@ -36,9 +36,9 @@ const ProfilePageView = () => {
   const [isFollowing, setIsFollowing] = useState(isFollowingData);
 
   // Update isFollowing when userProfileData updates
-useEffect(() => {
-  setIsFollowing(userProfileData?.data?.isFollowing || false);
-}, [userProfileData]);
+  useEffect(() => {
+    setIsFollowing(userProfileData?.data?.isFollowing || false);
+  }, [userProfileData]);
 
   if (isLoading) {
     return <ProfileLoadingSkeleton />;
@@ -94,9 +94,7 @@ useEffect(() => {
               </p>
               <p className="center gap-[5px] font-[700] text-[14px] text-primaryTxt/70">
                 <span className="">|</span>
-                <span>
-                  {userProfileData?.data?.totalFollower || 0}
-                </span>{" "}
+                <span>{userProfileData?.data?.totalFollower || 0}</span>{" "}
                 followers <span>|</span>
               </p>
               <p className="center gap-[5px] font-[700] text-[14px] text-primaryTxt/70">
@@ -114,6 +112,7 @@ useEffect(() => {
               isFollowing={isFollowing}
               setIsFollowing={setIsFollowing}
               userName={userProfileData?.data?.name}
+              userId={userId as string}
               // updateFollowerCount={updateFollowerCount}
               refetch={refetch}
             />
