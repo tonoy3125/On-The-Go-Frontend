@@ -3,6 +3,7 @@ import authReducer from "./features/auth/authSlice";
 import groupReducer from "./features/group/groupSlice";
 import userFollowersFollowingsReducer from "./features/follower/followerSlice";
 import reactionReducer from "./features/reaction/reactionSlice";
+import postReducer from "./features/post/postSlice";
 import { baseApi } from "./api/baseApi";
 import {
   persistStore,
@@ -41,13 +42,14 @@ const userFollowersFollowingsPersistConfig = {
 
 const persistedUserFollowersFollowingsReducer = persistReducer(
   userFollowersFollowingsPersistConfig,
-  userFollowersFollowingsReducer,
+  userFollowersFollowingsReducer
 );
 
 export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     auth: persistedAuthReducer, // Persisted auth reducer
+    post: postReducer,
     group: groupReducer,
     followers: persistedUserFollowersFollowingsReducer,
     reaction: persistedReactionReducer,
