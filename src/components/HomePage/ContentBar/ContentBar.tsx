@@ -1,5 +1,6 @@
 'use client'
 import MyFollowers from "@/components/Followers/MyFollowers/MyFollowers";
+import MyFollowingList from "@/components/MyFollowing/MyFollowingList/MyFollowingList";
 import CreatePostModal from "@/components/ProfilePage/CreatePostModal/CreatePostModal";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -30,7 +31,7 @@ const ContentBar = () => {
       <Separator className="my-4" />
       <MyFollowers />
       <Separator className="my-4" />
-      {/* <FolowingList /> */}
+      <MyFollowingList />
     </div>
   );
 };
