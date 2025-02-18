@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import PostCardSkeleton from "@/components/skeletons/PostCardSkeleton";
@@ -10,30 +11,45 @@ import { setPost } from "@/redux/features/post/postSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { TUserPayload } from "@/types/user.type";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import NoPostFound from "../NoPostFound/NoPostFound";
 import CreatePost from "@/components/ProfilePage/CreatePost/CreatePost";
 import PostCard from "@/components/PostData/PostCard/PostCard";
-
+import { useGetUserProfileQuery } from "@/redux/features/user/userApi";
 
 const FeedContent = () => {
   const user = useAppSelector(selectCurrentUser) as TUserPayload | null;
+  const userId = user?.id as string;
   const token = useAppSelector(useCurrentToken);
   const { data: posts } = useAppSelector((state) => state.post);
   const searchParams = useSearchParams();
   const router = useRouter();
-
   const dispatch = useAppDispatch();
+  const { data: userProfileData } = useGetUserProfileQuery(
+    { userId, token },
+    { skip: !userId || !token }
+  );
+  //   console.log(userProfileData);
 
-  const { data, isLoading, isFetching } = useGetAllPostsQuery({
+  const isFollowingData = userProfileData?.data?.isFollowing || false;
+//   console.log(isFollowingData)
+  const [isFollowing, setIsFollowing] = useState(isFollowingData);
+
+  // Update isFollowing when userProfileData updates
+  useEffect(() => {
+    setIsFollowing(userProfileData?.data?.isFollowing || false);
+  }, [userProfileData]);
+
+  const { data, isLoading, isFetching, refetch } = useGetAllPostsQuery({
     page: searchParams.get("page") || 1,
-    limit: 2,
+    limit: 10,
     categories: searchParams.get("category") || "",
     searchTerm: searchParams.get("searchTerm") || "",
     premium: searchParams.get("premium") || "",
     sort: searchParams.get("sort") || "",
   });
+
 
   // Fetch posts and append to the list when data changes
   useEffect(() => {
@@ -96,7 +112,15 @@ const FeedContent = () => {
         }
       >
         {posts.map((post, i) => {
-          return <PostCard post={post} key={post._id} />;
+          return (
+            <PostCard
+              isFollowing={isFollowing}
+              setIsFollowing={setIsFollowing}
+              refetch={refetch}
+              post={post}
+              key={post._id}
+            />
+          );
         })}
       </InfiniteScroll>
     </div>

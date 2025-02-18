@@ -32,7 +32,7 @@ const ProfilePageView = () => {
   //   console.log(userProfileData);
 
   const isFollowingData = userProfileData?.data?.isFollowing || false;
-  // console.log(isFollowingData)
+  // console.log("Profile Content", isFollowingData);
   const [isFollowing, setIsFollowing] = useState(isFollowingData);
 
   // Update isFollowing when userProfileData updates
