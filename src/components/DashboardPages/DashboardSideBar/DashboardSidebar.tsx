@@ -9,6 +9,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SetStateAction, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { DashboardNav } from "../DashboardNav/DashboardNav";
+import { adminLinks } from "@/routes";
 
 type SidebarProps = {
   className?: string;
@@ -106,7 +108,7 @@ export default function DashboardSidebar({
         <div className="space-y-4 py-4">
           <div className="px-3 py-2">
             <div className="mt-3 space-y-1" onClick={handleCloseBar}>
-              {/* <DashboardNav items={adminLinks} /> */}
+              <DashboardNav items={adminLinks} />
             </div>
           </div>
         </div>

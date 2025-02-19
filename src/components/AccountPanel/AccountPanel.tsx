@@ -1,4 +1,4 @@
-import { LogOut, User } from "lucide-react";
+import { LayoutDashboard, LogOut, User } from "lucide-react";
 
 import { useAppSelector } from "@/redux/hook";
 
@@ -54,7 +54,7 @@ export function AccountPanel() {
               {user?.user?.role === "admin" ? (
                 <Link href="/dashboard" className="cursor-pointer">
                   <DropdownMenuItem>
-                    {/* <LayoutDashboard className="mr-2 h-4 w-4" /> */}
+                    <LayoutDashboard className="mr-2 h-4 w-4" />
                     <span>Dashboard</span>
                   </DropdownMenuItem>
                 </Link>

@@ -13,6 +13,7 @@ import {
 import { TUserPayload } from "@/types/user.type";
 import { ThemeProvider } from "@/provider/theme-provider";
 import DashboardSidebar from "@/components/DashboardPages/DashboardSideBar/DashboardSidebar";
+import DashboardHeader from "@/components/DashboardPages/DashboardHeader/DashboardHeader";
 
 export interface ISideBarState {
   isOpen: boolean;
@@ -49,7 +50,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <div className="w-full h-screen flex items-start justify-start pb-[30px]">
         <DashboardSidebar isOpen={isOpen} setIsopen={setIsOpen} />
         <div className="w-full h-full flex-col flex">
-          {/* <DashboardHeader isOpen={isOpen} setIsOpen={setIsOpen} /> */}
+          <DashboardHeader isOpen={isOpen} setIsOpen={setIsOpen} />
           <div className="h-full overflow-auto smoothBar p-[20px]">
             {children}
           </div>
