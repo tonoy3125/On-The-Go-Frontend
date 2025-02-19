@@ -1,9 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 "use client";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { logOut, selectCurrentUser } from "@/redux/features/auth/authSlice";
-import { useAppSelector } from "@/redux/hook";
-import { TUserPayload } from "@/types/user.type";
+import { logOut } from "@/redux/features/auth/authSlice";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -23,7 +22,7 @@ export default function DashboardSidebar({
   isOpen,
   setIsopen,
 }: SidebarProps) {
-  const user = useAppSelector(selectCurrentUser) as TUserPayload | null;
+  //   const user = useAppSelector(selectCurrentUser) as TUserPayload | null;
   const router = useRouter();
   const dispatch = useDispatch();
   // outside click hide the drawer

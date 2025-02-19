@@ -22,7 +22,6 @@ export const adminLinks: NavItem[] = [
   {
     href: "/dashboard/manage-users",
     Icon: CiViewList,
-
     title: "Manage Users",
   },
   {

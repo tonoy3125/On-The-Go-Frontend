@@ -10,8 +10,6 @@ import { AccountPanel } from "@/components/AccountPanel/AccountPanel";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { TUserPayload } from "@/types/user.type";
 import HeaderSearchBar from "../HeaderSearchBar/HeaderSearchBar";
-// import { AccountPanel } from "../client/AccountPanel";
-// import HeaderSearchBar from "./HeaderSearchBar";
 
 const NavbarHeader = () => {
   const path = usePathname();
