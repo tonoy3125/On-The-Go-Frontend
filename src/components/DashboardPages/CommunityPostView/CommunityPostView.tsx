@@ -13,11 +13,13 @@ const CommunityPostView = () => {
   console.log(data?.meta);
   return (
     <div>
-      <Pagination
-        className="mb-[10px]"
-        onPageChange={(page) => setQuery({ ...query, page })}
-        meta={typeof data?.meta?.total === "number" ? data?.meta?.total : 0}
-      />
+      <div className='mb-5'>
+        <Pagination
+          className="mb-[10px]"
+          onPageChange={(page) => setQuery({ ...query, page })}
+          meta={typeof data?.meta?.total === "number" ? data?.meta?.total : 0}
+        />
+      </div>
       <div className=" grid grid-cols-1 lg:grid-cols-3 gap-[10px]">
         {data?.data?.map((post, i) => (
           <PostCard
