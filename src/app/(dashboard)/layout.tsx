@@ -12,6 +12,7 @@ import {
 } from "@/redux/features/auth/authSlice";
 import { TUserPayload } from "@/types/user.type";
 import { ThemeProvider } from "@/provider/theme-provider";
+import DashboardSidebar from "@/components/DashboardPages/DashboardSideBar/DashboardSidebar";
 
 export interface ISideBarState {
   isOpen: boolean;
@@ -46,7 +47,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       defaultTheme="light"
     >
       <div className="w-full h-screen flex items-start justify-start pb-[30px]">
-        {/* <Sidebar isOpen={isOpen} setIsopen={setIsOpen} /> */}
+        <DashboardSidebar isOpen={isOpen} setIsopen={setIsOpen} />
         <div className="w-full h-full flex-col flex">
           {/* <DashboardHeader isOpen={isOpen} setIsOpen={setIsOpen} /> */}
           <div className="h-full overflow-auto smoothBar p-[20px]">
