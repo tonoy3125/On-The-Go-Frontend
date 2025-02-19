@@ -14,12 +14,11 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { IoMenu } from "react-icons/io5";
-
-
 import { logOut, selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { TUserPayload } from "@/types/user.type";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
+import ThemeChanger from "../ThemeChanger/ThemeChanger";
 
 const DashboardHeader: React.FC<ISideBarState> = ({ setIsOpen }) => {
   const user = useAppSelector(selectCurrentUser) as TUserPayload | null;
@@ -48,7 +47,7 @@ const DashboardHeader: React.FC<ISideBarState> = ({ setIsOpen }) => {
         <IoMenu />
       </Button>
       <div className="flex items-center justify-end gap-[8px]">
-        {/* <ThemeChanger /> */}
+        <ThemeChanger />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Avatar className="cursor-pointer">
