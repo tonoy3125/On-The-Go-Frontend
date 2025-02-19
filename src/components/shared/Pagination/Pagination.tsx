@@ -49,6 +49,7 @@ function Pagination({
   showText = true,
   textClassName,
 }: PaginationProps) {
+ console.log(meta)
   const totalPages = Math.ceil(meta / limit);
   const [currentPage, setCurrentPage] = React.useState(1);
 

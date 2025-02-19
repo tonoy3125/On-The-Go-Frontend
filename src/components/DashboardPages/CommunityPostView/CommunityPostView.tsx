@@ -6,18 +6,17 @@ import { Button } from "@/components/ui/button";
 import { useGetAllPostsQuery } from "@/redux/features/post/postApi";
 
 import { useState } from "react";
+import DeleteCommunityPost from "../DeleteCommunityPost/DeleteCommunityPost";
 const CommunityPostView = () => {
-  const [page, setPage] = useState(1);
-  const { data } = useGetAllPostsQuery({
-    page,
-    limit: 10,
-  });
+  const [query, setQuery] = useState({ page: 1, limit: 10 });
+  const { data, refetch } = useGetAllPostsQuery(query);
+  console.log(data?.meta);
   return (
     <div>
       <Pagination
         className="mb-[10px]"
-        meta={data?.meta?.total || 0}
-        onPageChange={(page) => setPage(page)}
+        onPageChange={(page) => setQuery({ ...query, page })}
+        meta={typeof data?.meta?.total === "number" ? data?.meta?.total : 0}
       />
       <div className=" grid grid-cols-1 lg:grid-cols-3 gap-[10px]">
         {data?.data?.map((post, i) => (
@@ -27,8 +26,10 @@ const CommunityPostView = () => {
             key={post._id}
             showFooterItems={false}
           >
-            <div className="flex gap-[15px] w-full">
-              {/* <DeleteCommunityPost id={post._id} /> */}
+            <div className="flex items-center gap-[15px] w-full">
+              <button className="w-full">
+                <DeleteCommunityPost refetch={refetch} id={post._id} />
+              </button>
               <PostModal
                 post={post}
                 trigger={
