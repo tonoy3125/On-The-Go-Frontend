@@ -4,6 +4,17 @@ import { TCategories } from "@/types/category.type";
 
 const CategoryApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    createCategory: builder.mutation({
+      query: ({ token, payload }) => ({
+        url: "/category",
+        method: "POST",
+        body: payload,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ["Category"],
+    }),
     getAllCategories: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
@@ -60,6 +71,7 @@ const CategoryApi = baseApi.injectEndpoints({
 });
 
 export const {
+  useCreateCategoryMutation,
   useGetAllCategoriesQuery,
   useGetCategoryByNameQuery,
   useRemoveCategoryMutation,

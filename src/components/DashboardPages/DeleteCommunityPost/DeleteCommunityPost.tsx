@@ -5,7 +5,15 @@ import { removePostData } from "@/redux/features/post/postSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import Swal from "sweetalert2";
 
-const DeleteCommunityPost = ({ refetch, id }) => {
+type TDeleteCommunityPostProps = {
+  id: string;
+  refetch: () => void;
+};
+
+const DeleteCommunityPost: React.FC<TDeleteCommunityPostProps> = ({
+  refetch,
+  id,
+}) => {
   const [removePost] = useRemovePostMutation();
   const token = useAppSelector(useCurrentToken);
   const dispatch = useAppDispatch();
