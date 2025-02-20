@@ -53,7 +53,7 @@ export default function CategoryManagement() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data?.data?.length > 0 ? (
+              {data?.data && data?.data?.length > 0 ? (
                 data?.data?.map((category) => (
                   <TableRow key={category?._id}>
                     <TableCell>{category?.name}</TableCell>
