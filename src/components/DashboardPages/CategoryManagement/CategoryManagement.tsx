@@ -16,12 +16,13 @@ import { useGetAllCategoriesQuery } from "@/redux/features/category/categoryApi"
 
 import { format } from "date-fns";
 import { useState } from "react";
+import DeleteCategory from "../DeleteCategory/DeleteCategory";
 
 export default function CategoryManagement() {
   const [searchTerm, setSearchTerm] = useState("");
   const debounsedSearchTerm = useDebounce(searchTerm, 500);
 
-  const { data } = useGetAllCategoriesQuery({
+  const { data, refetch } = useGetAllCategoriesQuery({
     page: 1,
     limit: 10,
     searchTerm: debounsedSearchTerm,
@@ -60,9 +61,9 @@ export default function CategoryManagement() {
                       "MMM dd, yyyy"
                     )}
                   </TableCell>
-                  {/* <TableCell>
-                    <DeleteCategory id={category._id} />
-                  </TableCell> */}
+                  <TableCell>
+                    <DeleteCategory refetch={refetch} id={category._id} />
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
