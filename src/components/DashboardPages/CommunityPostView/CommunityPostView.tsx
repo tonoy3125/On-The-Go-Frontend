@@ -13,7 +13,7 @@ const CommunityPostView = () => {
   console.log(data?.meta);
   return (
     <div>
-      <div className='mb-5'>
+      <div className='mb-7'>
         <Pagination
           className="mb-[10px]"
           onPageChange={(page) => setQuery({ ...query, page })}
@@ -24,6 +24,7 @@ const CommunityPostView = () => {
         {data?.data?.map((post, i) => (
           <PostCard
             className="w-full"
+            groupView={true}
             post={post}
             key={post._id}
             showFooterItems={false}

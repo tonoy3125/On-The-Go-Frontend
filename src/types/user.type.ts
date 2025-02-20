@@ -48,3 +48,14 @@ export type TResponse<T> = {
 };
 
 export type TResponseRedux<T> = TResponse<T> & BaseQueryApi;
+
+export type TUserData = {
+  _id: string;
+  name: string;
+  email: string;
+  phone: number;
+  role: string;
+  createdAt: string;
+  updatedAt: string;
+  isPremium: boolean;
+};
