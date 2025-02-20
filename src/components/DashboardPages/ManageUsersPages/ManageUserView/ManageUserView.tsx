@@ -21,6 +21,7 @@ import OntheGoTooltip from "@/components/shared/Tooltip/OntheGoTooltip";
 import { BadgeCheck, ListOrderedIcon, SearchIcon } from "lucide-react";
 import ChangeUserRole from "../ChangeUserRole/ChangeUserRole";
 import ManageUsersSkeleton from "@/components/skeletons/ManageUsersSkeleton";
+import { TUserData } from "@/types/user.type";
 
 const ManageUserView = () => {
   const [page, setCurrentPage] = useState(1);
@@ -93,7 +94,7 @@ const ManageUserView = () => {
         </div>
       ) : userData?.data && userData?.data?.length > 0 ? (
         <div className="gap-4 gridUser_responsive">
-          {userData?.data?.map((pay_user) => (
+          {userData?.data?.map((pay_user: TUserData) => (
             <Card key={pay_user._id}>
               <div className="flex items-center gap-4 p-4">
                 <Avatar className="h-12 w-12">
