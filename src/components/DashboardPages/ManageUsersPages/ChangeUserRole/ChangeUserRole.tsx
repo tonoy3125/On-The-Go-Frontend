@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Select,
   SelectContent,
@@ -12,11 +13,10 @@ import {
   useCurrentToken,
 } from "@/redux/features/auth/authSlice";
 import { useUpdateUserRoleMutation } from "@/redux/features/user/userApi";
-
 import { useAppSelector } from "@/redux/hook";
 import { TRole, TUserPayload } from "@/types/user.type";
-
 import { toast } from "sonner";
+
 const ChangeUserRole = ({ role, id }: { role: string; id: string }) => {
   const user = useAppSelector(selectCurrentUser) as TUserPayload | null;
   const [updateUserById] = useUpdateUserRoleMutation();
