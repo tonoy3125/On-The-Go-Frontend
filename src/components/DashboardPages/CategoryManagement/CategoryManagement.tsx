@@ -53,20 +53,28 @@ export default function CategoryManagement() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data?.data?.map((category) => (
-                <TableRow key={category?._id}>
-                  <TableCell>{category?.name}</TableCell>
-                  <TableCell>
-                    {format(
-                      new Date(category.createdAt || "2024-09-29"),
-                      "MMM dd, yyyy"
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    <DeleteCategory refetch={refetch} id={category._id} />
+              {data?.data?.length > 0 ? (
+                data?.data?.map((category) => (
+                  <TableRow key={category?._id}>
+                    <TableCell>{category?.name}</TableCell>
+                    <TableCell>
+                      {format(
+                        new Date(category.createdAt || "2024-09-29"),
+                        "MMM dd, yyyy"
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      <DeleteCategory refetch={refetch} id={category._id} />
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={3} className="text-center py-4">
+                    No categories found.
                   </TableCell>
                 </TableRow>
-              ))}
+              )}
             </TableBody>
           </Table>
         </CardContent>
