@@ -55,6 +55,7 @@ export type TUserData = {
   email: string;
   phone: number;
   role: string;
+  image: string;
   createdAt: string;
   updatedAt: string;
   isPremium: boolean;
