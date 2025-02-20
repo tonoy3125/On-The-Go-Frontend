@@ -24,6 +24,7 @@ import { TUserPayload } from "@/types/user.type";
 import { formatDistanceToNow } from "date-fns";
 import { BadgeCheck, ListOrderedIcon, SearchIcon } from "lucide-react";
 import { useState } from "react";
+import ChangeUserRole from "../ChangeUserRole/ChangeUserRole";
 
 const ManageUserView = () => {
   const [page, setCurrentPage] = useState(1);
@@ -117,12 +118,9 @@ const ManageUserView = () => {
               </div>
             </div>
             <Separator />
-            {/* <CardContent className="p-4">
-              <ChangeUserRole
-                id={pay_user._id}
-                role={pay_user.auth?.role || ""}
-              />
-            </CardContent> */}
+            <CardContent className="p-4">
+              <ChangeUserRole id={pay_user._id} role={pay_user.role || ""} />
+            </CardContent>
           </Card>
         ))}
       </div>
