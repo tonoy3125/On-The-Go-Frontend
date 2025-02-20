@@ -17,6 +17,7 @@ import { useGetAllCategoriesQuery } from "@/redux/features/category/categoryApi"
 import { format } from "date-fns";
 import { useState } from "react";
 import DeleteCategory from "../DeleteCategory/DeleteCategory";
+import CreateCategory from "../CreateCategory/CreateCategory";
 
 export default function CategoryManagement() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -32,7 +33,7 @@ export default function CategoryManagement() {
     <div className="flex flex-col gap-4">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">Category Search</h1>
-        {/* <CreateCategory /> */}
+        <CreateCategory />
       </div>
       <Input
         type="text"
