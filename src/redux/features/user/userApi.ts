@@ -50,6 +50,17 @@ const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Auth"],
     }),
+    updateUserRole: builder.mutation({
+      query: ({ token, id, role }) => ({
+        url: `/users/role/${id}`,
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: { role },
+      }),
+      invalidatesTags: ["Auth"],
+    }),
     updateUserById: builder.mutation({
       query: ({ token, id, payload }) => ({
         url: `/users/${id}`,
@@ -79,5 +90,6 @@ export const {
   useGetAllUsersQuery,
   useGetUserProfileQuery,
   useUpdateUserByIdMutation,
+  useUpdateUserRoleMutation,
   useUpdateProfileImageMutation,
 } = userApi;
