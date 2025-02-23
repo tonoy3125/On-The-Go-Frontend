@@ -19,7 +19,6 @@ import { local_img_url } from "@/utils/localImageURL";
 import { AlertCircle, UploadIcon } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
-
 import { FieldValues, useForm } from "react-hook-form";
 import { FaPen } from "react-icons/fa";
 import { useDispatch } from "react-redux";
