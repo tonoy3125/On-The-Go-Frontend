@@ -1,5 +1,6 @@
 "use client";
 
+import ProfileSidebar from "@/components/ProfilePage/ProfileSidebar/ProfileSidebar";
 import Loader from "@/components/shared/Loader/Loader";
 import {
   selectCurrentUser,
@@ -34,7 +35,7 @@ const Layout = ({
   return (
     <div className="w-full min-h-screen flex items-start justify-center  py-[50px]">
       <div className="min-h-[400px] overflow-auto flex flex-col md:flex-row items-start justify-start gap-[20px] md:p-[25px] rounded-[10px] shadow-md w-full bg-white">
-        {/* <ProfileSidebar /> */}
+        <ProfileSidebar />
         {children}
       </div>
     </div>
