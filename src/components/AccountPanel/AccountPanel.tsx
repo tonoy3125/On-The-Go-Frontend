@@ -1,4 +1,4 @@
-import { LayoutDashboard, LogOut, User } from "lucide-react";
+import { LayoutDashboard, LogOut, Settings, User } from "lucide-react";
 
 import { useAppSelector } from "@/redux/hook";
 
@@ -66,13 +66,13 @@ export function AccountPanel() {
                   </DropdownMenuItem>
                 </Link>
               )}
-              {/* <Link href="/profile/settings" className="cursor-pointer">
+              <Link href="/profile/settings" className="cursor-pointer">
                 <DropdownMenuItem>
                   <Settings className="mr-2 h-4 w-4" />
 
                   <span>Settings</span>
                 </DropdownMenuItem>
-              </Link> */}
+              </Link>
             </>
           ) : (
             <></>
