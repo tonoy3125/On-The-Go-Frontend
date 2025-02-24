@@ -14,7 +14,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FaPen } from "react-icons/fa";
 
-const Profile = () => {
+const ProfilePage = () => {
   const user = useAppSelector(selectCurrentUser) as TUserPayload | null; // Get current user's ID
   const isLoading = useAppSelector(selectIsAuthLoading);
 
@@ -63,4 +63,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ProfilePage;

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-'use client'
+"use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -169,11 +169,11 @@ const ProfileSettingsView = () => {
           </div>
         </div>
 
-        <div className="mb-4">
+        <div className="mb-4 ">
           <Label htmlFor="name">Name *</Label>
           <Input
             id="name"
-            {...register("name", { required: "Group Name is Required" })}
+            {...register("name", { required: "Name is Required" })}
             className="mt-1 block w-full px-3 py-2 border border-borderColor rounded-md outline-none"
           />
           {errors.name && (
