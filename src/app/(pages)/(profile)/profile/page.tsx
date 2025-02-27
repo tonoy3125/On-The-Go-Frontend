@@ -58,7 +58,7 @@ const ProfilePage = () => {
         <span className="font-[600]">user since: </span>{" "}
         {format(new Date(user?.user?.createdAt || "12-30-2024"), "MMM dd, yyy")}
       </p>
-      {/* {!user.isPremium && user.role === "user" ? <PremiumAccess /> : <></>} */}
+      {!user.isPremium && user.role === "user" ? <PremiumAccess /> : <></>}
     </div>
   );
 };
