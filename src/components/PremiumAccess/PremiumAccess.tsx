@@ -6,6 +6,7 @@ import {
 import { useAppSelector } from "@/redux/hook";
 import { TUserPayload } from "@/types/user.type";
 import { useEffect, useState } from "react";
+import GetPremiumAccess from "../GetPremiumAccess/GetPremiumAccess";
 
 const PremiumAccess = () => {
   const [isCapable, setIsCapable] = useState(false);
@@ -41,7 +42,7 @@ const PremiumAccess = () => {
     return <div>Loading...</div>;
   }
 
-  return ;
+  return <div>{isCapable ? <GetPremiumAccess /> : <NotEligble />}</div>;
 };
 
 export default PremiumAccess;
