@@ -1,17 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useChangePasswordMutation } from "@/redux/features/auth/authApi";
 import {
-  selectCurrentUser,
-  selectIsAuthLoading,
   setUser,
   useCurrentToken,
 } from "@/redux/features/auth/authSlice";
-
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { TUserPayload } from "@/types/user.type";
 import { verifyToken } from "@/utils/verifyToken";
 import { AlertCircle } from "lucide-react";
 import { FieldValues, useForm } from "react-hook-form";
@@ -26,9 +23,7 @@ const UpdatePassword = () => {
     watch,
   } = useForm();
   const dispatch = useAppDispatch();
-  const user = useAppSelector(selectCurrentUser) as TUserPayload | null; // Get current user's ID
   const token = useAppSelector(useCurrentToken);
-  const isLoading = useAppSelector(selectIsAuthLoading);
 
   const newPassword = watch("newPassword");
   const oldPassword = watch("oldPassword");
@@ -45,9 +40,9 @@ const UpdatePassword = () => {
         confirmNewPassword: data?.confirmNewPassword,
       };
       const res = await changePassword({ passwordInfo, token }).unwrap();
-      console.log(res);
+      // console.log(res);
       const user = verifyToken(res?.data?.accessToken);
-      console.log(user);
+      // console.log(user);
       dispatch(
         setUser({
           user: { user, id: res.data.user?._id },

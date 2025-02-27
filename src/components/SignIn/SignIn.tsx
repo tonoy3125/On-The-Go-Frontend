@@ -30,14 +30,14 @@ const SignIn = () => {
   const router = useRouter();
 
   const onSubmit = async (data: FieldValues) => {
-    console.log(data);
+    // console.log(data);
     const toastId = toast.loading("Logging In...");
     try {
       const userInfo = {
         email: data?.email,
         password: data?.password,
       };
-      console.log(userInfo);
+      // console.log(userInfo);
       const res = await login(userInfo).unwrap();
       // console.log(res);
       const user = verifyToken(res.accessToken);
@@ -175,7 +175,7 @@ const SignIn = () => {
               </span>
             </Link>
           </p>
-          <Divider/>
+          <Divider />
           <div className="flex flex-col semi-sm:flex-row items-center gap-3 semi-sm:gap-5 justify-center mt-10">
             <button className="flex items-center justify-center w-full gap-1 bg-[#E6E9EB] hover:bg-[#E5EFEF] py-[6px] px-[13px] rounded-md">
               <FaLinkedinIn className="text-base text-[#0077B5]" />
