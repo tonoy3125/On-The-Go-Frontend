@@ -13,19 +13,16 @@ import {
 } from "@/components/ui/dialog";
 import { baseUrl } from "@/redux/api/baseApi";
 import {
-  selectCurrentUser,
   useCurrentToken,
 } from "@/redux/features/auth/authSlice";
 
 import { useAppSelector } from "@/redux/hook";
-import { TUserPayload } from "@/types/user.type";
 import { CheckCircle, Star } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { ImSpinner2 } from "react-icons/im";
 const GetPremiumAccess = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const user = useAppSelector(selectCurrentUser) as TUserPayload | null;
   const token = useAppSelector(useCurrentToken);
 
   const handleGetPremiumAccess = async () => {
@@ -63,7 +60,7 @@ const GetPremiumAccess = () => {
           <Image
             width={100}
             height={100}
-            src="/images/crown.png"
+            src="/public/images/crown.png"
             alt="verify"
             className="absolute top-[-13px] right-[-16px] rotate-[20deg] w-[40px] scale-1 group-hover/premium:rotate-0 group-hover/premium:scale-[1.2]"
             style={{ transition: "0.3s" }}

@@ -1,23 +1,20 @@
 import { baseUrl } from "@/redux/api/baseApi";
 import {
-  selectCurrentUser,
   useCurrentToken,
 } from "@/redux/features/auth/authSlice";
 import { useAppSelector } from "@/redux/hook";
-import { TUserPayload } from "@/types/user.type";
 import { useEffect, useState } from "react";
 import GetPremiumAccess from "../GetPremiumAccess/GetPremiumAccess";
+import NotEligble from "../NotEligble/NotEligble";
 
 const PremiumAccess = () => {
   const [isCapable, setIsCapable] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  const user = useAppSelector(selectCurrentUser) as TUserPayload | null;
   const token = useAppSelector(useCurrentToken);
 
   useEffect(() => {
     const checkCapable = async () => {
-      const url = baseUrl + "/user/can-have-premium";
+      const url = baseUrl + "/users/can-have-premium";
       try {
         setIsLoading(true);
         const res = await fetch(url, {
@@ -28,6 +25,7 @@ const PremiumAccess = () => {
           },
         });
         const data = await res.json();
+        console.log(data)
 
         setIsCapable(data.data);
         setIsLoading(false);
