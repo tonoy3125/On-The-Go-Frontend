@@ -70,12 +70,15 @@ const CreatePostModal: React.FC<IProps> = ({ children }) => {
     }
   };
 
+  const stripHtml = (html: string) => html.replace(/<[^>]*>/g, "").trim();
+
   const handleSubmit = async () => {
     if (!token || !user) return toast.error("Login first to create post");
     if (imageLoading) return;
-    if (!content) {
+    // Now using stripHtml function
+    const cleanedContent = stripHtml(content);
+    if (!cleanedContent)
       return toast.error("Please write something in content");
-    }
 
     if (images.length === 0) {
       return toast.error("Please upload at least one image");
@@ -88,14 +91,15 @@ const CreatePostModal: React.FC<IProps> = ({ children }) => {
     const toastId = toast.loading("Please wait...");
     try {
       const payload: IPostCreate = {
-        content,
+        content: cleanedContent,
         images,
         categories,
         premium: isPremium,
-        group: groupId as string | undefined,
+        // group: groupId as string | undefined,
       };
-      const { data } = await createPost(payload);
-      console.log(data);
+      console.log("This Is Payload", payload);
+      const { data } = await createPost({ payload, token });
+      console.log("This Is Create Post Data", data);
 
       toast.dismiss(toastId);
       toast.success("Post created successfully");
