@@ -12,6 +12,8 @@ const DisplayGroupPost = () => {
   const [query, setQuery] = useState({ group: groupId, page: 1, limit: 10 });
   const { data, isFetching } = useGetAllPostsQuery(query);
 
+  // console.log(data);
+
   const [postData, setPostData] = useState<IPost[]>([]);
 
   useEffect(() => {

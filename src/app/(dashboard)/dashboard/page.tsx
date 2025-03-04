@@ -1,8 +1,12 @@
-const Dashboard = () => {
-  return;
-  <div>
-    <h1>This Is Dashboard Page</h1>
-  </div>;
+import StatisticsView from "@/components/DashboardPages/StatisticsView/StatisticsView";
+import React from "react";
+
+const DashboardPage = () => {
+  return (
+    <div>
+      <StatisticsView />
+    </div>
+  );
 };
 
-export default Dashboard;
+export default DashboardPage;

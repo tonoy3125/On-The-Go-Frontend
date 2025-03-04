@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { Button } from "@/components/ui/button";
 import {
@@ -95,7 +96,7 @@ const CreatePostModal: React.FC<IProps> = ({ children }) => {
         images,
         categories,
         premium: isPremium,
-        // group: groupId as string | undefined,
+        group: groupId as string | undefined,
       };
       console.log("This Is Payload", payload);
       const { data } = await createPost({ payload, token });
