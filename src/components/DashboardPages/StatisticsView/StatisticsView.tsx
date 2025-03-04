@@ -1,3 +1,4 @@
+import DailyTransactions from "../DailyTransactions/DailyTransactions";
 import PaymentStatistics from "../PaymentStatistics/PaymentStatistics";
 import StatisticsHeading from "../StatisticsHeading/StatisticsHeading";
 
@@ -5,7 +6,7 @@ const StatisticsView = () => {
   return (
     <div className="w-full">
       <StatisticsHeading />
-      {/* <DailyTransactions /> */}
+      <DailyTransactions />
       <div className="flex items-start flex-col xl:flex-row gap-[20px] my-[20px]">
         <div className="flex flex-col gap-[20px] w-full">
           {/* <UserStatisticsPieChart /> */}

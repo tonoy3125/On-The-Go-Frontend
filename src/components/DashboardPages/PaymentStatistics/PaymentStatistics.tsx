@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Bar, BarChart, XAxis } from "recharts";
@@ -42,18 +43,24 @@ function PaymentStatistics() {
   >(undefined);
   const { data, isLoading } = useGetPaymentStatisticsQuery(selectedDateRange);
 
-  const monthlyTotals = data?.data?.reduce((acc: any, transaction: any) => {
-    const date = parseISO(transaction.createdAt);
-    const month = format(date, "MMMM");
+  const monthlyTotals = data?.data?.reduce(
+    (
+      acc: { [x: string]: any },
+      transaction: { createdAt: string; amount: any }
+    ) => {
+      const date = parseISO(transaction.createdAt);
+      const month = format(date, "MMMM");
 
-    if (!acc[month]) {
-      acc[month] = 0;
-    }
+      if (!acc[month]) {
+        acc[month] = 0;
+      }
 
-    acc[month] += transaction.amount;
+      acc[month] += transaction.amount;
 
-    return acc;
-  }, {});
+      return acc;
+    },
+    {}
+  );
 
   const result = Object.entries(monthlyTotals || {}).map(([month, total]) => ({
     month,

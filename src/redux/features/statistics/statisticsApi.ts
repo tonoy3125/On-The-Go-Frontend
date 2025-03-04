@@ -12,7 +12,17 @@ const StatisticsApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Statistics"],
     }),
+    getRecentStatistics: builder.query({
+      query: (token) => ({
+        url: "/statistics/recent",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      providesTags: ["Statistics"],
+    }),
   }),
 });
 
-export const { useGetPaymentStatisticsQuery } = StatisticsApi;
+export const { useGetPaymentStatisticsQuery,useGetRecentStatisticsQuery } = StatisticsApi;
