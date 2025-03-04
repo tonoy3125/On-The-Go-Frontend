@@ -1,3 +1,4 @@
+import PaymentStatistics from "../PaymentStatistics/PaymentStatistics";
 import StatisticsHeading from "../StatisticsHeading/StatisticsHeading";
 
 const StatisticsView = () => {
@@ -12,7 +13,7 @@ const StatisticsView = () => {
         </div>
         {/* <TopUsersTable /> */}
       </div>
-      {/* <PaymentStatistics /> */}
+      <PaymentStatistics />
     </div>
   );
 };
