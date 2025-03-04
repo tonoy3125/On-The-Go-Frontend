@@ -32,6 +32,16 @@ const StatisticsApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Statistics"],
     }),
+    getTopUsersStatistics: builder.query({
+      query: (token) => ({
+        url: "/statistics/top-user",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      providesTags: ["Statistics"],
+    }),
   }),
 });
 
@@ -39,4 +49,5 @@ export const {
   useGetPaymentStatisticsQuery,
   useGetRecentStatisticsQuery,
   useGetUsersStatisticsQuery,
+  useGetTopUsersStatisticsQuery,
 } = StatisticsApi;

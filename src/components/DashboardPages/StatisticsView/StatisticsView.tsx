@@ -1,6 +1,8 @@
 import DailyTransactions from "../DailyTransactions/DailyTransactions";
 import PaymentStatistics from "../PaymentStatistics/PaymentStatistics";
 import StatisticsHeading from "../StatisticsHeading/StatisticsHeading";
+import TopUsersTable from "../TopUsersTable/TopUsersTable";
+import UserStatistics from "../UserStatistics/UserStatistics";
 import UserStatisticsPieChart from "../UserStatisticsPieChart/UserStatisticsPieChart";
 
 const StatisticsView = () => {
@@ -11,9 +13,9 @@ const StatisticsView = () => {
       <div className="flex items-start flex-col xl:flex-row gap-[20px] my-[20px]">
         <div className="flex flex-col gap-[20px] w-full">
           <UserStatisticsPieChart />
-          {/* <UserStatistics /> */}
+          <UserStatistics />
         </div>
-        {/* <TopUsersTable /> */}
+        <TopUsersTable />
       </div>
       <PaymentStatistics />
     </div>

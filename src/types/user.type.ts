@@ -60,3 +60,11 @@ export type TUserData = {
   updatedAt: string;
   isPremium: boolean;
 };
+
+export type TTopUsers= {
+  postCount: number
+  userId: string
+  image: string
+  name: string
+  email: string
+}
