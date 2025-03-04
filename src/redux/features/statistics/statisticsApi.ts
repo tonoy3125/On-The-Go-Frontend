@@ -22,7 +22,21 @@ const StatisticsApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Statistics"],
     }),
+    getUsersStatistics: builder.query({
+      query: (token) => ({
+        url: "/statistics/user",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      providesTags: ["Statistics"],
+    }),
   }),
 });
 
-export const { useGetPaymentStatisticsQuery,useGetRecentStatisticsQuery } = StatisticsApi;
+export const {
+  useGetPaymentStatisticsQuery,
+  useGetRecentStatisticsQuery,
+  useGetUsersStatisticsQuery,
+} = StatisticsApi;
