@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -40,6 +41,7 @@ interface IPorps {
 }
 
 const PostModal: React.FC<IPorps> = ({ post, trigger }) => {
+  console.log(post)
   const { register, handleSubmit, reset } = useForm();
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(1);
@@ -135,7 +137,9 @@ const PostModal: React.FC<IPorps> = ({ post, trigger }) => {
         <div className=" h-[80vh] overflow-auto smoothBar w-full">
           <DialogHeader></DialogHeader>
           <Card>
-            <PostContent post={post} />
+            <PostContent post={post} refetch={function (): void {
+              throw new Error("Function not implemented.");
+            } } />
           </Card>
           <Separator className="my-[20px]" />
           <PostReaction post={post} />

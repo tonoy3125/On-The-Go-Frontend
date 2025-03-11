@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import PostCard from "@/components/PostData/PostCard/PostCard";
 import PostModal from "@/components/PostData/PostModal/PostModal";
@@ -27,8 +28,11 @@ const CommunityPostView = () => {
             groupView={true}
             post={post}
             key={post._id}
-            showFooterItems={false}
-          >
+            showFooterItems={false} refetch={function (): void {
+              throw new Error("Function not implemented.");
+            } } isFollowing={false} setIsFollowing={function (state: boolean): void {
+              throw new Error("Function not implemented.");
+            } }          >
             <div className="flex items-center gap-[15px] w-full">
               <button className="w-full">
                 <DeleteCommunityPost refetch={refetch} id={post._id} />

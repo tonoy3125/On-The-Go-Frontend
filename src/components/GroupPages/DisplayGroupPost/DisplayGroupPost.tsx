@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import PostCard from "@/components/PostData/PostCard/PostCard";
 import PostCardSkeleton from "@/components/skeletons/PostCardSkeleton";
 import { Separator } from "@/components/ui/separator";
@@ -28,7 +30,11 @@ const DisplayGroupPost = () => {
       <h3 className="text-[25px] text-primaryTxt font-[700]">Group Post</h3>
       <Separator className="my-4" />
       {postData?.map((post) => (
-        <PostCard post={post} key={post._id} groupView={true} />
+        <PostCard post={post} key={post._id} groupView={true} refetch={function (): void {
+          throw new Error("Function not implemented.");
+        } } isFollowing={false} setIsFollowing={function (state: boolean): void {
+          throw new Error("Function not implemented.");
+        } } />
       ))}
       {!isFetching && !postData.length ? (
         <div className="w-full flex items-center justify-center bg-white py-[50px] rounded-[8px]">
