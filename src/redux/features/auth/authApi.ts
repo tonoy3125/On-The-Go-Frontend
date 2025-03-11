@@ -18,6 +18,16 @@ const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Auth"],
     }),
+    getUserState: builder.query({
+      query: (token) => ({
+        url: "/auth/auth-state",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      providesTags: ["Auth"],
+    }),
     changePassword: builder.mutation({
       query: ({ passwordInfo, token }) => ({
         url: "/auth/change-password",
@@ -53,6 +63,7 @@ const authApi = baseApi.injectEndpoints({
 export const {
   useSignUpMutation,
   useLoginMutation,
+  useGetUserStateQuery,
   useChangePasswordMutation,
   useForgetPasswordMutation,
   useResetPasswordMutation,

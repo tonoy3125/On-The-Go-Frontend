@@ -55,7 +55,7 @@ const FollowerApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: TResponseRedux<TFollower[]>) => {
-        console.log("inside redux", response);
+        // console.log("inside redux", response);
         return {
           data: response.data,
           meta: response.meta,
@@ -92,7 +92,7 @@ const FollowerApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: TResponseRedux<TFollower[]>) => {
-        console.log("inside redux", response);
+        // console.log("inside redux", response);
         return {
           data: response.data,
           meta: response.meta,

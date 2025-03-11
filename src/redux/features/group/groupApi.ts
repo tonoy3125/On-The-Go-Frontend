@@ -49,7 +49,7 @@ const GroupApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: TResponseRedux<TGroup[]>) => {
-        console.log("inside redux", response);
+        // console.log("inside redux", response);
         return {
           data: response.data,
           meta: response.meta,

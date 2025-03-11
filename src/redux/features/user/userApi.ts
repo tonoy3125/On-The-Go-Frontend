@@ -32,7 +32,7 @@ const userApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: TResponseRedux<TUserData[]>) => {
-        console.log("inside redux", response);
+        // console.log("inside redux", response);
         return {
           data: response.data,
           meta: response.meta,

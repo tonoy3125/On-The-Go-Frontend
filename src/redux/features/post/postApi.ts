@@ -44,7 +44,7 @@ const PostApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: TResponseRedux<IPost[]>) => {
-        console.log("inside redux", response);
+        // console.log("inside redux", response);
         return {
           data: response.data,
           meta: response.meta,
@@ -81,7 +81,7 @@ const PostApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: TResponseRedux<IPost[]>) => {
-        console.log("inside redux", response);
+        // console.log("inside redux", response);
         return {
           data: response.data,
           meta: response.meta,

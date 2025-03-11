@@ -39,7 +39,7 @@ const CategoryApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: TResponseRedux<TCategories[]>) => {
-        console.log("inside redux", response);
+        // console.log("inside redux", response);
         return {
           data: response.data,
           meta: response.meta,
