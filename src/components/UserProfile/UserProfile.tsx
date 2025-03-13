@@ -9,7 +9,7 @@ const UserProfile = () => {
   const userId = user?.id as string;
   return (
     <Link
-      href={`/${userId}`}
+      href={`/user/${userId}`}
       className="flex items-center gap-[12px] p-[5px] hover:bg-primaryMat/5 w-full rounded-[8px]"
     >
       <div className="relative h-12 w-12 center bg-primaryMat/10 rounded-full p-[5px]">
@@ -17,7 +17,7 @@ const UserProfile = () => {
           width={40}
           height={40}
           src={user?.user?.image || "/images/avatar.jpg"}
-          alt={user?.user?.name || 'User Avatar'}
+          alt={user?.user?.name || "User Avatar"}
           className="rounded-full w-full h-full object-contain"
         />
       </div>

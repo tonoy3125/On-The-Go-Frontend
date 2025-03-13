@@ -17,12 +17,14 @@ import { useLoginMutation } from "@/redux/features/auth/authApi";
 import { setUser } from "@/redux/features/auth/authSlice";
 import { useRouter } from "next/navigation";
 import Divider from "../shared/Divider/Divider";
+import { loginCredentials } from "@/lib/credentials";
 
 const SignIn = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
   const [showLoginPassword, setShowLoginPassword] = useState(false);
   const dispatch = useAppDispatch();
@@ -79,6 +81,30 @@ const SignIn = () => {
           Sign in with your data that you enterd during your registration
         </p>
         <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="flex font-poppins flex-col gap-[5px]">
+            <h3 className="block text-[18px] font-semibold mb-5sign">
+              Quick Login{" "}
+            </h3>
+            <div className="flex items-center justify-start  gap-[10px] flex-wrap mb-[20px]">
+              {loginCredentials.map(({ email, password, label }, i) => (
+                <button
+                  key={"login" + i}
+                  type="button"
+                  className="w-fit bg-[#fff] border-[1px] border-[#dae1e3] font-[700] text-[#1D1D1F] rounded-full px-[15px] py-[5px] text-[12px] active:scale-[0.8]"
+                  style={{ transition: "0.3s" }}
+                  onClick={() => {
+                    // Set form values when button is clicked
+                    reset({
+                      email: email,
+                      password: password,
+                    });
+                  }}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
           <div className="mb-5">
             <h2 className="text-[15px] font-medium text-[#231928] mb-3 opacity-90">
               Email Address
