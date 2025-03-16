@@ -106,7 +106,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
       </Avatar>
       <div className="flex flex-col gap-[10px]">
         <h4 className="text-sm font-semibold flex items-center gap-[10px]">
-          <Link href={`/${userData._id}`} className="hover:underline">
+          <Link href={`/user/${userData._id}`} className="hover:underline">
             {userData.name}
           </Link>
           {userData.isPremium ? (
