@@ -22,7 +22,7 @@ const ProfilePageView = () => {
   const { userId } = useParams();
   const user = useAppSelector(selectCurrentUser) as TUserPayload | null;
   const token = useAppSelector(useCurrentToken);
-  // console.log(userId);
+  console.log("user Id is ", userId);
   const {
     data: userProfileData,
     isLoading,
