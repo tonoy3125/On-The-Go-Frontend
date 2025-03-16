@@ -1,4 +1,4 @@
-# Travel Tips & Destination Guides Frontend Application
+# Travel Tips & Destination Guides Application
 
 # Description
 
