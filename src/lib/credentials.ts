@@ -1,7 +1,7 @@
 export const loginCredentials = [
   {
     label: "User",
-    email: "shaifshajed@gmail.com",
+    email: "towfiq@gmail.com",
     password: "123456",
   },
   {

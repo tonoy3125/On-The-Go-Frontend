@@ -59,7 +59,7 @@ export function AccountPanel() {
                   </DropdownMenuItem>
                 </Link>
               ) : (
-                <Link href={`/${user.id}`}>
+                <Link href={`/user/${user.id}`}>
                   <DropdownMenuItem className="cursor-pointer">
                     <User className="mr-2 h-4 w-4" />
                     <span>My Profile</span>

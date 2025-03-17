@@ -66,7 +66,7 @@ const FollowersView = () => {
                   </div>
 
                   <Link
-                    href={`/${follower?.follower?._id}`}
+                    href={`/user/${follower?.follower?._id}`}
                     className="shrink-0 text-primaryMat text-[14px] hover:underline"
                   >
                     View profile

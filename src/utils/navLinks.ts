@@ -18,7 +18,7 @@ export const shortcutsLinks = [
   },
   {
     path: "/followers",
-    label: "My Followrs",
+    label: "My Followers",
     iconUrl: "/icons/follower.svg",
   },
 ];
